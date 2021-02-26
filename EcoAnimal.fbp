@@ -347,6 +347,7 @@
             <property name="window_extra_style"></property>
             <property name="window_name"></property>
             <property name="window_style">wxTAB_TRAVERSAL</property>
+            <event name="OnLeftDClick">onAnimalClick</event>
             <object class="wxBoxSizer" expanded="1">
                 <property name="minimum_size"></property>
                 <property name="name">bSizer6</property>
@@ -597,7 +598,7 @@
                                             <property name="validator_style">wxFILTER_NONE</property>
                                             <property name="validator_type">wxDefaultValidator</property>
                                             <property name="validator_variable"></property>
-                                            <property name="value">１ページ目</property>
+                                            <property name="value">アニマル名</property>
                                             <property name="window_extra_style"></property>
                                             <property name="window_name"></property>
                                             <property name="window_style"></property>
@@ -932,10 +933,10 @@
                                 </object>
                             </object>
                         </object>
-                        <object class="simplebookpage" expanded="0">
+                        <object class="simplebookpage" expanded="1">
                             <property name="label">a page</property>
                             <property name="select">0</property>
-                            <object class="wxPanel" expanded="0">
+                            <object class="wxPanel" expanded="1">
                                 <property name="BottomDockable">1</property>
                                 <property name="LeftDockable">1</property>
                                 <property name="RightDockable">1</property>

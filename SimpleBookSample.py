@@ -95,7 +95,7 @@ class SimpleBookPanel ( wx.Panel ):
 
         gbSizer1.Add( self.m_staticText4, wx.GBPosition( 0, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
-        self.m_name = wx.TextCtrl( self.m_panel_page1, wx.ID_ANY, _(u"１ページ目"), wx.DefaultPosition, wx.Size( -1,15 ), 0 )
+        self.m_name = wx.TextCtrl( self.m_panel_page1, wx.ID_ANY, _(u"アニマル名"), wx.DefaultPosition, wx.Size( -1,15 ), 0 )
         self.m_name.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
 
         gbSizer1.Add( self.m_name, wx.GBPosition( 0, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
@@ -178,7 +178,15 @@ class SimpleBookPanel ( wx.Panel ):
         self.SetSizer( bSizer6 )
         self.Layout()
 
+        # Connect Events
+        self.Bind( wx.EVT_LEFT_DCLICK, self.onAnimalClick )
+
     def __del__( self ):
         pass
+
+
+    # Virtual event handlers, overide them in your derived class
+    def onAnimalClick( self, event ):
+        event.Skip()
 
 
