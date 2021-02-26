@@ -77,6 +77,14 @@ class AnimalBook(SimpleBookPanel):
 
         dc.DrawText(self.m_name.GetValue(), x-20,y+45)
 
+    def onValueChanged( self, event ):
+        value = self.m_slider_value.GetValue()
+        self.m_value.SetValue(value)
+
+    def onRightChanged( self, event ):
+        value = self.m_slider_right.GetValue()
+        self.m_right.SetValue(value)
+
 if __name__ == "__main__":
     app = wx.App()
     frame = EcoAnimal(None)
