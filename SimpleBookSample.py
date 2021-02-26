@@ -95,10 +95,10 @@ class SimpleBookPanel ( wx.Panel ):
 
         gbSizer1.Add( self.m_staticText4, wx.GBPosition( 0, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
-        self.m_textCtrl1 = wx.TextCtrl( self.m_panel_page1, wx.ID_ANY, _(u"１ページ目"), wx.DefaultPosition, wx.Size( -1,15 ), 0 )
-        self.m_textCtrl1.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_name = wx.TextCtrl( self.m_panel_page1, wx.ID_ANY, _(u"１ページ目"), wx.DefaultPosition, wx.Size( -1,15 ), 0 )
+        self.m_name.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
 
-        gbSizer1.Add( self.m_textCtrl1, wx.GBPosition( 0, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        gbSizer1.Add( self.m_name, wx.GBPosition( 0, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
         self.m_staticText5 = wx.StaticText( self.m_panel_page1, wx.ID_ANY, _(u"価値"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText5.Wrap( -1 )
@@ -109,7 +109,7 @@ class SimpleBookPanel ( wx.Panel ):
 
         self.m_gauge1 = wx.Gauge( self.m_panel_page1, wx.ID_ANY, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.GA_HORIZONTAL )
         self.m_gauge1.SetValue( 0 )
-        gbSizer1.Add( self.m_gauge1, wx.GBPosition( 1, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        gbSizer1.Add( self.m_gauge1, wx.GBPosition( 1, 1 ), wx.GBSpan( 1, 2 ), wx.ALL, 5 )
 
         self.m_staticText7 = wx.StaticText( self.m_panel_page1, wx.ID_ANY, _(u"権利"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText7.Wrap( -1 )
@@ -120,7 +120,14 @@ class SimpleBookPanel ( wx.Panel ):
 
         self.m_gauge2 = wx.Gauge( self.m_panel_page1, wx.ID_ANY, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.GA_HORIZONTAL )
         self.m_gauge2.SetValue( 0 )
-        gbSizer1.Add( self.m_gauge2, wx.GBPosition( 2, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        gbSizer1.Add( self.m_gauge2, wx.GBPosition( 2, 1 ), wx.GBSpan( 1, 2 ), wx.ALL, 5 )
+
+        self.m_class_name = wx.StaticText( self.m_panel_page1, wx.ID_ANY, _(u"MyLabel"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_class_name.Wrap( -1 )
+
+        self.m_class_name.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+
+        gbSizer1.Add( self.m_class_name, wx.GBPosition( 0, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
 
         self.m_panel_page1.SetSizer( gbSizer1 )
