@@ -20,7 +20,7 @@ _ = gettext.gettext
 class MainFrame ( wx.Frame ):
 
     def __init__( self, parent ):
-        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 915,698 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
+        wx.Frame.__init__ ( self, parent, id = wx.ID_ANY, title = wx.EmptyString, pos = wx.DefaultPosition, size = wx.Size( 1227,698 ), style = wx.DEFAULT_FRAME_STYLE|wx.TAB_TRAVERSAL )
 
         self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 
@@ -42,7 +42,7 @@ class MainFrame ( wx.Frame ):
         self.bSizer_animal_list.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
 
         self.m_panel = wx.Panel( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( -1,-1 ), wx.TAB_TRAVERSAL )
-        self.m_panel.SetMinSize( wx.Size( 600,400 ) )
+        self.m_panel.SetMinSize( wx.Size( 900,400 ) )
 
         self.bSizer_animal_list.Add( self.m_panel, wx.GBPosition( 0, 0 ), wx.GBSpan( 1, 1 ), wx.EXPAND |wx.ALL, 5 )
 
@@ -53,7 +53,7 @@ class MainFrame ( wx.Frame ):
         self.bSizer_animal_list.Add( self.m_scrolledWindow, wx.GBPosition( 0, 1 ), wx.GBSpan( 1, 1 ), wx.EXPAND |wx.ALL, 5 )
 
         self.m_textCtrl = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
-        self.m_textCtrl.SetMinSize( wx.Size( 890,200 ) )
+        self.m_textCtrl.SetMinSize( wx.Size( 1190,200 ) )
 
         self.bSizer_animal_list.Add( self.m_textCtrl, wx.GBPosition( 1, 0 ), wx.GBSpan( 1, 2 ), wx.ALL, 5 )
 

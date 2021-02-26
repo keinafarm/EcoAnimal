@@ -20,11 +20,11 @@ class EcoAnimal(MainFrame):
     def onPaint( self, event ):
         dc = wx.PaintDC(self.m_panel)
         dc.SetPen(wx.Pen('blue'))
-        for i in range(1,6):
-            for j in range(1,21):
-                x = j*27
-                y = i*60
-                animal = self.animal_list[(i-1)*20+(j-1)]
+        for i in range(5):
+            for j in range(20):
+                x = j*45+20
+                y = i*80+20
+                animal = self.animal_list[i*20+j]
                 animal.paint( x, y, dc )
 
 class AnimalBook(SimpleBookPanel):
@@ -34,11 +34,17 @@ class AnimalBook(SimpleBookPanel):
         self.m_name.SetValue(animal_name)
 
     def paint(self, x, y, dc):
+        dc.SetBrush(wx.Brush(wx.Colour(255, 0, 0)))
         dc.DrawCircle(x, y, 10)
         pos1 = (x, y + 10)
         pos2 = (x - 10, y + 40)
         pos3 = (x + 10, y + 40)
+        dc.SetBrush(wx.Brush(wx.Colour(0, 255, 0)))
         dc.DrawPolygonList([[pos1, pos2, pos3]])
+        dc.SetBrush(wx.Brush(wx.Colour(0, 0, 0)))
+        dc.SetFont(wx.Font(wx.FontInfo(8)))
+
+        dc.DrawText(self.m_name.GetValue(), x-20,y+45)
 
 if __name__ == "__main__":
     app = wx.App()
