@@ -63,8 +63,16 @@ class MainFrame ( wx.Frame ):
 
         self.Centre( wx.BOTH )
 
+        # Connect Events
+        self.m_panel.Bind( wx.EVT_PAINT, self.onPaint )
+
     def __del__( self ):
         pass
+
+
+    # Virtual event handlers, overide them in your derived class
+    def onPaint( self, event ):
+        event.Skip()
 
 
 ###########################################################################
