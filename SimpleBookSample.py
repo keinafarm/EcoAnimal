@@ -148,6 +148,7 @@ class SimpleBookPanel ( wx.Panel ):
 
         self.m_right = wx.Gauge( self.m_panel_page1, wx.ID_ANY, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.GA_HORIZONTAL )
         self.m_right.SetValue( 0 )
+        self.m_right.SetForegroundColour( wx.Colour( 255, 255, 0 ) )
         self.m_right.SetBackgroundColour( wx.Colour( 255, 0, 0 ) )
 
         gbSizer1.Add( self.m_right, wx.GBPosition( 2, 1 ), wx.GBSpan( 1, 2 ), wx.ALL, 5 )
