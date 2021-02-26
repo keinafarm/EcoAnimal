@@ -24,7 +24,7 @@ class EcoAnimal(MainFrame):
             for j in range(1,21):
                 x = j*27
                 y = i*60
-                animal = self.animal_list[i*20+j]
+                animal = self.animal_list[(i-1)*20+(j-1)]
                 animal.paint( x, y, dc )
 
 class AnimalBook(SimpleBookPanel):
