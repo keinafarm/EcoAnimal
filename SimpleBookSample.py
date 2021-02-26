@@ -108,8 +108,8 @@ class SimpleBookPanel ( wx.Panel ):
 
         bSizer6 = wx.BoxSizer( wx.VERTICAL )
 
-        self.m_simplebook1 = wx.Simplebook( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( -1,-1 ), 0 )
-        self.m_panel_page1 = wx.Panel( self.m_simplebook1, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+        self.m_simplebook = wx.Simplebook( self, wx.ID_ANY, wx.DefaultPosition, wx.Size( -1,-1 ), 0 )
+        self.m_panel_page1 = wx.Panel( self.m_simplebook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
         gbSizer1 = wx.GridBagSizer( 0, 0 )
         gbSizer1.SetFlexibleDirection( wx.BOTH )
         gbSizer1.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
@@ -159,8 +159,8 @@ class SimpleBookPanel ( wx.Panel ):
         self.m_panel_page1.SetSizer( gbSizer1 )
         self.m_panel_page1.Layout()
         gbSizer1.Fit( self.m_panel_page1 )
-        self.m_simplebook1.AddPage( self.m_panel_page1, _(u"a page"), False )
-        self.m_panel_page2 = wx.Panel( self.m_simplebook1, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+        self.m_simplebook.AddPage( self.m_panel_page1, _(u"a page"), False )
+        self.m_panel_page2 = wx.Panel( self.m_simplebook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
         gbSizer2 = wx.GridBagSizer( 0, 0 )
         gbSizer2.SetFlexibleDirection( wx.BOTH )
         gbSizer2.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
@@ -203,9 +203,9 @@ class SimpleBookPanel ( wx.Panel ):
         self.m_panel_page2.SetSizer( gbSizer2 )
         self.m_panel_page2.Layout()
         gbSizer2.Fit( self.m_panel_page2 )
-        self.m_simplebook1.AddPage( self.m_panel_page2, _(u"a page"), False )
+        self.m_simplebook.AddPage( self.m_panel_page2, _(u"a page"), False )
 
-        bSizer6.Add( self.m_simplebook1, 1, wx.EXPAND |wx.ALL, 5 )
+        bSizer6.Add( self.m_simplebook, 1, wx.EXPAND |wx.ALL, 5 )
 
 
         self.SetSizer( bSizer6 )

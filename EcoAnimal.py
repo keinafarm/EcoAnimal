@@ -42,16 +42,18 @@ class EcoAnimal(MainFrame):
         event.Skip()
 
     def next_page(self):
-        for book in self.animal_list:
+        for panel in self.animal_list:
+            book = panel.m_simplebook
             last_page = book.GetPageCount()
-            current_page = book.GetCurrentPage()
+            current_page = book.GetSelection()
             if current_page < last_page:
                 book.ChangeSelection(current_page+1)
 
     def prev_page(self):
-        for book in self.animal_list:
-            current_page = book.GetCurrentPage()
-            if current_page > 1:
+        for panel in self.animal_list:
+            book = panel.m_simplebook
+            current_page = book.GetSelection()
+            if current_page > 0:
                 book.ChangeSelection(current_page-1)
 
 
