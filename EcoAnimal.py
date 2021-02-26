@@ -27,11 +27,40 @@ class EcoAnimal(MainFrame):
                 animal = self.animal_list[i*20+j]
                 animal.paint( x, y, dc )
 
+    def onExit( self, event ):
+        self.Destroy()
+
+    def onNext( self, event ):
+        self.next_page()
+        event.Skip()
+
+    def onPrev( self, event ):
+        self.prev_page()
+        event.Skip()
+
+    def onPaint( self, event ):
+        event.Skip()
+
+    def next_page(self):
+        for book in self.animal_list:
+            last_page = book.GetPageCount()
+            current_page = book.GetCurrentPage()
+            if current_page < last_page:
+                book.ChangeSelection(current_page+1)
+
+    def prev_page(self):
+        for book in self.animal_list:
+            current_page = book.GetCurrentPage()
+            if current_page > 1:
+                book.ChangeSelection(current_page-1)
+
+
 class AnimalBook(SimpleBookPanel):
     def __init__(self, parent, animal_name, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,style=wx.TAB_TRAVERSAL, name=wx.PanelNameStr):
         super().__init__(parent, id, pos, size, style, name)
         self.m_class_name.SetLabel(self.__class__.__name__)
         self.m_name.SetValue(animal_name)
+        self.m_staticText_name = animal_name
 
     def paint(self, x, y, dc):
         dc.SetBrush(wx.Brush(wx.Colour(255, 0, 0)))

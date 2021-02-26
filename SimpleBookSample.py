@@ -27,12 +27,18 @@ class MainFrame ( wx.Frame ):
         self.m_statusBar = self.CreateStatusBar( 1, wx.STB_SIZEGRIP, wx.ID_ANY )
         self.m_menubar = wx.MenuBar( 0 )
         self.m_menu_file = wx.Menu()
-        self.m_menuItem2 = wx.MenuItem( self.m_menu_file, wx.ID_ANY, _(u"MyMenuItem"), wx.EmptyString, wx.ITEM_NORMAL )
-        self.m_menu_file.Append( self.m_menuItem2 )
+        self.m_menuItem_exit = wx.MenuItem( self.m_menu_file, wx.ID_ANY, _(u"終了"), wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu_file.Append( self.m_menuItem_exit )
 
         self.m_menubar.Append( self.m_menu_file, _(u"File") )
 
         self.m_menu_BookList = wx.Menu()
+        self.m_menuItem_next = wx.MenuItem( self.m_menu_BookList, wx.ID_ANY, _(u"次のページ"), wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu_BookList.Append( self.m_menuItem_next )
+
+        self.m_menuItem_prev = wx.MenuItem( self.m_menu_BookList, wx.ID_ANY, _(u"前のページ"), wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu_BookList.Append( self.m_menuItem_prev )
+
         self.m_menubar.Append( self.m_menu_BookList, _(u"Book List") )
 
         self.SetMenuBar( self.m_menubar )
@@ -64,6 +70,9 @@ class MainFrame ( wx.Frame ):
         self.Centre( wx.BOTH )
 
         # Connect Events
+        self.Bind( wx.EVT_MENU, self.onExit, id = self.m_menuItem_exit.GetId() )
+        self.Bind( wx.EVT_MENU, self.onNext, id = self.m_menuItem_next.GetId() )
+        self.Bind( wx.EVT_MENU, self.onPrev, id = self.m_menuItem_prev.GetId() )
         self.m_panel.Bind( wx.EVT_PAINT, self.onPaint )
 
     def __del__( self ):
@@ -71,6 +80,15 @@ class MainFrame ( wx.Frame ):
 
 
     # Virtual event handlers, overide them in your derived class
+    def onExit( self, event ):
+        event.Skip()
+
+    def onNext( self, event ):
+        event.Skip()
+
+    def onPrev( self, event ):
+        event.Skip()
+
     def onPaint( self, event ):
         event.Skip()
 
@@ -147,25 +165,25 @@ class SimpleBookPanel ( wx.Panel ):
         gbSizer2.SetFlexibleDirection( wx.BOTH )
         gbSizer2.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
 
-        self.m_staticText8 = wx.StaticText( self.m_panel_page2, wx.ID_ANY, _(u"項目１"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText8 = wx.StaticText( self.m_panel_page2, wx.ID_ANY, _(u"生産量"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText8.Wrap( -1 )
 
         self.m_staticText8.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
 
         gbSizer2.Add( self.m_staticText8, wx.GBPosition( 1, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
-        self.m_slider1 = wx.Slider( self.m_panel_page2, wx.ID_ANY, 50, 0, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.SL_HORIZONTAL )
-        gbSizer2.Add( self.m_slider1, wx.GBPosition( 1, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        self.m_slider_value = wx.Slider( self.m_panel_page2, wx.ID_ANY, 10, 0, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.SL_HORIZONTAL )
+        gbSizer2.Add( self.m_slider_value, wx.GBPosition( 1, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
-        self.m_staticText9 = wx.StaticText( self.m_panel_page2, wx.ID_ANY, _(u"項目２"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText9 = wx.StaticText( self.m_panel_page2, wx.ID_ANY, _(u"権利初期値"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText9.Wrap( -1 )
 
         self.m_staticText9.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
 
         gbSizer2.Add( self.m_staticText9, wx.GBPosition( 2, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
-        self.m_slider2 = wx.Slider( self.m_panel_page2, wx.ID_ANY, 50, 0, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.SL_HORIZONTAL )
-        gbSizer2.Add( self.m_slider2, wx.GBPosition( 2, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        self.m_slider_right = wx.Slider( self.m_panel_page2, wx.ID_ANY, 50, 0, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.SL_HORIZONTAL )
+        gbSizer2.Add( self.m_slider_right, wx.GBPosition( 2, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
         self.m_staticText10 = wx.StaticText( self.m_panel_page2, wx.ID_ANY, _(u"２ページ目"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText10.Wrap( -1 )
@@ -173,6 +191,13 @@ class SimpleBookPanel ( wx.Panel ):
         self.m_staticText10.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
 
         gbSizer2.Add( self.m_staticText10, wx.GBPosition( 0, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_staticText_name = wx.StaticText( self.m_panel_page2, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText_name.Wrap( -1 )
+
+        self.m_staticText_name.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+
+        gbSizer2.Add( self.m_staticText_name, wx.GBPosition( 0, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
 
         self.m_panel_page2.SetSizer( gbSizer2 )
