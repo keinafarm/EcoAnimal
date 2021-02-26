@@ -2,7 +2,7 @@ import wx
 from SimpleBookSample import MainFrame, SimpleBookPanel
 
 
-class EcoAnimal(MainFrame):
+class Gui(MainFrame):
     def __init__(self, parent):
         super().__init__(parent)
 
@@ -87,6 +87,6 @@ class AnimalBook(SimpleBookPanel):
 
 if __name__ == "__main__":
     app = wx.App()
-    frame = EcoAnimal(None)
+    frame = Gui(None)
     frame.Show()
     app.MainLoop()
