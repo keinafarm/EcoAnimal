@@ -16,7 +16,7 @@ class AnimalBook(BaseicAnimalBook):
         self.m_pos_y = None
         self.m_dc = None
         self.set_control()
-        self.root_window = None
+        self.root_window = None                 # この設定はself.m_name.SetValueより前
         self.m_name.SetValue(animal_name)
 
     def set_root_window(self, root_window):
