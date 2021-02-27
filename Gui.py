@@ -19,6 +19,9 @@ class Gui(MainFrame):
 
         self.m_scrolledWindow.SetSizer(self.bSizer_animal_list)
 
+    def logout(self, text):
+        self.m_textCtrl.AppendText( text+'\n' )
+
     def onPaint( self, event ):
         for i in range(5):
             for j in range(20):
@@ -53,7 +56,7 @@ class Gui(MainFrame):
 
 
     def onRun( self, event ):
-        event.Skip()
+        self.model.trade()
 
     def onReset( self, event ):
         self.model.reset()

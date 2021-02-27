@@ -1,6 +1,7 @@
 import wx
 from Gui import Gui
 from AnimalBook import  AnimalBookModel
+from Market import Market
 
 class EcoAnimal():
     def __init__(self):
@@ -22,6 +23,9 @@ class EcoAnimal():
             animal.reset()
 
         return self.animal_list
+
+    def trade(self):
+        market = Market(self.animal_list, self.view.logout )
 
 if __name__ == "__main__":
     app = wx.App()
