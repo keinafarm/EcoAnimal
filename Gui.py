@@ -1,6 +1,6 @@
 import wx
 from SimpleBookSample import MainFrame, SimpleBookPanel
-
+from AnimalBook import AnimalBook
 
 class Gui(MainFrame):
     def __init__(self, parent):
@@ -32,14 +32,9 @@ class Gui(MainFrame):
 
     def onNext( self, event ):
         self.next_page()
-        event.Skip()
 
     def onPrev( self, event ):
         self.prev_page()
-        event.Skip()
-
-    def onPaint( self, event ):
-        event.Skip()
 
     def next_page(self):
         for panel in self.animal_list:
@@ -57,33 +52,6 @@ class Gui(MainFrame):
                 book.ChangeSelection(current_page-1)
 
 
-class AnimalBook(SimpleBookPanel):
-    def __init__(self, parent, animal_name, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,style=wx.TAB_TRAVERSAL, name=wx.PanelNameStr):
-        super().__init__(parent, id, pos, size, style, name)
-        self.m_class_name.SetLabel(self.__class__.__name__)
-        self.m_name.SetValue(animal_name)
-        self.m_staticText_name = animal_name
-
-    def paint(self, x, y, dc):
-        dc.SetBrush(wx.Brush(wx.Colour(255, 0, 0)))
-        dc.DrawCircle(x, y, 10)
-        pos1 = (x, y + 10)
-        pos2 = (x - 10, y + 40)
-        pos3 = (x + 10, y + 40)
-        dc.SetBrush(wx.Brush(wx.Colour(0, 255, 0)))
-        dc.DrawPolygonList([[pos1, pos2, pos3]])
-        dc.SetBrush(wx.Brush(wx.Colour(0, 0, 0)))
-        dc.SetFont(wx.Font(wx.FontInfo(8)))
-
-        dc.DrawText(self.m_name.GetValue(), x-20,y+45)
-
-    def onValueChanged( self, event ):
-        value = self.m_slider_value.GetValue()
-        self.m_value.SetValue(value)
-
-    def onRightChanged( self, event ):
-        value = self.m_slider_right.GetValue()
-        self.m_right.SetValue(value)
 
 if __name__ == "__main__":
     app = wx.App()

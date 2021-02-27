@@ -133,11 +133,11 @@ class SimpleBookPanel ( wx.Panel ):
 
         gbSizer1.Add( self.m_staticText5, wx.GBPosition( 1, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
-        self.m_value = wx.Gauge( self.m_panel_page1, wx.ID_ANY, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.GA_HORIZONTAL )
-        self.m_value.SetValue( 0 )
-        self.m_value.SetBackgroundColour( wx.Colour( 128, 255, 0 ) )
+        self.m_gauge_value = wx.Gauge( self.m_panel_page1, wx.ID_ANY, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.GA_HORIZONTAL )
+        self.m_gauge_value.SetValue( 0 )
+        self.m_gauge_value.SetBackgroundColour( wx.Colour( 128, 255, 0 ) )
 
-        gbSizer1.Add( self.m_value, wx.GBPosition( 1, 1 ), wx.GBSpan( 1, 2 ), wx.ALL, 5 )
+        gbSizer1.Add( self.m_gauge_value, wx.GBPosition( 1, 1 ), wx.GBSpan( 1, 2 ), wx.ALL, 5 )
 
         self.m_staticText7 = wx.StaticText( self.m_panel_page1, wx.ID_ANY, _(u"権利"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText7.Wrap( -1 )
@@ -146,12 +146,12 @@ class SimpleBookPanel ( wx.Panel ):
 
         gbSizer1.Add( self.m_staticText7, wx.GBPosition( 2, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
-        self.m_right = wx.Gauge( self.m_panel_page1, wx.ID_ANY, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.GA_HORIZONTAL )
-        self.m_right.SetValue( 0 )
-        self.m_right.SetForegroundColour( wx.Colour( 255, 255, 0 ) )
-        self.m_right.SetBackgroundColour( wx.Colour( 255, 0, 0 ) )
+        self.m_gauge_right = wx.Gauge( self.m_panel_page1, wx.ID_ANY, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.GA_HORIZONTAL )
+        self.m_gauge_right.SetValue( 0 )
+        self.m_gauge_right.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+        self.m_gauge_right.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
 
-        gbSizer1.Add( self.m_right, wx.GBPosition( 2, 1 ), wx.GBSpan( 1, 2 ), wx.ALL, 5 )
+        gbSizer1.Add( self.m_gauge_right, wx.GBPosition( 2, 1 ), wx.GBSpan( 1, 2 ), wx.ALL, 5 )
 
         self.m_class_name = wx.StaticText( self.m_panel_page1, wx.ID_ANY, _(u"MyLabel"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_class_name.Wrap( -1 )
@@ -166,7 +166,7 @@ class SimpleBookPanel ( wx.Panel ):
         gbSizer1.Fit( self.m_panel_page1 )
         self.m_simplebook.AddPage( self.m_panel_page1, _(u"a page"), False )
         self.m_panel_page2 = wx.Panel( self.m_simplebook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
-        gbSizer2 = wx.GridBagSizer( 0, 0 )
+        gbSizer2 = wx.GridBagSizer( 2, 2 )
         gbSizer2.SetFlexibleDirection( wx.BOTH )
         gbSizer2.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
 
@@ -179,10 +179,11 @@ class SimpleBookPanel ( wx.Panel ):
 
         self.m_slider_value = wx.Slider( self.m_panel_page2, wx.ID_ANY, 10, 0, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.SL_HORIZONTAL|wx.SL_SELRANGE )
         self.m_slider_value.SetFont( wx.Font( 8, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
-        self.m_slider_value.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
-        self.m_slider_value.SetBackgroundColour( wx.Colour( 0, 255, 64 ) )
+        self.m_slider_value.SetForegroundColour( wx.Colour( 0, 255, 0 ) )
+        self.m_slider_value.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+        self.m_slider_value.SetMinSize( wx.Size( -1,10 ) )
 
-        gbSizer2.Add( self.m_slider_value, wx.GBPosition( 1, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        gbSizer2.Add( self.m_slider_value, wx.GBPosition( 1, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
         self.m_staticText9 = wx.StaticText( self.m_panel_page2, wx.ID_ANY, _(u"権利初期値"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText9.Wrap( -1 )
@@ -191,10 +192,13 @@ class SimpleBookPanel ( wx.Panel ):
 
         gbSizer2.Add( self.m_staticText9, wx.GBPosition( 2, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
-        self.m_slider_right = wx.Slider( self.m_panel_page2, wx.ID_ANY, 50, 0, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.SL_HORIZONTAL )
-        self.m_slider_right.SetBackgroundColour( wx.Colour( 255, 0, 0 ) )
+        self.m_slider_right = wx.Slider( self.m_panel_page2, wx.ID_ANY, 50, 0, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.SL_HORIZONTAL|wx.SL_SELRANGE )
+        self.m_slider_right.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_slider_right.SetForegroundColour( wx.Colour( 255, 0, 0 ) )
+        self.m_slider_right.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+        self.m_slider_right.SetMinSize( wx.Size( -1,10 ) )
 
-        gbSizer2.Add( self.m_slider_right, wx.GBPosition( 2, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        gbSizer2.Add( self.m_slider_right, wx.GBPosition( 2, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
         self.m_staticText10 = wx.StaticText( self.m_panel_page2, wx.ID_ANY, _(u"２ページ目"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText10.Wrap( -1 )
@@ -209,6 +213,18 @@ class SimpleBookPanel ( wx.Panel ):
         self.m_staticText_name.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
 
         gbSizer2.Add( self.m_staticText_name, wx.GBPosition( 0, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_textCtrl_value = wx.TextCtrl( self.m_panel_page2, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 25,12 ), wx.TE_PROCESS_ENTER )
+        self.m_textCtrl_value.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_textCtrl_value.SetMinSize( wx.Size( 25,12 ) )
+
+        gbSizer2.Add( self.m_textCtrl_value, wx.GBPosition( 1, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_textCtrl_right = wx.TextCtrl( self.m_panel_page2, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 25,12 ), wx.TE_PROCESS_ENTER )
+        self.m_textCtrl_right.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_textCtrl_right.SetMinSize( wx.Size( 25,12 ) )
+
+        gbSizer2.Add( self.m_textCtrl_right, wx.GBPosition( 2, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
 
         self.m_panel_page2.SetSizer( gbSizer2 )
@@ -226,6 +242,8 @@ class SimpleBookPanel ( wx.Panel ):
         self.Bind( wx.EVT_LEFT_DCLICK, self.onAnimalClick )
         self.m_slider_value.Bind( wx.EVT_SLIDER, self.onValueChanged )
         self.m_slider_right.Bind( wx.EVT_SLIDER, self.onRightChanged )
+        self.m_textCtrl_value.Bind( wx.EVT_TEXT_ENTER, self.onValueText )
+        self.m_textCtrl_right.Bind( wx.EVT_TEXT_ENTER, self.onRightText )
 
     def __del__( self ):
         pass
@@ -239,6 +257,12 @@ class SimpleBookPanel ( wx.Panel ):
         event.Skip()
 
     def onRightChanged( self, event ):
+        event.Skip()
+
+    def onValueText( self, event ):
+        event.Skip()
+
+    def onRightText( self, event ):
         event.Skip()
 
 
