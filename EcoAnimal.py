@@ -1,6 +1,6 @@
 import wx
 from Gui import Gui
-from AnimalBook import AnimalBookView, AnimalBookModel
+from AnimalBook import  AnimalBookModel
 
 class EcoAnimal():
     def __init__(self):
