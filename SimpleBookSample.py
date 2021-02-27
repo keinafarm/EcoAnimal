@@ -94,10 +94,10 @@ class MainFrame ( wx.Frame ):
 
 
 ###########################################################################
-## Class SimpleBookPanel
+## Class BaseicAnimalBook
 ###########################################################################
 
-class SimpleBookPanel ( wx.Panel ):
+class BaseicAnimalBook ( wx.Panel ):
 
     def __init__( self, parent, id = wx.ID_ANY, pos = wx.DefaultPosition, size = wx.Size( 260,90 ), style = wx.TAB_TRAVERSAL, name = wx.EmptyString ):
         wx.Panel.__init__ ( self, parent, id = id, pos = pos, size = size, style = style, name = name )
@@ -121,7 +121,7 @@ class SimpleBookPanel ( wx.Panel ):
 
         gbSizer1.Add( self.m_staticText4, wx.GBPosition( 0, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
-        self.m_name = wx.TextCtrl( self.m_panel_page1, wx.ID_ANY, _(u"アニマル名"), wx.DefaultPosition, wx.Size( -1,15 ), 0 )
+        self.m_name = wx.TextCtrl( self.m_panel_page1, wx.ID_ANY, _(u"アニマル名"), wx.DefaultPosition, wx.Size( -1,15 ), wx.TE_PROCESS_ENTER )
         self.m_name.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
 
         gbSizer1.Add( self.m_name, wx.GBPosition( 0, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
@@ -240,6 +240,8 @@ class SimpleBookPanel ( wx.Panel ):
 
         # Connect Events
         self.Bind( wx.EVT_LEFT_DCLICK, self.onAnimalClick )
+        self.m_name.Bind( wx.EVT_TEXT, self.onAnimalNameChange )
+        self.m_name.Bind( wx.EVT_TEXT_ENTER, self.onAnimalNameChange )
         self.m_slider_value.Bind( wx.EVT_SLIDER, self.onValueChanged )
         self.m_slider_right.Bind( wx.EVT_SLIDER, self.onRightChanged )
         self.m_textCtrl_value.Bind( wx.EVT_TEXT_ENTER, self.onValueText )
@@ -252,6 +254,10 @@ class SimpleBookPanel ( wx.Panel ):
     # Virtual event handlers, overide them in your derived class
     def onAnimalClick( self, event ):
         event.Skip()
+
+    def onAnimalNameChange( self, event ):
+        event.Skip()
+
 
     def onValueChanged( self, event ):
         event.Skip()

@@ -1,5 +1,5 @@
 import wx
-from SimpleBookSample import MainFrame, SimpleBookPanel
+from SimpleBookSample import MainFrame
 from AnimalBook import AnimalBook
 
 class Gui(MainFrame):
@@ -14,18 +14,17 @@ class Gui(MainFrame):
             animal = AnimalBook(self.m_scrolledWindow, animal_name, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,0)
             self.bSizer_animal_list.Add(animal, 1, wx.EXPAND | wx.ALL, 5)
             self.animal_list.append(animal)
+            animal.set_root_window(self)
 
         self.m_scrolledWindow.SetSizer(self.bSizer_animal_list)
 
     def onPaint( self, event ):
-        dc = wx.PaintDC(self.m_panel)
-        dc.SetPen(wx.Pen('blue'))
         for i in range(5):
             for j in range(20):
                 x = j*45+20
                 y = i*80+20
                 animal = self.animal_list[i*20+j]
-                animal.paint( x, y, dc )
+                animal.paint( self.m_panel, x, y )
 
     def onExit( self, event ):
         self.Destroy()

@@ -369,7 +369,7 @@
             <property name="id">wxID_ANY</property>
             <property name="maximum_size">271,103</property>
             <property name="minimum_size">260,90</property>
-            <property name="name">SimpleBookPanel</property>
+            <property name="name">BaseicAnimalBook</property>
             <property name="pos"></property>
             <property name="size">260,90</property>
             <property name="subclass">; ; forward_declare</property>
@@ -620,7 +620,7 @@
                                             <property name="resize">Resizable</property>
                                             <property name="show">1</property>
                                             <property name="size">-1,15</property>
-                                            <property name="style"></property>
+                                            <property name="style">wxTE_PROCESS_ENTER</property>
                                             <property name="subclass">; ; forward_declare</property>
                                             <property name="toolbar_pane">0</property>
                                             <property name="tooltip"></property>
@@ -632,6 +632,8 @@
                                             <property name="window_extra_style"></property>
                                             <property name="window_name"></property>
                                             <property name="window_style"></property>
+                                            <event name="OnText">onAnimalNameChange</event>
+                                            <event name="OnTextEnter">onAnimalNameChange</event>
                                         </object>
                                     </object>
                                     <object class="gbsizeritem" expanded="0">
