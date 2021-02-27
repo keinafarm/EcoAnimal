@@ -1,6 +1,6 @@
 import wx
 from SimpleBookSample import BaseicAnimalBook
-
+import random
 
 class AnimalBookModel:
     def __init__(self, name):
@@ -9,6 +9,20 @@ class AnimalBookModel:
         self.initial_right = 50
         self.create_value = 30
         self.right = self.initial_right
+
+    def get_value_color(self):
+        if self.value > 255:
+            green = 255
+        else:
+            green = self.value
+        return 0, green, 0
+
+    def get_right_color(self):
+        if self.right > 255:
+            red = 255
+        else:
+            red = self.value
+        return red, 0, 0
 
 
 class AnimalBookView(BaseicAnimalBook):
@@ -45,13 +59,14 @@ class AnimalBookView(BaseicAnimalBook):
             self.m_pos_x = x
         if y is not None:
             self.m_pos_y = y
-
-        dc.SetBrush(wx.Brush(wx.Colour(255, 0, 0)))
+        red,green,blue = self.model.get_right_color()
+        dc.SetBrush(wx.Brush(wx.Colour(red,green,blue)))
         dc.DrawCircle(self.m_pos_x, self.m_pos_y, 10)
         pos1 = (self.m_pos_x, self.m_pos_y + 10)
         pos2 = (self.m_pos_x - 10, self.m_pos_y + 40)
         pos3 = (self.m_pos_x + 10, self.m_pos_y + 40)
-        dc.SetBrush(wx.Brush(wx.Colour(0, 255, 0)))
+        red,green,blue = self.model.get_value_color()
+        dc.SetBrush(wx.Brush(wx.Colour(red,green,blue)))
         dc.DrawPolygonList([[pos1, pos2, pos3]])
         dc.SetBrush(wx.Brush(wx.Colour(0, 0, 0)))
         dc.SetFont(wx.Font(wx.FontInfo(8)))
