@@ -1,14 +1,15 @@
 import wx
 from Gui import Gui
-from AnimalBook import  AnimalBookModel
+from AnimalBook import AnimalBookModel
 from Market import Market
 
-class EcoAnimal():
+
+class EcoAnimal:
     def __init__(self):
         self.animal_list = []
-        for i in range(1,101):
+        for i in range(1, 101):
             animal_name = "Animal{0}".format(str(i))
-            animal = AnimalBookModel( animal_name )
+            animal = AnimalBookModel(animal_name)
             self.animal_list.append(animal)
 
         self.view = Gui(None, self)
@@ -25,7 +26,9 @@ class EcoAnimal():
         return self.animal_list
 
     def trade(self):
-        market = Market(self.animal_list, self.view.logout )
+        market = Market(self.animal_list, self.view.logout)
+        market.trade()
+
 
 if __name__ == "__main__":
     app = wx.App()

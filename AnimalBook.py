@@ -1,6 +1,6 @@
 import wx
 from SimpleBookSample import BaseicAnimalBook
-import random
+
 
 class AnimalBookModel:
     def __init__(self, name):
@@ -9,11 +9,11 @@ class AnimalBookModel:
         self.initial_right = 50
         self.create_value = 30
         self.right = self.initial_right
-        self.consumption = self.create_value-5                # 消費量
-        self.purchase_amount = self.consumption               # 購入量
+        self.consumption = self.create_value - 5  # 消費量
+        self.purchase_amount = self.consumption  # 購入量
 
     def get_name(self):
-        return  self.name
+        return self.name
 
     def set_name(self, name):
         self.name = name
@@ -40,10 +40,10 @@ class AnimalBookModel:
         if self.purchase_amount < self.right:
             return self.purchase_amount
         else:
-            return None                             # 権利が足りなくて買えない
+            return None  # 権利が足りなくて買えない
 
     def request(self, price):
-        if self.value-self.consumption > price:
+        if self.value - self.consumption > price:
             return True
         else:
             return False
@@ -52,11 +52,9 @@ class AnimalBookModel:
         self.value -= price
         self.right += price
 
-
     def settlement(self, price):
         self.value += price
         self.right -= price
-
 
 
 class AnimalBookView(BaseicAnimalBook):
@@ -94,15 +92,15 @@ class AnimalBookView(BaseicAnimalBook):
             self.m_pos_x = x
         if y is not None:
             self.m_pos_y = y
-        red,green,blue = self.model.get_right_color()
+        red, green, blue = self.model.get_right_color()
         print("red={0}".format(red))
-        dc.SetBrush(wx.Brush(wx.Colour(red,green,blue)))
+        dc.SetBrush(wx.Brush(wx.Colour(red, green, blue)))
         dc.DrawCircle(self.m_pos_x, self.m_pos_y, 10)
         pos1 = (self.m_pos_x, self.m_pos_y + 10)
         pos2 = (self.m_pos_x - 10, self.m_pos_y + 40)
         pos3 = (self.m_pos_x + 10, self.m_pos_y + 40)
-        red,green,blue = self.model.get_value_color()
-        dc.SetBrush(wx.Brush(wx.Colour(red,green,blue)))
+        red, green, blue = self.model.get_value_color()
+        dc.SetBrush(wx.Brush(wx.Colour(red, green, blue)))
         dc.DrawPolygonList([[pos1, pos2, pos3]])
         dc.SetBrush(wx.Brush(wx.Colour(0, 0, 0)))
         dc.SetFont(wx.Font(wx.FontInfo(8)))
@@ -137,6 +135,6 @@ class AnimalBookView(BaseicAnimalBook):
         self.set_control()
 
     def onAnimalNameChange(self, event):
-        self.model.set_name( self.m_name.GetValue() )
+        self.model.set_name(self.m_name.GetValue())
         if self.root_window is not None:
             self.root_window.Refresh()
