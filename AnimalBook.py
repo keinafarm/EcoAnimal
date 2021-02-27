@@ -1,23 +1,31 @@
 import wx
 from SimpleBookSample import BaseicAnimalBook
 
+class AnimalBookModel:
+    def __init__(self, name):
+        self.name = name
+        self.value = 0
+        self.initial_right = 50
+        self.create_value = 30
+        self.right = self.initial_right
 
-class AnimalBook(BaseicAnimalBook):
-    def __init__(self, parent, animal_name, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
+class AnimalBookView(BaseicAnimalBook):
+    def __init__(self, parent, model, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.TAB_TRAVERSAL, name=wx.PanelNameStr):
         super().__init__(parent, id, pos, size, style, name)
+        self.model = model
+
         self.m_class_name.SetLabel(self.__class__.__name__)
-        self.m_staticText_name = animal_name
-        self.m_value = 0
-        self.m_initial_right = 50
-        self.m_create_value = 30
-        self.m_right = self.m_initial_right
+        self.m_staticText_name = self.model.name
+        self.m_value = self.model.value
+        self.m_initial_right = self.model.initial_right
+        self.m_create_value = self.model.create_value
+        self.m_right = self.model.right
         self.m_pos_x = None
         self.m_pos_y = None
-        self.m_dc = None
         self.set_control()
         self.root_window = None                 # この設定はself.m_name.SetValueより前
-        self.m_name.SetValue(animal_name)
+        self.m_name.SetValue(self.model.name)
 
     def set_root_window(self, root_window):
         self.root_window = root_window

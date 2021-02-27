@@ -1,17 +1,16 @@
 import wx
 from SimpleBookSample import MainFrame
-from AnimalBook import AnimalBook
+from AnimalBook import AnimalBookView
 
 class Gui(MainFrame):
-    def __init__(self, parent):
+    def __init__(self, parent, animal_model_list):
         super().__init__(parent)
 
         self.bSizer_animal_list = wx.BoxSizer(wx.VERTICAL)
 
         self.animal_list = []
-        for i in range(1,101):
-            animal_name = "Animal{0}".format(str(i))
-            animal = AnimalBook(self.m_scrolledWindow, animal_name, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,0)
+        for i in range(100):
+            animal = AnimalBookView(self.m_scrolledWindow, animal_model_list[i], wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize,0)
             self.bSizer_animal_list.Add(animal, 1, wx.EXPAND | wx.ALL, 5)
             self.animal_list.append(animal)
             animal.set_root_window(self)
