@@ -9,29 +9,30 @@ class AnimalBookModel:
         self.initial_right = 50
         self.create_value = 30
         self.right = self.initial_right
-        self.view = None
 
-    def set_view(self, view):
-        self.view = view
+    def get_name(self):
+        return  self.name
+
+    def set_name(self, name):
+        self.name = name
 
     def get_value_color(self):
         if self.value > 255:
             green = 255
         else:
             green = self.value
-        return 0, green, 0
+        return 0, green, 128
 
     def get_right_color(self):
         if self.right > 255:
             red = 255
         else:
             red = self.right
-        return red, 0, 0
+        return red, 0, 128
 
     def reset(self):
         self.value = 0
         self.right = self.initial_right
-        self.view.set_control()
 
 
 class AnimalBookView(BaseicAnimalBook):
@@ -112,5 +113,6 @@ class AnimalBookView(BaseicAnimalBook):
         self.set_control()
 
     def onAnimalNameChange(self, event):
+        self.model.set_name( self.m_name.GetValue() )
         if self.root_window is not None:
             self.root_window.Refresh()
