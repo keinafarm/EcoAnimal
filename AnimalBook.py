@@ -50,7 +50,6 @@ class AnimalBook(BaseicAnimalBook):
         dc.DrawPolygonList([[pos1, pos2, pos3]])
         dc.SetBrush(wx.Brush(wx.Colour(0, 0, 0)))
         dc.SetFont(wx.Font(wx.FontInfo(8)))
-        print("paint:{0}".format(self.m_name.GetValue()))
 
         dc.DrawText(self.m_name.GetValue(), self.m_pos_x - 20, self.m_pos_y + 45)
 
@@ -82,6 +81,5 @@ class AnimalBook(BaseicAnimalBook):
         self.set_control()
 
     def onAnimalNameChange(self, event):
-        print("onAnimalNameChange")
         if self.root_window is not None:
             self.root_window.Refresh()
