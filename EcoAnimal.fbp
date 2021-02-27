@@ -118,6 +118,43 @@
                         <event name="OnMenuSelection">onExit</event>
                     </object>
                 </object>
+                <object class="wxMenu" expanded="1">
+                    <property name="label">Run</property>
+                    <property name="name">m_menu_run</property>
+                    <property name="permission">protected</property>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap"></property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_ANY</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">実行</property>
+                        <property name="name">m_menuItem5</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut"></property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">onRun</event>
+                    </object>
+                    <object class="separator" expanded="1">
+                        <property name="name">m_separator1</property>
+                        <property name="permission">none</property>
+                    </object>
+                    <object class="wxMenuItem" expanded="1">
+                        <property name="bitmap"></property>
+                        <property name="checked">0</property>
+                        <property name="enabled">1</property>
+                        <property name="help"></property>
+                        <property name="id">wxID_ANY</property>
+                        <property name="kind">wxITEM_NORMAL</property>
+                        <property name="label">初期値に戻す</property>
+                        <property name="name">m_menuItem4</property>
+                        <property name="permission">none</property>
+                        <property name="shortcut"></property>
+                        <property name="unchecked_bitmap"></property>
+                        <event name="OnMenuSelection">onReset</event>
+                    </object>
+                </object>
                 <object class="wxMenu" expanded="0">
                     <property name="label">Book List</property>
                     <property name="name">m_menu_BookList</property>

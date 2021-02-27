@@ -3,9 +3,11 @@ from SimpleBookSample import MainFrame
 from AnimalBook import AnimalBookView
 
 class Gui(MainFrame):
-    def __init__(self, parent, animal_model_list):
+    def __init__(self, parent, model):
         super().__init__(parent)
 
+        self.model = model
+        animal_model_list = self.model.get_animal_list()
         self.bSizer_animal_list = wx.BoxSizer(wx.VERTICAL)
 
         self.animal_list = []
@@ -50,6 +52,12 @@ class Gui(MainFrame):
                 book.ChangeSelection(current_page-1)
 
 
+    def onRun( self, event ):
+        event.Skip()
+
+    def onReset( self, event ):
+        self.model.reset()
+        self.Refresh()
 
 if __name__ == "__main__":
     app = wx.App()

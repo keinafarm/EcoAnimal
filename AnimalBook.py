@@ -9,6 +9,10 @@ class AnimalBookModel:
         self.initial_right = 50
         self.create_value = 30
         self.right = self.initial_right
+        self.view = None
+
+    def set_view(self, view):
+        self.view = view
 
     def get_value_color(self):
         if self.value > 255:
@@ -21,8 +25,13 @@ class AnimalBookModel:
         if self.right > 255:
             red = 255
         else:
-            red = self.value
+            red = self.right
         return red, 0, 0
+
+    def reset(self):
+        self.value = 0
+        self.right = self.initial_right
+        self.view.set_control()
 
 
 class AnimalBookView(BaseicAnimalBook):
@@ -30,6 +39,7 @@ class AnimalBookView(BaseicAnimalBook):
                  style=wx.TAB_TRAVERSAL, name=wx.PanelNameStr):
         super().__init__(parent, id, pos, size, style, name)
         self.model = model
+        self.model.set_view(self)
 
         self.m_class_name.SetLabel(self.__class__.__name__)
         self.m_staticText_name = self.model.name
@@ -60,6 +70,7 @@ class AnimalBookView(BaseicAnimalBook):
         if y is not None:
             self.m_pos_y = y
         red,green,blue = self.model.get_right_color()
+        print("red={0}".format(red))
         dc.SetBrush(wx.Brush(wx.Colour(red,green,blue)))
         dc.DrawCircle(self.m_pos_x, self.m_pos_y, 10)
         pos1 = (self.m_pos_x, self.m_pos_y + 10)

@@ -10,9 +10,18 @@ class EcoAnimal():
             animal = AnimalBookModel( animal_name )
             self.animal_list.append(animal)
 
-        self.view = Gui(None, self.animal_list)
+        self.view = Gui(None, self)
 
         self.view.Show()
+
+    def get_animal_list(self):
+        return self.animal_list
+
+    def reset(self):
+        for animal in self.animal_list:
+            animal.reset()
+
+        return self.animal_list
 
 if __name__ == "__main__":
     app = wx.App()
