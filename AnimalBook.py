@@ -1,6 +1,7 @@
 import wx
 from SimpleBookSample import BaseicAnimalBook
 
+
 class AnimalBookModel:
     def __init__(self, name):
         self.name = name
@@ -8,6 +9,7 @@ class AnimalBookModel:
         self.initial_right = 50
         self.create_value = 30
         self.right = self.initial_right
+
 
 class AnimalBookView(BaseicAnimalBook):
     def __init__(self, parent, model, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
@@ -17,28 +19,23 @@ class AnimalBookView(BaseicAnimalBook):
 
         self.m_class_name.SetLabel(self.__class__.__name__)
         self.m_staticText_name = self.model.name
-        self.m_value = self.model.value
-        self.m_initial_right = self.model.initial_right
-        self.m_create_value = self.model.create_value
-        self.m_right = self.model.right
         self.m_pos_x = None
         self.m_pos_y = None
         self.set_control()
-        self.root_window = None                 # この設定はself.m_name.SetValueより前
+        self.root_window = None  # この設定はself.m_name.SetValueより前
         self.m_name.SetValue(self.model.name)
 
     def set_root_window(self, root_window):
         self.root_window = root_window
 
-
     def set_control(self):
-        self.m_gauge_value.SetValue(self.m_value)
-        self.m_slider_value.SetValue(self.m_create_value)
-        self.m_textCtrl_value.SetValue(str(self.m_create_value))
+        self.m_gauge_value.SetValue(self.model.value)
+        self.m_slider_value.SetValue(self.model.create_value)
+        self.m_textCtrl_value.SetValue(str(self.model.create_value))
 
-        self.m_gauge_right.SetValue(self.m_right)
-        self.m_slider_right.SetValue(self.m_initial_right)
-        self.m_textCtrl_right.SetValue(str(self.m_initial_right))
+        self.m_gauge_right.SetValue(self.model.right)
+        self.m_slider_right.SetValue(self.model.initial_right)
+        self.m_textCtrl_right.SetValue(str(self.model.initial_right))
 
     def paint(self, panel, x=None, y=None):
         dc = wx.PaintDC(panel)
@@ -62,11 +59,11 @@ class AnimalBookView(BaseicAnimalBook):
         dc.DrawText(self.m_name.GetValue(), self.m_pos_x - 20, self.m_pos_y + 45)
 
     def onValueChanged(self, event):
-        self.m_create_value = self.m_slider_value.GetValue()
+        self.model.create_value = self.m_slider_value.GetValue()
         self.set_control()
 
     def onRightChanged(self, event):
-        self.m_initial_right = self.m_slider_right.GetValue()
+        self.model.initial_right = self.m_slider_right.GetValue()
         self.set_control()
 
     def onValueText(self, event):
@@ -75,7 +72,7 @@ class AnimalBookView(BaseicAnimalBook):
             value = 100
         elif value < 0:
             value = 0
-        self.m_create_value = value
+        self.model.create_value = value
         self.set_control()
 
     def onRightText(self, event):
@@ -85,7 +82,7 @@ class AnimalBookView(BaseicAnimalBook):
         elif value < 0:
             value = 0
 
-        self.m_initial_right = value
+        self.model.initial_right = value
         self.set_control()
 
     def onAnimalNameChange(self, event):
