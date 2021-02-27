@@ -9,6 +9,8 @@ class AnimalBookModel:
         self.initial_right = 50
         self.create_value = 30
         self.right = self.initial_right
+        self.consumption = self.create_value-5                # 消費量
+        self.purchase_amount = self.consumption               # 購入量
 
     def get_name(self):
         return  self.name
@@ -33,6 +35,28 @@ class AnimalBookModel:
     def reset(self):
         self.value = 0
         self.right = self.initial_right
+
+    def buy(self):
+        if self.purchase_amount < self.right:
+            return self.purchase_amount
+        else:
+            return None                             # 権利が足りなくて買えない
+
+    def request(self, price):
+        if self.value-self.consumption > price:
+            return True
+        else:
+            return False
+
+    def sell(self, price):
+        self.value -= price
+        self.right += price
+
+
+    def settlement(self, price):
+        self.value += price
+        self.right -= price
+
 
 
 class AnimalBookView(BaseicAnimalBook):
