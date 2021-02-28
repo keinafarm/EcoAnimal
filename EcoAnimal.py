@@ -1,6 +1,6 @@
 import wx
 from Gui import Gui
-from AnimalBook import AnimalBookModel
+from Animal import AnimalModel
 from Market import Market
 
 
@@ -9,7 +9,7 @@ class EcoAnimal:
         self.animal_list = []
         for i in range(1, 101):
             animal_name = "Animal{0}".format(str(i))
-            animal = AnimalBookModel(animal_name)
+            animal = AnimalModel(animal_name)
             self.animal_list.append(animal)
 
         self.view = Gui(None, self)

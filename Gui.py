@@ -1,6 +1,6 @@
 import wx
 from SimpleBookSample import MainFrame, DialogParameterSetting
-from AnimalBook import AnimalBookView
+from Animal import AnimalView, AnimalParameterSettingDialog
 
 
 class Gui(MainFrame):
@@ -13,8 +13,8 @@ class Gui(MainFrame):
 
         self.animal_list = []
         for i in range(100):
-            animal = AnimalBookView(self.m_scrolledWindow, animal_model_list[i], wx.ID_ANY, wx.DefaultPosition,
-                                    wx.DefaultSize, 0)
+            animal = AnimalView(self.m_scrolledWindow, animal_model_list[i], wx.ID_ANY, wx.DefaultPosition,
+                                wx.DefaultSize, 0)
             self.bSizer_animal_list.Add(animal, 1, wx.EXPAND | wx.ALL, 5)
             self.animal_list.append(animal)
             animal.set_root_window(self)
@@ -81,12 +81,11 @@ class Gui(MainFrame):
         self.model.trade()
 
     def onParameterSetting( self, event ):
-        dialog = DialogParameterSetting(self)
+        dialog = AnimalParameterSettingDialog(self)
         result = dialog.ShowModal()
-        if result == wx.ID_OK:
-            print("result=OK")
-        elif result == wx.ID_CANCEL:
-            print("result=CANCEL")
-        else:
-            print("result=ANY")
+        if result != wx.ID_OK:
+            return
+
+        for animal in self.animal_list:
+            animal.set_parameter(dialog)
 
