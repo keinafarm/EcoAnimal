@@ -62,7 +62,6 @@ class AnimalBookView(BaseicAnimalBook):
                  style=wx.TAB_TRAVERSAL, name=wx.PanelNameStr):
         super().__init__(parent, id, pos, size, style, name)
         self.model = model
-        self.model.set_view(self)
 
         self.m_class_name.SetLabel(self.__class__.__name__)
         self.m_staticText_name = self.model.name
