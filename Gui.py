@@ -56,9 +56,14 @@ class Gui(MainFrame):
             if current_page > 0:
                 book.ChangeSelection(current_page - 1)
 
-    def onRun(self, event):
+    def onTrade(self, event):
         self.model.trade()
 
     def onReset(self, event):
         self.model.reset()
+        self.Refresh()
+
+    def update_animals(self):
+        for animal in self.animal_list:
+            animal.set_control()
         self.Refresh()

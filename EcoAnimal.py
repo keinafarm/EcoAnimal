@@ -28,7 +28,7 @@ class EcoAnimal:
     def trade(self):
         market = Market(self.animal_list, self.view.logout)
         market.trade()
-
+        self.view.update_animals()
 
 if __name__ == "__main__":
     app = wx.App()

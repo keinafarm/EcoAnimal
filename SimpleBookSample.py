@@ -33,7 +33,7 @@ class MainFrame ( wx.Frame ):
         self.m_menubar.Append( self.m_menu_file, _(u"File") )
 
         self.m_menu_run = wx.Menu()
-        self.m_menuItem5 = wx.MenuItem( self.m_menu_run, wx.ID_ANY, _(u"実行"), wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menuItem5 = wx.MenuItem( self.m_menu_run, wx.ID_ANY, _(u"取引"), wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu_run.Append( self.m_menuItem5 )
 
         self.m_menu_run.AppendSeparator()
@@ -82,7 +82,7 @@ class MainFrame ( wx.Frame ):
 
         # Connect Events
         self.Bind( wx.EVT_MENU, self.onExit, id = self.m_menuItem_exit.GetId() )
-        self.Bind( wx.EVT_MENU, self.onRun, id = self.m_menuItem5.GetId() )
+        self.Bind( wx.EVT_MENU, self.onTrade, id = self.m_menuItem5.GetId() )
         self.Bind( wx.EVT_MENU, self.onReset, id = self.m_menuItem4.GetId() )
         self.Bind( wx.EVT_MENU, self.onNext, id = self.m_menuItem_next.GetId() )
         self.Bind( wx.EVT_MENU, self.onPrev, id = self.m_menuItem_prev.GetId() )
@@ -96,7 +96,7 @@ class MainFrame ( wx.Frame ):
     def onExit( self, event ):
         event.Skip()
 
-    def onRun( self, event ):
+    def onTrade( self, event ):
         event.Skip()
 
     def onReset( self, event ):

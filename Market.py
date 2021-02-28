@@ -22,3 +22,6 @@ class Market:
             animal_buyer.settlement(price)
             self.log(
                 "【{0}】は【{1}】から{2}で購入しました".format(animal_buyer.get_name(), seller_list[select].get_name(), price))
+
+        for animal in self.animal_list:
+            animal.production()

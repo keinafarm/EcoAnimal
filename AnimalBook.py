@@ -56,6 +56,10 @@ class AnimalBookModel:
         self.value += price
         self.right -= price
 
+    def production(self):
+        self.value += self.create_value
+
+
 
 class AnimalBookView(BaseicAnimalBook):
     def __init__(self, parent, model, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
