@@ -25,3 +25,4 @@ class Market:
 
         for animal in self.animal_list:
             animal.production()
+            animal.consume()
