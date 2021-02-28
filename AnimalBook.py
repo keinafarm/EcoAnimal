@@ -79,11 +79,11 @@ class AnimalBookView(BaseicAnimalBook):
         self.root_window = root_window
 
     def set_control(self):
-        self.m_gauge_value.SetValue(self.model.value)
+        self.m_gauge_value.SetValue(self.model.value/10)
         self.m_slider_value.SetValue(self.model.create_value)
         self.m_textCtrl_value.SetValue(str(self.model.create_value))
 
-        self.m_gauge_right.SetValue(self.model.right)
+        self.m_gauge_right.SetValue(self.model.right/5)
         self.m_slider_right.SetValue(self.model.initial_right)
         self.m_textCtrl_right.SetValue(str(self.model.initial_right))
 
