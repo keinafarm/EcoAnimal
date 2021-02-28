@@ -36,6 +36,12 @@ class MainFrame ( wx.Frame ):
         self.m_menuItem5 = wx.MenuItem( self.m_menu_run, wx.ID_ANY, _(u"取引"), wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu_run.Append( self.m_menuItem5 )
 
+        self.m_menuItem_trade_run = wx.MenuItem( self.m_menu_run, wx.ID_ANY, _(u"連続取引開始"), wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu_run.Append( self.m_menuItem_trade_run )
+
+        self.m_menuItem_trade_stop = wx.MenuItem( self.m_menu_run, wx.ID_ANY, _(u"連続取引停止"), wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu_run.Append( self.m_menuItem_trade_stop )
+
         self.m_menu_run.AppendSeparator()
 
         self.m_menuItem4 = wx.MenuItem( self.m_menu_run, wx.ID_ANY, _(u"初期値に戻す"), wx.EmptyString, wx.ITEM_NORMAL )
@@ -83,6 +89,8 @@ class MainFrame ( wx.Frame ):
         # Connect Events
         self.Bind( wx.EVT_MENU, self.onExit, id = self.m_menuItem_exit.GetId() )
         self.Bind( wx.EVT_MENU, self.onTrade, id = self.m_menuItem5.GetId() )
+        self.Bind( wx.EVT_MENU, self.onTradeRun, id = self.m_menuItem_trade_run.GetId() )
+        self.Bind( wx.EVT_MENU, self.onTradeStop, id = self.m_menuItem_trade_stop.GetId() )
         self.Bind( wx.EVT_MENU, self.onReset, id = self.m_menuItem4.GetId() )
         self.Bind( wx.EVT_MENU, self.onNext, id = self.m_menuItem_next.GetId() )
         self.Bind( wx.EVT_MENU, self.onPrev, id = self.m_menuItem_prev.GetId() )
@@ -97,6 +105,12 @@ class MainFrame ( wx.Frame ):
         event.Skip()
 
     def onTrade( self, event ):
+        event.Skip()
+
+    def onTradeRun( self, event ):
+        event.Skip()
+
+    def onTradeStop( self, event ):
         event.Skip()
 
     def onReset( self, event ):

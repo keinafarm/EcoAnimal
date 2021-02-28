@@ -21,6 +21,9 @@ class Gui(MainFrame):
 
         self.m_scrolledWindow.SetSizer(self.bSizer_animal_list)
 
+        self.timer = wx.Timer(self)
+        self.Bind(wx.EVT_TIMER, self.onTimer)
+
     def logout(self, text):
         self.m_textCtrl.AppendText(text + '\n')
 
@@ -67,3 +70,12 @@ class Gui(MainFrame):
         for animal in self.animal_list:
             animal.set_control()
         self.Refresh()
+
+    def onTradeRun(self, event):
+        self.timer.Start(500)
+
+    def onTradeStop(self, event):
+        self.timer.Stop()
+
+    def onTimer(self, event):
+        self.model.trade()
