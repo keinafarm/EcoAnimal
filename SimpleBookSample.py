@@ -56,6 +56,14 @@ class MainFrame ( wx.Frame ):
         self.m_menuItem_prev = wx.MenuItem( self.m_menu_BookList, wx.ID_ANY, _(u"前のページ"), wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu_BookList.Append( self.m_menuItem_prev )
 
+        self.m_menu_BookList.AppendSeparator()
+
+        self.m_menuItem8 = wx.MenuItem( self.m_menu_BookList, wx.ID_ANY, _(u"生産量設定"), wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu_BookList.Append( self.m_menuItem8 )
+
+        self.m_menuItem9 = wx.MenuItem( self.m_menu_BookList, wx.ID_ANY, _(u"権利初期値設定"), wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu_BookList.Append( self.m_menuItem9 )
+
         self.m_menubar.Append( self.m_menu_BookList, _(u"Book List") )
 
         self.SetMenuBar( self.m_menubar )
@@ -264,6 +272,72 @@ class BaseicAnimalBook ( wx.Panel ):
         self.m_panel_page2.Layout()
         gbSizer2.Fit( self.m_panel_page2 )
         self.m_simplebook.AddPage( self.m_panel_page2, _(u"a page"), False )
+        self.m_panel_page3 = wx.Panel( self.m_simplebook, wx.ID_ANY, wx.DefaultPosition, wx.DefaultSize, wx.TAB_TRAVERSAL )
+        gbSizer21 = wx.GridBagSizer( 2, 2 )
+        gbSizer21.SetFlexibleDirection( wx.BOTH )
+        gbSizer21.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
+
+        self.m_staticText81 = wx.StaticText( self.m_panel_page3, wx.ID_ANY, _(u"購入量"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText81.Wrap( -1 )
+
+        self.m_staticText81.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+
+        gbSizer21.Add( self.m_staticText81, wx.GBPosition( 1, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_slider_purchase_amount = wx.Slider( self.m_panel_page3, wx.ID_ANY, 10, 0, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.SL_HORIZONTAL|wx.SL_SELRANGE )
+        self.m_slider_purchase_amount.SetFont( wx.Font( 8, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_slider_purchase_amount.SetForegroundColour( wx.Colour( 0, 255, 0 ) )
+        self.m_slider_purchase_amount.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+        self.m_slider_purchase_amount.SetMinSize( wx.Size( -1,10 ) )
+
+        gbSizer21.Add( self.m_slider_purchase_amount, wx.GBPosition( 1, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_staticText91 = wx.StaticText( self.m_panel_page3, wx.ID_ANY, _(u"消費量"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText91.Wrap( -1 )
+
+        self.m_staticText91.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+
+        gbSizer21.Add( self.m_staticText91, wx.GBPosition( 2, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_slider_consumption = wx.Slider( self.m_panel_page3, wx.ID_ANY, 50, 0, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.SL_HORIZONTAL|wx.SL_SELRANGE )
+        self.m_slider_consumption.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_slider_consumption.SetForegroundColour( wx.Colour( 255, 0, 0 ) )
+        self.m_slider_consumption.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+        self.m_slider_consumption.SetMinSize( wx.Size( -1,10 ) )
+
+        gbSizer21.Add( self.m_slider_consumption, wx.GBPosition( 2, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_staticText101 = wx.StaticText( self.m_panel_page3, wx.ID_ANY, _(u"3ページ目"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText101.Wrap( -1 )
+
+        self.m_staticText101.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+
+        gbSizer21.Add( self.m_staticText101, wx.GBPosition( 0, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_staticText_name1 = wx.StaticText( self.m_panel_page3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText_name1.Wrap( -1 )
+
+        self.m_staticText_name1.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+
+        gbSizer21.Add( self.m_staticText_name1, wx.GBPosition( 0, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_textCtrl_purchase_amount = wx.TextCtrl( self.m_panel_page3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 25,12 ), wx.TE_PROCESS_ENTER )
+        self.m_textCtrl_purchase_amount.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_textCtrl_purchase_amount.SetMinSize( wx.Size( 25,12 ) )
+
+        gbSizer21.Add( self.m_textCtrl_purchase_amount, wx.GBPosition( 1, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_textCtrl_consumption = wx.TextCtrl( self.m_panel_page3, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 25,12 ), wx.TE_PROCESS_ENTER )
+        self.m_textCtrl_consumption.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_textCtrl_consumption.SetMinSize( wx.Size( 25,12 ) )
+
+        gbSizer21.Add( self.m_textCtrl_consumption, wx.GBPosition( 2, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+
+        self.m_panel_page3.SetSizer( gbSizer21 )
+        self.m_panel_page3.Layout()
+        gbSizer21.Fit( self.m_panel_page3 )
+        self.m_simplebook.AddPage( self.m_panel_page3, _(u"a page"), False )
 
         bSizer6.Add( self.m_simplebook, 1, wx.EXPAND |wx.ALL, 5 )
 
@@ -279,6 +353,10 @@ class BaseicAnimalBook ( wx.Panel ):
         self.m_slider_right.Bind( wx.EVT_SLIDER, self.onRightChanged )
         self.m_textCtrl_value.Bind( wx.EVT_TEXT_ENTER, self.onValueText )
         self.m_textCtrl_right.Bind( wx.EVT_TEXT_ENTER, self.onRightText )
+        self.m_slider_purchase_amount.Bind( wx.EVT_SLIDER, self.onPurchaseAmountChanged )
+        self.m_slider_consumption.Bind( wx.EVT_SLIDER, self.onConsumptionChanged )
+        self.m_textCtrl_purchase_amount.Bind( wx.EVT_TEXT_ENTER, self.onPurchaseAmountText )
+        self.m_textCtrl_consumption.Bind( wx.EVT_TEXT_ENTER, self.onConsumptionText )
 
     def __del__( self ):
         pass
@@ -302,6 +380,18 @@ class BaseicAnimalBook ( wx.Panel ):
         event.Skip()
 
     def onRightText( self, event ):
+        event.Skip()
+
+    def onPurchaseAmountChanged( self, event ):
+        event.Skip()
+
+    def onConsumptionChanged( self, event ):
+        event.Skip()
+
+    def onPurchaseAmountText( self, event ):
+        event.Skip()
+
+    def onConsumptionText( self, event ):
         event.Skip()
 
 

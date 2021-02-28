@@ -80,12 +80,21 @@ class AnimalBookView(BaseicAnimalBook):
 
     def set_control(self):
         self.m_gauge_value.SetValue(self.model.value/10)
+
         self.m_slider_value.SetValue(self.model.create_value)
         self.m_textCtrl_value.SetValue(str(self.model.create_value))
 
         self.m_gauge_right.SetValue(self.model.right/5)
+
         self.m_slider_right.SetValue(self.model.initial_right)
         self.m_textCtrl_right.SetValue(str(self.model.initial_right))
+
+        self.m_slider_purchase_amount.SetValue(self.model.purchase_amount)
+        self.m_textCtrl_purchase_amount.SetValue(str(self.model.purchase_amount))
+
+        self.m_slider_consumption.SetValue(self.model.consumption)
+        self.m_textCtrl_consumption.SetValue(str(self.model.consumption))
+
 
     def paint(self, panel, x=None, y=None):
         dc = wx.PaintDC(panel)
@@ -135,6 +144,34 @@ class AnimalBookView(BaseicAnimalBook):
             value = 0
 
         self.model.initial_right = value
+        self.set_control()
+
+    def onPurchaseAmountChanged( self, event ):
+        self.model.purchase_amount = self.m_slider_purchase_amount.GetValue()
+        self.set_control()
+
+    def onConsumptionChanged( self, event ):
+        self.model.consumption = self.m_slider_consumption.GetValue()
+        self.set_control()
+
+    def onPurchaseAmountText( self, event ):
+        value = int(self.m_slider_purchase_amount.GetValue())
+        if value > 100:
+            value = 100
+        elif value < 0:
+            value = 0
+
+        self.model.purchase_amount = value
+        self.set_control()
+
+    def onConsumptionText( self, event ):
+        value = int(self.m_textCtrl_consumption.GetValue())
+        if value > 100:
+            value = 100
+        elif value < 0:
+            value = 0
+
+        self.model.consumption = value
         self.set_control()
 
     def onAnimalNameChange(self, event):
