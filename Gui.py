@@ -1,5 +1,5 @@
 import wx
-from SimpleBookSample import MainFrame
+from SimpleBookSample import MainFrame, DialogParameterSetting
 from AnimalBook import AnimalBookView
 
 
@@ -79,3 +79,14 @@ class Gui(MainFrame):
 
     def onTimer(self, event):
         self.model.trade()
+
+    def onParameterSetting( self, event ):
+        dialog = DialogParameterSetting(self)
+        result = dialog.ShowModal()
+        if result == wx.ID_OK:
+            print("result=OK")
+        elif result == wx.ID_CANCEL:
+            print("result=CANCEL")
+        else:
+            print("result=ANY")
+

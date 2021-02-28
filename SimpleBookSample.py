@@ -44,9 +44,6 @@ class MainFrame ( wx.Frame ):
 
         self.m_menu_run.AppendSeparator()
 
-        self.m_menuItem4 = wx.MenuItem( self.m_menu_run, wx.ID_ANY, _(u"初期値に戻す"), wx.EmptyString, wx.ITEM_NORMAL )
-        self.m_menu_run.Append( self.m_menuItem4 )
-
         self.m_menubar.Append( self.m_menu_run, _(u"Run") )
 
         self.m_menu_BookList = wx.Menu()
@@ -58,11 +55,11 @@ class MainFrame ( wx.Frame ):
 
         self.m_menu_BookList.AppendSeparator()
 
-        self.m_menuItem8 = wx.MenuItem( self.m_menu_BookList, wx.ID_ANY, _(u"生産量設定"), wx.EmptyString, wx.ITEM_NORMAL )
-        self.m_menu_BookList.Append( self.m_menuItem8 )
+        self.m_menuItem_parameter_setting = wx.MenuItem( self.m_menu_BookList, wx.ID_ANY, _(u"一括設定"), wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu_BookList.Append( self.m_menuItem_parameter_setting )
 
-        self.m_menuItem9 = wx.MenuItem( self.m_menu_BookList, wx.ID_ANY, _(u"権利初期値設定"), wx.EmptyString, wx.ITEM_NORMAL )
-        self.m_menu_BookList.Append( self.m_menuItem9 )
+        self.m_menuItem4 = wx.MenuItem( self.m_menu_BookList, wx.ID_ANY, _(u"初期値に戻す"), wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu_BookList.Append( self.m_menuItem4 )
 
         self.m_menubar.Append( self.m_menu_BookList, _(u"Book List") )
 
@@ -99,9 +96,10 @@ class MainFrame ( wx.Frame ):
         self.Bind( wx.EVT_MENU, self.onTrade, id = self.m_menuItem5.GetId() )
         self.Bind( wx.EVT_MENU, self.onTradeRun, id = self.m_menuItem_trade_run.GetId() )
         self.Bind( wx.EVT_MENU, self.onTradeStop, id = self.m_menuItem_trade_stop.GetId() )
-        self.Bind( wx.EVT_MENU, self.onReset, id = self.m_menuItem4.GetId() )
         self.Bind( wx.EVT_MENU, self.onNext, id = self.m_menuItem_next.GetId() )
         self.Bind( wx.EVT_MENU, self.onPrev, id = self.m_menuItem_prev.GetId() )
+        self.Bind( wx.EVT_MENU, self.onParameterSetting, id = self.m_menuItem_parameter_setting.GetId() )
+        self.Bind( wx.EVT_MENU, self.onReset, id = self.m_menuItem4.GetId() )
         self.m_panel.Bind( wx.EVT_PAINT, self.onPaint )
 
     def __del__( self ):
@@ -121,13 +119,16 @@ class MainFrame ( wx.Frame ):
     def onTradeStop( self, event ):
         event.Skip()
 
-    def onReset( self, event ):
-        event.Skip()
-
     def onNext( self, event ):
         event.Skip()
 
     def onPrev( self, event ):
+        event.Skip()
+
+    def onParameterSetting( self, event ):
+        event.Skip()
+
+    def onReset( self, event ):
         event.Skip()
 
     def onPaint( self, event ):
@@ -392,6 +393,172 @@ class BaseicAnimalBook ( wx.Panel ):
         event.Skip()
 
     def onConsumptionText( self, event ):
+        event.Skip()
+
+
+###########################################################################
+## Class DialogParameterSetting
+###########################################################################
+
+class DialogParameterSetting ( wx.Dialog ):
+
+    def __init__( self, parent ):
+        wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = _(u"パラメータ設定"), pos = wx.DefaultPosition, size = wx.Size( 266,237 ), style = wx.DEFAULT_DIALOG_STYLE )
+
+        self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
+
+        gbSizer2 = wx.GridBagSizer( 2, 2 )
+        gbSizer2.SetFlexibleDirection( wx.BOTH )
+        gbSizer2.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
+
+        self.m_staticText10 = wx.StaticText( self, wx.ID_ANY, _(u"全アニマルのパラメータを設定します"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText10.Wrap( -1 )
+
+        self.m_staticText10.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+
+        gbSizer2.Add( self.m_staticText10, wx.GBPosition( 0, 0 ), wx.GBSpan( 1, 3 ), wx.ALL, 5 )
+
+        self.m_staticText8 = wx.StaticText( self, wx.ID_ANY, _(u"生産量"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText8.Wrap( -1 )
+
+        self.m_staticText8.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+
+        gbSizer2.Add( self.m_staticText8, wx.GBPosition( 1, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_textCtrl_value = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 25,12 ), wx.TE_PROCESS_ENTER )
+        self.m_textCtrl_value.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_textCtrl_value.SetMinSize( wx.Size( 25,12 ) )
+
+        gbSizer2.Add( self.m_textCtrl_value, wx.GBPosition( 1, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_slider_value = wx.Slider( self, wx.ID_ANY, 10, 0, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.SL_HORIZONTAL|wx.SL_SELRANGE )
+        self.m_slider_value.SetFont( wx.Font( 8, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_slider_value.SetForegroundColour( wx.Colour( 0, 255, 0 ) )
+        self.m_slider_value.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+        self.m_slider_value.SetMinSize( wx.Size( -1,10 ) )
+
+        gbSizer2.Add( self.m_slider_value, wx.GBPosition( 1, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_staticText9 = wx.StaticText( self, wx.ID_ANY, _(u"権利初期値"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText9.Wrap( -1 )
+
+        self.m_staticText9.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+
+        gbSizer2.Add( self.m_staticText9, wx.GBPosition( 2, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_slider_right = wx.Slider( self, wx.ID_ANY, 50, 0, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.SL_HORIZONTAL|wx.SL_SELRANGE )
+        self.m_slider_right.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_slider_right.SetForegroundColour( wx.Colour( 255, 0, 0 ) )
+        self.m_slider_right.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+        self.m_slider_right.SetMinSize( wx.Size( -1,10 ) )
+
+        gbSizer2.Add( self.m_slider_right, wx.GBPosition( 2, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_textCtrl_right = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 25,12 ), wx.TE_PROCESS_ENTER )
+        self.m_textCtrl_right.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_textCtrl_right.SetMinSize( wx.Size( 25,12 ) )
+
+        gbSizer2.Add( self.m_textCtrl_right, wx.GBPosition( 2, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_staticText81 = wx.StaticText( self, wx.ID_ANY, _(u"購入量"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText81.Wrap( -1 )
+
+        self.m_staticText81.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+
+        gbSizer2.Add( self.m_staticText81, wx.GBPosition( 3, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_textCtrl_purchase_amount = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 25,12 ), wx.TE_PROCESS_ENTER )
+        self.m_textCtrl_purchase_amount.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_textCtrl_purchase_amount.SetMinSize( wx.Size( 25,12 ) )
+
+        gbSizer2.Add( self.m_textCtrl_purchase_amount, wx.GBPosition( 3, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_slider_purchase_amount = wx.Slider( self, wx.ID_ANY, 10, 0, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.SL_HORIZONTAL|wx.SL_SELRANGE )
+        self.m_slider_purchase_amount.SetFont( wx.Font( 8, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_slider_purchase_amount.SetForegroundColour( wx.Colour( 0, 255, 0 ) )
+        self.m_slider_purchase_amount.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+        self.m_slider_purchase_amount.SetMinSize( wx.Size( -1,10 ) )
+
+        gbSizer2.Add( self.m_slider_purchase_amount, wx.GBPosition( 3, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_staticText91 = wx.StaticText( self, wx.ID_ANY, _(u"消費量"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText91.Wrap( -1 )
+
+        self.m_staticText91.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+
+        gbSizer2.Add( self.m_staticText91, wx.GBPosition( 4, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_textCtrl_consumption = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 25,12 ), wx.TE_PROCESS_ENTER )
+        self.m_textCtrl_consumption.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_textCtrl_consumption.SetMinSize( wx.Size( 25,12 ) )
+
+        gbSizer2.Add( self.m_textCtrl_consumption, wx.GBPosition( 4, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_slider_consumption = wx.Slider( self, wx.ID_ANY, 50, 0, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.SL_HORIZONTAL|wx.SL_SELRANGE )
+        self.m_slider_consumption.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_slider_consumption.SetForegroundColour( wx.Colour( 255, 0, 0 ) )
+        self.m_slider_consumption.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+        self.m_slider_consumption.SetMinSize( wx.Size( -1,10 ) )
+
+        gbSizer2.Add( self.m_slider_consumption, wx.GBPosition( 4, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_button_cancel = wx.Button( self, wx.ID_CANCEL, _(u"Cancel"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        gbSizer2.Add( self.m_button_cancel, wx.GBPosition( 7, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_button_ok = wx.Button( self, wx.ID_OK, _(u"OK"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        gbSizer2.Add( self.m_button_ok, wx.GBPosition( 7, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+
+        self.SetSizer( gbSizer2 )
+        self.Layout()
+
+        self.Centre( wx.BOTH )
+
+        # Connect Events
+        self.m_textCtrl_value.Bind( wx.EVT_TEXT_ENTER, self.onValueText )
+        self.m_slider_value.Bind( wx.EVT_SLIDER, self.onValueChanged )
+        self.m_slider_right.Bind( wx.EVT_SLIDER, self.onRightChanged )
+        self.m_textCtrl_right.Bind( wx.EVT_TEXT_ENTER, self.onRightText )
+        self.m_textCtrl_purchase_amount.Bind( wx.EVT_TEXT_ENTER, self.onPurchaseAmountText )
+        self.m_slider_purchase_amount.Bind( wx.EVT_SLIDER, self.onPurchaseAmountChanged )
+        self.m_textCtrl_consumption.Bind( wx.EVT_TEXT_ENTER, self.onConsumptionText )
+        self.m_slider_consumption.Bind( wx.EVT_SLIDER, self.onConsumptionChanged )
+        self.m_button_cancel.Bind( wx.EVT_BUTTON, self.onCancel )
+        self.m_button_ok.Bind( wx.EVT_BUTTON, self.onOk )
+
+    def __del__( self ):
+        pass
+
+
+    # Virtual event handlers, overide them in your derived class
+    def onValueText( self, event ):
+        event.Skip()
+
+    def onValueChanged( self, event ):
+        event.Skip()
+
+    def onRightChanged( self, event ):
+        event.Skip()
+
+    def onRightText( self, event ):
+        event.Skip()
+
+    def onPurchaseAmountText( self, event ):
+        event.Skip()
+
+    def onPurchaseAmountChanged( self, event ):
+        event.Skip()
+
+    def onConsumptionText( self, event ):
+        event.Skip()
+
+    def onConsumptionChanged( self, event ):
+        event.Skip()
+
+    def onCancel( self, event ):
+        event.Skip()
+
+    def onOk( self, event ):
         event.Skip()
 
 
