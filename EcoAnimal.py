@@ -4,14 +4,17 @@ from Market import Market
 import pandas as pd
 from SimpleBookSample import MainFrame
 
-
 # https://note.nkmk.me/python-pandas-assign-append/
+
+ANIMALS = 108  # アニマルの数
+
 
 class EcoAnimal:
     def __init__(self):
         self.animal_list = pd.DataFrame()
-        for i in range(1, 109):
-            animal_name = "Animal{0}".format(str(i))
+        for i in range(ANIMALS):
+            # 初期値
+            animal_name = "Animal{0}".format(i + 1)
             df = pd.DataFrame({
                 'object': [None],
                 'name': [animal_name],  # アニマル名
@@ -44,8 +47,6 @@ class EcoAnimal:
         self.view.update_animals()
 
 
-
-
 class EcoAnimalView(MainFrame):
     def __init__(self, parent, model):
         super().__init__(parent)
@@ -55,7 +56,7 @@ class EcoAnimalView(MainFrame):
         self.bSizer_animal_list = wx.BoxSizer(wx.VERTICAL)
 
         self.animal_list = []
-        for i in range(108):
+        for i in range(ANIMALS):
             animal = AnimalView(self.m_scrolledWindow, animal_model_list[i], wx.ID_ANY, wx.DefaultPosition,
                                 wx.DefaultSize, 0)
             self.bSizer_animal_list.Add(animal, 1, wx.EXPAND | wx.ALL, 5)
@@ -68,12 +69,16 @@ class EcoAnimalView(MainFrame):
         self.m_textCtrl.AppendText(text + '\n')
 
     def onPaint(self, event):
-        for i in range(9):
-            for j in range(12):
-                x = j * 70 + 30
-                y = i * 40 + 20
-                animal = self.animal_list[i * 12 + j]
-                animal.paint(self.m_panel, x, y)
+        i = 0
+        j = 0
+        for animal in self.animal_list:
+            x = j * 70 + 30
+            y = i * 40 + 20
+            animal.paint(self.m_panel, x, y)
+            j += 1
+            if j > 12:
+                i += 1
+                j = 0
 
     def onExit(self, event):
         self.Destroy()
