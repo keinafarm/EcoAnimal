@@ -74,7 +74,7 @@ class Gui(MainFrame):
     def onTradeStop(self, event):
         self.m_timer.Stop()
 
-    def onTimer( self, event ):
+    def onTimer(self, event):
         self.model.trade()
 
     def onParameterSetting(self, event):
