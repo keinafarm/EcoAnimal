@@ -7,7 +7,7 @@ class AnimalModel:
         self.name = name
         self.initial_right = 50
         self.create_value = 30
-        self.value = self.create_value*2
+        self.value = self.create_value
         self.right = self.initial_right
         self.consumption = self.create_value  # 消費量
         self.purchase_amount = self.consumption  # 購入量
