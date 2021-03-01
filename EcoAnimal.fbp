@@ -437,6 +437,15 @@
                     </object>
                 </object>
             </object>
+            <object class="wxTimer" expanded="1">
+                <property name="enabled">0</property>
+                <property name="id">wxID_ANY</property>
+                <property name="name">m_timer</property>
+                <property name="oneshot">0</property>
+                <property name="period">500</property>
+                <property name="permission">protected</property>
+                <event name="OnTimer">onTimer</event>
+            </object>
         </object>
         <object class="Panel" expanded="1">
             <property name="aui_managed">0</property>

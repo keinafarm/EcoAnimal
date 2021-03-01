@@ -1,5 +1,5 @@
 import wx
-from SimpleBookSample import MainFrame, DialogParameterSetting
+from SimpleBookSample import MainFrame
 from Animal import AnimalView, AnimalParameterSettingDialog
 
 
@@ -20,9 +20,6 @@ class Gui(MainFrame):
             animal.set_root_window(self)
 
         self.m_scrolledWindow.SetSizer(self.bSizer_animal_list)
-
-        self.timer = wx.Timer(self)
-        self.Bind(wx.EVT_TIMER, self.onTimer)
 
     def logout(self, text):
         self.m_textCtrl.AppendText(text + '\n')
@@ -72,15 +69,15 @@ class Gui(MainFrame):
         self.Refresh()
 
     def onTradeRun(self, event):
-        self.timer.Start(500)
+        self.m_timer.Start(500)
 
     def onTradeStop(self, event):
-        self.timer.Stop()
+        self.m_timer.Stop()
 
-    def onTimer(self, event):
+    def onTimer( self, event ):
         self.model.trade()
 
-    def onParameterSetting( self, event ):
+    def onParameterSetting(self, event):
         dialog = AnimalParameterSettingDialog(self)
         result = dialog.ShowModal()
         if result != wx.ID_OK:
@@ -88,4 +85,3 @@ class Gui(MainFrame):
 
         for animal in self.animal_list:
             animal.set_parameter(dialog)
-

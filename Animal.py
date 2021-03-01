@@ -1,7 +1,7 @@
 import wx
 from SimpleBookSample import BaseicAnimalBook, DialogParameterSetting
 import random
-import pandas as pd
+
 
 # https://qiita.com/ysdyt/items/9ccca82fc5b504e7913a
 # https://aiacademy.jp/media/?p=152
@@ -12,32 +12,31 @@ class AnimalModel:
 
     @property
     def name(self):
-        return self.df.at[0,'name']
+        return self.df.at[0, 'name']
 
     @property
     def initial_right(self):
-        return self.df.at[0,'initial_right']
+        return self.df.at[0, 'initial_right']
 
     @property
     def create_value(self):
-        return self.df.at[0,'create_value']
+        return self.df.at[0, 'create_value']
 
     @property
     def value(self):
-        return self.df.at[0,'value']
+        return self.df.at[0, 'value']
 
     @property
     def right(self):
-        return self.df.at[0,'right']
+        return self.df.at[0, 'right']
 
     @property
     def consumption(self):
-        return self.df.at[0,'consumption']
+        return self.df.at[0, 'consumption']
 
     @property
     def purchase_amount(self):
-        return self.df.at[0,'purchase_amount']
-
+        return self.df.at[0, 'purchase_amount']
 
     @name.setter
     def name(self, text):
@@ -86,7 +85,8 @@ class AnimalModel:
             return "nobody"
 
         # 必要量を手持ちの金額で売ってくれるところを探す
-        seller_list = [animal.price(self.purchase_amount) for animal in seller_list if animal.price(self.purchase_amount)[1] <= self.right]
+        seller_list = [animal.price(self.purchase_amount) for animal in seller_list if
+                       animal.price(self.purchase_amount)[1] <= self.right]
         length = len(seller_list)
         if length == 0:
             log("【{0}】は権利不足でした".format(self.name))
@@ -102,10 +102,10 @@ class AnimalModel:
         return "buy"
 
     def price(self, amount):
-        return [self,amount]    # とりあえず、量と価格は同じ
+        return [self, amount]  # とりあえず、量と価格は同じ
 
     def request(self, amount):
-        if self.value - self.consumption >= amount: # 売ったあと、自分の分は残っているか
+        if self.value - self.consumption >= amount:  # 売ったあと、自分の分は残っているか
             return True
         else:
             return False
@@ -146,13 +146,13 @@ class AnimalView(BaseicAnimalBook):
 
     def set_control(self):
         self.m_gauge_value.SetValue(self.model.value / 10)
-        self.m_staticText_value.SetLabel( str(self.model.value) )
+        self.m_staticText_value.SetLabel(str(self.model.value))
 
         self.m_slider_value.SetValue(self.model.create_value)
         self.m_textCtrl_value.SetValue(str(self.model.create_value))
 
         self.m_gauge_right.SetValue(self.model.right / 5)
-        self.m_staticText_right.SetLabel( str(self.model.right) )
+        self.m_staticText_right.SetLabel(str(self.model.right))
 
         self.m_slider_right.SetValue(self.model.initial_right)
         self.m_textCtrl_right.SetValue(str(self.model.initial_right))
@@ -162,7 +162,6 @@ class AnimalView(BaseicAnimalBook):
 
         self.m_slider_consumption.SetValue(self.model.consumption)
         self.m_textCtrl_consumption.SetValue(str(self.model.consumption))
-
 
     def paint(self, panel, x=None, y=None):
         dc = wx.PaintDC(panel)

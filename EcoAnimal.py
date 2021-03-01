@@ -4,11 +4,12 @@ from Animal import AnimalModel
 from Market import Market
 import pandas as pd
 
+
 # https://note.nkmk.me/python-pandas-assign-append/
 
 class EcoAnimal:
     def __init__(self):
-        self.animal_list =  pd.DataFrame()
+        self.animal_list = pd.DataFrame()
         for i in range(1, 109):
             animal_name = "Animal{0}".format(str(i))
             df = pd.DataFrame({
@@ -41,6 +42,7 @@ class EcoAnimal:
         market = Market(self.get_animal_list(), self.view.logout)
         market.trade()
         self.view.update_animals()
+
 
 if __name__ == "__main__":
     app = wx.App()
