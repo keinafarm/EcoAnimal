@@ -1,6 +1,6 @@
 import wx
 from SimpleBookSample import BaseicAnimalBook, DialogParameterSetting
-
+import random
 
 class AnimalModel:
     def __init__(self, name):
@@ -22,25 +22,46 @@ class AnimalModel:
         self.value = 0
         self.right = self.initial_right
 
-    def buy(self):
-        if self.purchase_amount < self.right:
-            return self.purchase_amount
-        else:
-            return None  # 権利が足りなくて買えない
+    def buy(self, animal_list, log):
+        # 必要量を持っているところを探す
+        seller_list = [animal for animal in animal_list if animal.request(self.purchase_amount)]
+        length = len(seller_list)
+        if length == 0:
+            log("【{0}】は購入できませんでした".format(self.name))
+            return "nobody"
 
-    def request(self, price):
-        if self.value - self.consumption >= price:
+        # 必要量を手持ちの金額で売ってくれるところを探す
+        seller_list = [animal.price(self.purchase_amount) for animal in seller_list if animal.price(self.purchase_amount)[1] <= self.right]
+        length = len(seller_list)
+        if length == 0:
+            log("【{0}】は権利不足でした".format(self.name))
+            return "shortage"
+
+        select = random.randint(0, length - 1)
+        seller = seller_list[select][0]
+        right = seller_list[select][1]
+        seller.sell(self.purchase_amount, right)
+
+        self.settlement(self.purchase_amount, right)
+        log("【{0}】は【{1}】から{2}で購入しました".format(self.name, seller.get_name(), right))
+        return "buy"
+
+    def price(self, amount):
+        return [self,amount]    # とりあえず、量と価格は同じ
+
+    def request(self, amount):
+        if self.value - self.consumption >= amount: # 売ったあと、自分の分は残っているか
             return True
         else:
             return False
 
-    def sell(self, price):
-        self.value -= price
-        self.right += price
+    def sell(self, amount, right):
+        self.value -= amount
+        self.right += right
 
-    def settlement(self, price):
-        self.value += price
-        self.right -= price
+    def settlement(self, amount, right):
+        self.value += amount
+        self.right -= right
 
     def production(self):
         self.value += self.create_value
