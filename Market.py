@@ -24,5 +24,5 @@ class Market:
                 "【{0}】は【{1}】から{2}で購入しました".format(animal_buyer.get_name(), seller_list[select].get_name(), price))
 
         for animal in self.animal_list:
-            animal.production()
-            animal.consume()
+            animal.production()         # 生産
+            animal.consume()            # 消費
