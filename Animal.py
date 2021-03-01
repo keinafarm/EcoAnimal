@@ -18,20 +18,6 @@ class AnimalModel:
     def set_name(self, name):
         self.name = name
 
-    def get_value_color(self):
-        if self.value > 255:
-            green = 255
-        else:
-            green = self.value
-        return 0, green, 128
-
-    def get_right_color(self):
-        if self.right > 255:
-            red = 255
-        else:
-            red = self.right
-        return red, 0, 128
-
     def reset(self):
         self.value = 0
         self.right = self.initial_right
@@ -61,8 +47,9 @@ class AnimalModel:
 
     def consume(self):
         self.value += self.consumption
-        if self.value < 0 :
+        if self.value < 0:
             self.value = 0
+
 
 class AnimalView(BaseicAnimalBook):
     def __init__(self, parent, model, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
@@ -106,33 +93,47 @@ class AnimalView(BaseicAnimalBook):
             self.m_pos_x = x
         if y is not None:
             self.m_pos_y = y
-        red, green, blue = self.model.get_right_color()
+
+        if self.model.right > 255:
+            red = 255
+        else:
+            red = self.model.right
+        green = 0
+        blue = 200
         print("red={0}".format(red))
         dc.SetBrush(wx.Brush(wx.Colour(red, green, blue)))
-        dc.DrawCircle(self.m_pos_x-6, self.m_pos_y, 4)
+        dc.DrawCircle(self.m_pos_x - 6, self.m_pos_y, 4)
 
-        pos1 = (self.m_pos_x-6, self.m_pos_y + 4)
+        pos1 = (self.m_pos_x - 6, self.m_pos_y + 4)
         pos2 = (self.m_pos_x - 10, self.m_pos_y + 20)
         pos3 = (self.m_pos_x - 2, self.m_pos_y + 20)
-        red, green, blue = self.model.get_value_color()
+
+        if self.model.value > 255:
+            green = 255
+        else:
+            green = self.model.value
+        red = 0
+        blue = 200
         dc.SetBrush(wx.Brush(wx.Colour(red, green, blue)))
         dc.DrawPolygonList([[pos1, pos2, pos3]])
         dc.SetBrush(wx.Brush(wx.Colour(0, 0, 0)))
         dc.SetFont(wx.Font(wx.FontInfo(8)))
 
         dc.SetPen(wx.Pen('green', width=3))
-        line_length = self.model.value * 5/ 100
+        line_length = self.model.value * 5 / 100
         if line_length > 20:
             line_length = 20
-        dc.DrawLine( wx.Point(self.m_pos_x+1, self.m_pos_y+20), wx.Point(self.m_pos_x+1, self.m_pos_y+20-line_length ) )
+        dc.DrawLine(wx.Point(self.m_pos_x + 1, self.m_pos_y + 20),
+                    wx.Point(self.m_pos_x + 1, self.m_pos_y + 20 - line_length))
 
         dc.SetPen(wx.Pen('red', width=3))
-        line_length = self.model.right* 20/100
+        line_length = self.model.right * 20 / 100
         if line_length > 20:
             line_length = 20
-        dc.DrawLine( wx.Point(self.m_pos_x+6, self.m_pos_y+20), wx.Point(self.m_pos_x+6, self.m_pos_y+20-line_length ) )
+        dc.DrawLine(wx.Point(self.m_pos_x + 6, self.m_pos_y + 20),
+                    wx.Point(self.m_pos_x + 6, self.m_pos_y + 20 - line_length))
 
-        dc.DrawText(self.m_name.GetValue(), self.m_pos_x - 20, self.m_pos_y + 45)
+        dc.DrawText(self.m_name.GetValue(), self.m_pos_x - 20, self.m_pos_y + 25)
 
     def onValueChanged(self, event):
         self.model.create_value = self.m_slider_value.GetValue()

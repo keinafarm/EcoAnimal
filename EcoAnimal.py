@@ -7,7 +7,7 @@ from Market import Market
 class EcoAnimal:
     def __init__(self):
         self.animal_list = []
-        for i in range(1, 101):
+        for i in range(1, 109):
             animal_name = "Animal{0}".format(str(i))
             animal = AnimalModel(animal_name)
             self.animal_list.append(animal)

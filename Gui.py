@@ -12,7 +12,7 @@ class Gui(MainFrame):
         self.bSizer_animal_list = wx.BoxSizer(wx.VERTICAL)
 
         self.animal_list = []
-        for i in range(100):
+        for i in range(108):
             animal = AnimalView(self.m_scrolledWindow, animal_model_list[i], wx.ID_ANY, wx.DefaultPosition,
                                 wx.DefaultSize, 0)
             self.bSizer_animal_list.Add(animal, 1, wx.EXPAND | wx.ALL, 5)
@@ -28,11 +28,11 @@ class Gui(MainFrame):
         self.m_textCtrl.AppendText(text + '\n')
 
     def onPaint(self, event):
-        for i in range(5):
-            for j in range(20):
-                x = j * 45 + 20
-                y = i * 80 + 20
-                animal = self.animal_list[i * 20 + j]
+        for i in range(9):
+            for j in range(12):
+                x = j * 70 + 30
+                y = i * 40 + 20
+                animal = self.animal_list[i * 12 + j]
                 animal.paint(self.m_panel, x, y)
 
     def onExit(self, event):
