@@ -5,11 +5,11 @@ from SimpleBookSample import BaseicAnimalBook, DialogParameterSetting
 class AnimalModel:
     def __init__(self, name):
         self.name = name
-        self.value = 0
         self.initial_right = 50
         self.create_value = 30
+        self.value = self.create_value*2
         self.right = self.initial_right
-        self.consumption = self.create_value - 5  # 消費量
+        self.consumption = self.create_value  # 消費量
         self.purchase_amount = self.consumption  # 購入量
 
     def get_name(self):
@@ -46,7 +46,7 @@ class AnimalModel:
         self.value += self.create_value
 
     def consume(self):
-        self.value += self.consumption
+        self.value -= self.consumption
         if self.value < 0:
             self.value = 0
 
@@ -70,11 +70,13 @@ class AnimalView(BaseicAnimalBook):
 
     def set_control(self):
         self.m_gauge_value.SetValue(self.model.value / 10)
+        self.m_staticText_value.SetLabel( str(self.model.value) )
 
         self.m_slider_value.SetValue(self.model.create_value)
         self.m_textCtrl_value.SetValue(str(self.model.create_value))
 
         self.m_gauge_right.SetValue(self.model.right / 5)
+        self.m_staticText_right.SetLabel( str(self.model.right) )
 
         self.m_slider_right.SetValue(self.model.initial_right)
         self.m_textCtrl_right.SetValue(str(self.model.initial_right))
@@ -84,6 +86,7 @@ class AnimalView(BaseicAnimalBook):
 
         self.m_slider_consumption.SetValue(self.model.consumption)
         self.m_textCtrl_consumption.SetValue(str(self.model.consumption))
+
 
     def paint(self, panel, x=None, y=None):
         dc = wx.PaintDC(panel)

@@ -166,7 +166,7 @@ class BaseicAnimalBook ( wx.Panel ):
         self.m_name = wx.TextCtrl( self.m_panel_page1, wx.ID_ANY, _(u"アニマル名"), wx.DefaultPosition, wx.Size( -1,15 ), wx.TE_PROCESS_ENTER )
         self.m_name.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
 
-        gbSizer1.Add( self.m_name, wx.GBPosition( 0, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        gbSizer1.Add( self.m_name, wx.GBPosition( 0, 1 ), wx.GBSpan( 1, 2 ), wx.ALL, 5 )
 
         self.m_staticText5 = wx.StaticText( self.m_panel_page1, wx.ID_ANY, _(u"価値"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText5.Wrap( -1 )
@@ -175,11 +175,12 @@ class BaseicAnimalBook ( wx.Panel ):
 
         gbSizer1.Add( self.m_staticText5, wx.GBPosition( 1, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
-        self.m_gauge_value = wx.Gauge( self.m_panel_page1, wx.ID_ANY, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.GA_HORIZONTAL )
+        self.m_gauge_value = wx.Gauge( self.m_panel_page1, wx.ID_ANY, 100, wx.DefaultPosition, wx.Size( 160,10 ), wx.GA_HORIZONTAL )
         self.m_gauge_value.SetValue( 0 )
         self.m_gauge_value.SetBackgroundColour( wx.Colour( 128, 255, 0 ) )
+        self.m_gauge_value.SetMinSize( wx.Size( 160,10 ) )
 
-        gbSizer1.Add( self.m_gauge_value, wx.GBPosition( 1, 1 ), wx.GBSpan( 1, 2 ), wx.ALL, 5 )
+        gbSizer1.Add( self.m_gauge_value, wx.GBPosition( 1, 2 ), wx.GBSpan( 1, 2 ), wx.ALL, 5 )
 
         self.m_staticText7 = wx.StaticText( self.m_panel_page1, wx.ID_ANY, _(u"権利"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText7.Wrap( -1 )
@@ -188,19 +189,36 @@ class BaseicAnimalBook ( wx.Panel ):
 
         gbSizer1.Add( self.m_staticText7, wx.GBPosition( 2, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
-        self.m_gauge_right = wx.Gauge( self.m_panel_page1, wx.ID_ANY, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.GA_HORIZONTAL )
+        self.m_gauge_right = wx.Gauge( self.m_panel_page1, wx.ID_ANY, 100, wx.DefaultPosition, wx.Size( 160,10 ), wx.GA_HORIZONTAL )
         self.m_gauge_right.SetValue( 0 )
         self.m_gauge_right.SetForegroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
         self.m_gauge_right.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
+        self.m_gauge_right.SetMinSize( wx.Size( 160,10 ) )
 
-        gbSizer1.Add( self.m_gauge_right, wx.GBPosition( 2, 1 ), wx.GBSpan( 1, 2 ), wx.ALL, 5 )
+        gbSizer1.Add( self.m_gauge_right, wx.GBPosition( 2, 2 ), wx.GBSpan( 1, 2 ), wx.ALL, 5 )
 
         self.m_class_name = wx.StaticText( self.m_panel_page1, wx.ID_ANY, _(u"MyLabel"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_class_name.Wrap( -1 )
 
         self.m_class_name.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
 
-        gbSizer1.Add( self.m_class_name, wx.GBPosition( 0, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        gbSizer1.Add( self.m_class_name, wx.GBPosition( 0, 3 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_staticText_value = wx.StaticText( self.m_panel_page1, wx.ID_ANY, _(u"0"), wx.DefaultPosition, wx.Size( -1,10 ), wx.ALIGN_RIGHT )
+        self.m_staticText_value.Wrap( -1 )
+
+        self.m_staticText_value.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_staticText_value.SetMinSize( wx.Size( 20,10 ) )
+
+        gbSizer1.Add( self.m_staticText_value, wx.GBPosition( 1, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+        self.m_staticText_right = wx.StaticText( self.m_panel_page1, wx.ID_ANY, _(u"0"), wx.DefaultPosition, wx.Size( 20,10 ), wx.ALIGN_RIGHT )
+        self.m_staticText_right.Wrap( -1 )
+
+        self.m_staticText_right.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_staticText_right.SetMinSize( wx.Size( 20,10 ) )
+
+        gbSizer1.Add( self.m_staticText_right, wx.GBPosition( 2, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
 
         self.m_panel_page1.SetSizer( gbSizer1 )
