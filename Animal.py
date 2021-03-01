@@ -1,16 +1,71 @@
 import wx
 from SimpleBookSample import BaseicAnimalBook, DialogParameterSetting
 import random
+import pandas as pd
+
+# https://qiita.com/ysdyt/items/9ccca82fc5b504e7913a
+# https://aiacademy.jp/media/?p=152
 
 class AnimalModel:
-    def __init__(self, name):
-        self.name = name
-        self.initial_right = 50
-        self.create_value = 30
-        self.value = self.create_value
-        self.right = self.initial_right
-        self.consumption = self.create_value  # 消費量
-        self.purchase_amount = self.consumption  # 購入量
+    def __init__(self, df):
+        self.df = df
+
+    @property
+    def name(self):
+        return self.df.at[0,'name']
+
+    @property
+    def initial_right(self):
+        return self.df.at[0,'initial_right']
+
+    @property
+    def create_value(self):
+        return self.df.at[0,'create_value']
+
+    @property
+    def value(self):
+        return self.df.at[0,'value']
+
+    @property
+    def right(self):
+        return self.df.at[0,'right']
+
+    @property
+    def consumption(self):
+        return self.df.at[0,'consumption']
+
+    @property
+    def purchase_amount(self):
+        return self.df.at[0,'purchase_amount']
+
+
+    @name.setter
+    def name(self, text):
+        self.df['name'] = text
+
+    @initial_right.setter
+    def initial_right(self, amount):
+        self.df['initial_right'] = amount
+
+    @create_value.setter
+    def create_value(self, amount):
+        self.df['create_value'] = amount
+
+    @value.setter
+    def value(self, amount):
+        self.df['value'] = amount
+
+    @right.setter
+    def right(self, amount):
+        self.df['right'] = amount
+
+    @consumption.setter
+    def consumption(self, amount):
+        self.df['consumption'] = amount
+
+    @purchase_amount.setter
+    def purchase_amount(self, amount):
+        self.df['purchase_amount'] = amount
 
     def get_name(self):
         return self.name
