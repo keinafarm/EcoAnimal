@@ -29,7 +29,7 @@ class AnimalModel:
             return None  # 権利が足りなくて買えない
 
     def request(self, price):
-        if self.value - self.consumption > price:
+        if self.value - self.consumption >= price:
             return True
         else:
             return False
