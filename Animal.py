@@ -57,7 +57,6 @@ class AnimalModel:
 
     @value.setter
     def value(self, amount):
-        print(self.df)
         self.df.at[0,'value'] = amount
 
     @right.setter

@@ -135,17 +135,6 @@ class EcoAnimal:
 
         self._animal_list = pd.DataFrame()  # アニマルリストを初期化
         for i in range(ANIMALS):
-            #            df = animal_list.loc[i:i]                  # DataFrame型で取得しようと思ったら範囲していしないといけない
-            #            animal = AnimalModel(df)  # アニマルを生成
-            #            df.at[0,'object'] = animal  # インスタンスを保存
-            #            self._animal_list = self._animal_list.append(df, ignore_index=True)  # リストに登録
-
-
-            #animal = AnimalModel(animal_list.loc[i:i])
-            #animal_list.loc[i:i,'object'] = animal  # インスタンスを保存
-
-            #self._animal_list = animal_list
-
             df = animal_list.loc[i:i].copy(deep=False)                  # DataFrame型で取得しようと思ったら範囲していしないといけない
                                                                         # deep=Falseでないと、参照になる
             df.reset_index(drop=True, inplace=True)                     # indexをクリアしておかないと、AnimalModelが代入する時困る
@@ -153,10 +142,7 @@ class EcoAnimal:
             df['object'] = animal
             self._animal_list = self._animal_list.append(df, ignore_index=True)  # リストに登録
 
-            #self._animal_list = animal_list
-
-
-        self.view.restructure(self.animal_list)
+        self.view.restructure(self.animal_list)                         # 読み直したデータで画面を再構築する
 
 
 class EcoAnimalView(MainFrame):
