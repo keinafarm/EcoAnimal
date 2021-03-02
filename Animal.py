@@ -8,8 +8,12 @@ import random
 
 class AnimalModel:
     def __init__(self, df):
+        """
+
+        :param df:
+        """
         self.df = df
-        self.df.value = self.df.create_value
+        self.value = self.df.create_value
 
     @property
     def name(self):
@@ -132,14 +136,17 @@ class AnimalView(BaseicAnimalBook):
     def __init__(self, parent, model, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.TAB_TRAVERSAL, name=wx.PanelNameStr):
         super().__init__(parent, id, pos, size, style, name)
-        self.model = model
-
-        self.m_class_name.SetLabel(self.__class__.__name__)
-        self.m_staticText_name = self.model.name
+        self.model = None
         self.m_pos_x = None
         self.m_pos_y = None
-        self.set_control()
         self.root_window = None  # この設定はself.m_name.SetValueより前
+        self.set_model(model)
+
+    def set_model(self, model):
+        self.model = model
+        self.m_class_name.SetLabel(model.__class__.__name__)
+        self.m_staticText_name = self.model.name
+        self.set_control()
         self.m_name.SetValue(self.model.name)
 
     def set_root_window(self, root_window):
@@ -285,6 +292,10 @@ class AnimalView(BaseicAnimalBook):
 class AnimalParameterSettingDialog(DialogParameterSetting):
     def __init__(self, parent, initializer):
         super().__init__(parent)
+        self.initial_right = None
+        self.create_value = None
+        self.consumption = None
+        self.purchase_amount = None
         initializer(self)
         self.set_control()
 

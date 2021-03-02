@@ -27,6 +27,19 @@ class MainFrame ( wx.Frame ):
         self.m_statusBar = self.CreateStatusBar( 1, wx.STB_SIZEGRIP, wx.ID_ANY )
         self.m_menubar = wx.MenuBar( 0 )
         self.m_menu_file = wx.Menu()
+        self.m_menuItem_save = wx.MenuItem( self.m_menu_file, wx.ID_ANY, _(u"保存"), wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu_file.Append( self.m_menuItem_save )
+
+        self.m_menuItem_load = wx.MenuItem( self.m_menu_file, wx.ID_ANY, _(u"読み出し"), wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu_file.Append( self.m_menuItem_load )
+
+        self.m_menu_file.AppendSeparator()
+
+        self.m_menuItem11 = wx.MenuItem( self.m_menu_file, wx.ID_ANY, _(u"ログデータ保存"), wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu_file.Append( self.m_menuItem11 )
+
+        self.m_menu_file.AppendSeparator()
+
         self.m_menuItem_exit = wx.MenuItem( self.m_menu_file, wx.ID_ANY, _(u"終了"), wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu_file.Append( self.m_menuItem_exit )
 
@@ -94,6 +107,9 @@ class MainFrame ( wx.Frame ):
         self.Centre( wx.BOTH )
 
         # Connect Events
+        self.Bind( wx.EVT_MENU, self.onSave, id = self.m_menuItem_save.GetId() )
+        self.Bind( wx.EVT_MENU, self.onLoad, id = self.m_menuItem_load.GetId() )
+        self.Bind( wx.EVT_MENU, self.onLogSave, id = self.m_menuItem11.GetId() )
         self.Bind( wx.EVT_MENU, self.onExit, id = self.m_menuItem_exit.GetId() )
         self.Bind( wx.EVT_MENU, self.onTrade, id = self.m_menuItem5.GetId() )
         self.Bind( wx.EVT_MENU, self.onTradeRun, id = self.m_menuItem_trade_run.GetId() )
@@ -110,6 +126,15 @@ class MainFrame ( wx.Frame ):
 
 
     # Virtual event handlers, overide them in your derived class
+    def onSave( self, event ):
+        event.Skip()
+
+    def onLoad( self, event ):
+        event.Skip()
+
+    def onLogSave( self, event ):
+        event.Skip()
+
     def onExit( self, event ):
         event.Skip()
 
