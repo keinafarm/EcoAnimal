@@ -9,6 +9,7 @@ import random
 class AnimalModel:
     def __init__(self, df):
         self.df = df
+        self.df.value = self.df.create_value
 
     @property
     def name(self):
@@ -282,12 +283,9 @@ class AnimalView(BaseicAnimalBook):
 
 
 class AnimalParameterSettingDialog(DialogParameterSetting):
-    def __init__(self, parent):
+    def __init__(self, parent, initializer):
         super().__init__(parent)
-        self.create_value = 10
-        self.initial_right = 10
-        self.purchase_amount = 10
-        self.consumption = 10
+        initializer(self)
         self.set_control()
 
     def set_control(self):

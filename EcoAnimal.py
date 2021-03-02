@@ -22,7 +22,7 @@ class AnimalParameter:
         'name': [None],  # アニマル名
         'initial_right': [50],  # 権利の初期値
         'create_value': [30],  # 価値の生産量
-        'value': [30],  # 価値の量
+        'value': [0],  # 価値の量
         'right': [50],  # 権利の量
         'consumption': [30],  # 消費量
         'purchase_amount': [30],  # 購入量
@@ -30,11 +30,30 @@ class AnimalParameter:
 
     @classmethod
     def get_property(cls):
+        """
+        保存してある初期値データを提供する
+        :return:
+        """
         return cls.df.copy()
 
     @classmethod
-    def set_property(cls, df):
-        cls.df = df
+    def store_property(cls, obj):
+        """
+        初期値データを保存する
+        :param obj: 新たな初期値が格納されているオブジェクト
+        :return:
+        """
+        cls.df['initial_right'] = obj.initial_right
+        cls.df['create_value'] = obj.create_value
+        cls.df['consumption'] = obj.consumption
+        cls.df['purchase_amount'] = obj.purchase_amount
+
+    @classmethod
+    def load_property(cls, obj):
+        obj.initial_right = cls.df.at[0,'initial_right']
+        obj.create_value = cls.df.at[0,'create_value']
+        obj.consumption = cls.df.at[0,'consumption']
+        obj.purchase_amount = cls.df.at[0,'purchase_amount']
 
 
 class EcoAnimal:
@@ -71,6 +90,7 @@ class EcoAnimal:
         """
         for animal in self._animal_list['object']:
             animal.reset()
+        self.view.update_animals()  # 表示を更新
 
     def trade(self):
         """
@@ -228,11 +248,11 @@ class EcoAnimalView(MainFrame):
         :param event:
         :return:
         """
-        dialog = AnimalParameterSettingDialog(self)
+        dialog = AnimalParameterSettingDialog(self, AnimalParameter.load_property)
         result = dialog.ShowModal()
         if result != wx.ID_OK:
             return
-
+        AnimalParameter.store_property(dialog)
         for animal in self.animal_list:
             animal.set_parameter(dialog)
 
