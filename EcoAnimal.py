@@ -82,7 +82,9 @@ class EcoAnimal:
         リスト形式でアニマルリストを提供する
         :return:
         """
-        return self._animal_list['object'].values.tolist()
+        df = self._animal_list.loc[:,'object']
+        ret_list = df.values.tolist()
+        return ret_list
 
     def reset(self):
         """
@@ -112,7 +114,7 @@ class EcoAnimal:
         """
         save_list = self._animal_list.copy()
         save_list.loc[:,'object'] = None          # オブジェクトはクリアしておく
-        save_list.to_excel(pathname)
+        save_list.to_excel(pathname, index=False)
 
     def load(self, pathname):
         """
@@ -120,10 +122,13 @@ class EcoAnimal:
         df.loc[x:y]['colomn'] = は スライスで作成されたコピーに代入している
         df.loc[x:y,'colomn'] = は スライスで指定した場所に直接代入している
 
+        df.reset_index(drop=True, inplace=True)
+        取り出したData Frameのindexを0にする
+        https://note.nkmk.me/python-pandas-reset-index/
         :param pathname:
         :return:
         """
-        animal_list = pd.read_excel(pathname, index_col=0)
+        animal_list = pd.read_excel(pathname, index_col=None)
         if len(animal_list) != ANIMALS:
             self.view.m_statusBar.SetStatusText("データ数は{0}です。(現在:{1})".format(ANIMALS, len(animal_list)))  # あとでdialog化
             return
@@ -134,10 +139,22 @@ class EcoAnimal:
             #            animal = AnimalModel(df)  # アニマルを生成
             #            df.at[0,'object'] = animal  # インスタンスを保存
             #            self._animal_list = self._animal_list.append(df, ignore_index=True)  # リストに登録
-            animal = AnimalModel(animal_list.loc[i:i])
-            animal_list.loc[i:i,'object'] = animal  # インスタンスを保存
 
-            self._animal_list = animal_list
+
+            #animal = AnimalModel(animal_list.loc[i:i])
+            #animal_list.loc[i:i,'object'] = animal  # インスタンスを保存
+
+            #self._animal_list = animal_list
+
+            df = animal_list.loc[i:i].copy(deep=False)                  # DataFrame型で取得しようと思ったら範囲していしないといけない
+                                                                        # deep=Falseでないと、参照になる
+            df.reset_index(drop=True, inplace=True)                     # indexをクリアしておかないと、AnimalModelが代入する時困る
+            animal = AnimalModel(df)
+            df['object'] = animal
+            self._animal_list = self._animal_list.append(df, ignore_index=True)  # リストに登録
+
+            #self._animal_list = animal_list
+
 
         self.view.restructure(self.animal_list)
 
