@@ -45,31 +45,32 @@ class AnimalModel:
 
     @name.setter
     def name(self, text):
-        self.df['name'] = text
+        self.df.at[0,'name'] = text
 
     @initial_right.setter
     def initial_right(self, amount):
-        self.df['initial_right'] = amount
+        self.df.at[0,'initial_right'] = amount
 
     @create_value.setter
     def create_value(self, amount):
-        self.df['create_value'] = amount
+        self.df.at[0,'create_value'] = amount
 
     @value.setter
     def value(self, amount):
-        self.df['value'] = amount
+        print(self.df)
+        self.df.at[0,'value'] = amount
 
     @right.setter
     def right(self, amount):
-        self.df['right'] = amount
+        self.df.at[0,'right'] = amount
 
     @consumption.setter
     def consumption(self, amount):
-        self.df['consumption'] = amount
+        self.df.at[0,'consumption'] = amount
 
     @purchase_amount.setter
     def purchase_amount(self, amount):
-        self.df['purchase_amount'] = amount
+        self.df.at[0,'purchase_amount'] = amount
 
     def get_name(self):
         return self.name

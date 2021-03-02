@@ -44,10 +44,10 @@ class AnimalParameter:
         :param target: 新たな初期値が格納されているオブジェクト
         :return:
         """
-        cls.df['initial_right'] = target.initial_right
-        cls.df['create_value'] = target.create_value
-        cls.df['consumption'] = target.consumption
-        cls.df['purchase_amount'] = target.purchase_amount
+        cls.df.at[0,'initial_right'] = target.initial_right
+        cls.df.at[0,'create_value'] = target.create_value
+        cls.df.at[0,'consumption'] = target.consumption
+        cls.df.at[0,'purchase_amount'] = target.purchase_amount
 
     @classmethod
     def load_property(cls, target):
@@ -68,9 +68,9 @@ class EcoAnimal:
             # 初期値
             animal_name = "Animal{0}".format(i + 1)  # アニマル名の初期値
             df = AnimalParameter.get_property()  # アニマルプロパティの初期値
-            df["name"] = animal_name
+            df.at[0,"name"] = animal_name
             animal = AnimalModel(df)  # アニマルを生成
-            df['object'] = animal  # インスタンスを保存
+            df.at[0,'object'] = animal  # インスタンスを保存
             self._animal_list = self._animal_list.append(df, ignore_index=True)  # リストに登録
 
         self.view = EcoAnimalView(None, self)  # viewを作成
@@ -89,7 +89,7 @@ class EcoAnimal:
         全アニマルの価値と権利を初期値に戻す
         :return:
         """
-        for animal in self._animal_list['object']:
+        for animal in self.animal_list:
             animal.reset()
         self.view.update_animals()  # 表示を更新
 
@@ -111,12 +111,15 @@ class EcoAnimal:
         :return: 
         """
         save_list = self._animal_list.copy()
-        save_list['object'] = None          # オブジェクトはクリアしておく
+        save_list.loc[:,'object'] = None          # オブジェクトはクリアしておく
         save_list.to_excel(pathname)
 
     def load(self, pathname):
         """
         https://note.nkmk.me/python-pandas-dataframe-for-iteration/
+        df.loc[x:y]['colomn'] = は スライスで作成されたコピーに代入している
+        df.loc[x:y,'colomn'] = は スライスで指定した場所に直接代入している
+
         :param pathname:
         :return:
         """
@@ -127,10 +130,14 @@ class EcoAnimal:
 
         self._animal_list = pd.DataFrame()  # アニマルリストを初期化
         for i in range(ANIMALS):
-            df = animal_list.loc[i:i]                  # DataFrame型で取得しようと思ったら範囲していしないといけない
-            animal = AnimalModel(df)  # アニマルを生成
-            df['object'] = animal  # インスタンスを保存
-            self._animal_list = self._animal_list.append(df, ignore_index=True)  # リストに登録
+            #            df = animal_list.loc[i:i]                  # DataFrame型で取得しようと思ったら範囲していしないといけない
+            #            animal = AnimalModel(df)  # アニマルを生成
+            #            df.at[0,'object'] = animal  # インスタンスを保存
+            #            self._animal_list = self._animal_list.append(df, ignore_index=True)  # リストに登録
+            animal = AnimalModel(animal_list.loc[i:i])
+            animal_list.loc[i:i,'object'] = animal  # インスタンスを保存
+
+            self._animal_list = animal_list
 
         self.view.restructure(self.animal_list)
 
