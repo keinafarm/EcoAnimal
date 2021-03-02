@@ -19,7 +19,7 @@ ANIMALS = 108  # アニマルの数（色んな数で割りやすいから２と
 class AnimalParameter:
     df = pd.DataFrame({  # アニマルのプロパティの初期値
         'object': [None],
-        'name': [],  # アニマル名
+        'name': [None],  # アニマル名
         'initial_right': [50],  # 権利の初期値
         'create_value': [30],  # 価値の生産量
         'value': [30],  # 価値の量
@@ -30,7 +30,7 @@ class AnimalParameter:
 
     @classmethod
     def get_property(cls):
-        return cls.df
+        return cls.df.copy()
 
     @classmethod
     def set_property(cls, df):
