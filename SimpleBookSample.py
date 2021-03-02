@@ -30,7 +30,7 @@ class MainFrame ( wx.Frame ):
         self.m_menuItem_exit = wx.MenuItem( self.m_menu_file, wx.ID_ANY, _(u"終了"), wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu_file.Append( self.m_menuItem_exit )
 
-        self.m_menubar.Append( self.m_menu_file, _(u"File") )
+        self.m_menubar.Append( self.m_menu_file, _(u"ファイル") )
 
         self.m_menu_run = wx.Menu()
         self.m_menuItem5 = wx.MenuItem( self.m_menu_run, wx.ID_ANY, _(u"取引"), wx.EmptyString, wx.ITEM_NORMAL )
@@ -44,7 +44,7 @@ class MainFrame ( wx.Frame ):
 
         self.m_menu_run.AppendSeparator()
 
-        self.m_menubar.Append( self.m_menu_run, _(u"Run") )
+        self.m_menubar.Append( self.m_menu_run, _(u"実行") )
 
         self.m_menu_BookList = wx.Menu()
         self.m_menuItem_next = wx.MenuItem( self.m_menu_BookList, wx.ID_ANY, _(u"次のページ"), wx.EmptyString, wx.ITEM_NORMAL )
@@ -61,7 +61,7 @@ class MainFrame ( wx.Frame ):
         self.m_menuItem4 = wx.MenuItem( self.m_menu_BookList, wx.ID_ANY, _(u"初期値に戻す"), wx.EmptyString, wx.ITEM_NORMAL )
         self.m_menu_BookList.Append( self.m_menuItem4 )
 
-        self.m_menubar.Append( self.m_menu_BookList, _(u"Book List") )
+        self.m_menubar.Append( self.m_menu_BookList, _(u"アニマル") )
 
         self.SetMenuBar( self.m_menubar )
 

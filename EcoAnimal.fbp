@@ -100,7 +100,7 @@
                 <property name="window_name"></property>
                 <property name="window_style"></property>
                 <object class="wxMenu" expanded="1">
-                    <property name="label">File</property>
+                    <property name="label">ファイル</property>
                     <property name="name">m_menu_file</property>
                     <property name="permission">protected</property>
                     <object class="wxMenuItem" expanded="0">
@@ -119,7 +119,7 @@
                     </object>
                 </object>
                 <object class="wxMenu" expanded="1">
-                    <property name="label">Run</property>
+                    <property name="label">実行</property>
                     <property name="name">m_menu_run</property>
                     <property name="permission">protected</property>
                     <object class="wxMenuItem" expanded="1">
@@ -170,7 +170,7 @@
                     </object>
                 </object>
                 <object class="wxMenu" expanded="1">
-                    <property name="label">Book List</property>
+                    <property name="label">アニマル</property>
                     <property name="name">m_menu_BookList</property>
                     <property name="permission">protected</property>
                     <object class="wxMenuItem" expanded="1">
