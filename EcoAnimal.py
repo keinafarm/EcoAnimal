@@ -102,7 +102,6 @@ class EcoAnimalView(MainFrame):
                                 wx.DefaultSize, 0)
             self.bSizer_animal_list.Add(animal, 1, wx.EXPAND | wx.ALL, 5)
             self.animal_list.append(animal)  # アニマルのViewを作って登録
-            animal.set_root_window(self)  # 各アニマルに、このビューを通知(アニマルのparentはm_scrolledWindowなので、何かと不便)
 
         self.m_scrolledWindow.SetSizer(self.bSizer_animal_list)
 

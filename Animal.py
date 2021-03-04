@@ -7,13 +7,31 @@ import pandas as pd
 # https://qiita.com/ysdyt/items/9ccca82fc5b504e7913a
 # https://aiacademy.jp/media/?p=152
 
+############################################################
+#
+#   アニマルのデータ管理
+#
+############################################################
+
 class AnimalModel:
+    #############
+    #
+    #   クラス変数
+    #
+    #############
+
     animal_properties = None
     property_name_list = ['object', 'name', 'value', 'right', 'create_value', 'initial_right', 'consumption',
                           'purchase_amount']
     initial_values = {'object': None, 'name': None, 'right': 50, 'value': 30, 'create_value': 30, 'initial_right': 50,
                       'consumption': 30, 'purchase_amount': 30}
     animal_count = 0
+
+    #############
+    #
+    #   クラスメソッド
+    #
+    #############
 
     @classmethod
     def init(cls, animals):
@@ -58,6 +76,11 @@ class AnimalModel:
         cls.animal_properties = animal_list
         return None
 
+    #############
+    #
+    #   アニマルデータ管理オブジェクト
+    #
+    #############
     def __init__(self, index, name):
         """
         アニマルを生成する
@@ -69,14 +92,121 @@ class AnimalModel:
         self.value = self.create_value
         self.right = self.initial_right
 
-    def set_parameter(self, dialog):
-        self.create_value = dialog.create_value
-        self.initial_right = dialog.initial_right
-        self.purchase_amount = dialog.purchase_amount
-        self.consumption = dialog.consumption
-        #self.value = self.create_value
-        #self.right = self.initial_right
+    def set_parameter(self, source):
+        """
+        初期値を設定する
+        :param source:
+        :return:
+        """
+        self.create_value = source.create_value
+        self.initial_right = source.initial_right
+        self.purchase_amount = source.purchase_amount
+        self.consumption = source.consumption
 
+    def reset(self):
+        """
+        初期状態に戻す
+        :return:
+        """
+        self.value = 0
+        self.right = self.initial_right
+
+    def buy(self, animal_list, log):
+        """
+        買い取引
+        :param animal_list: アニマルオブジェクトリスト
+        :param log(msg):ログ出力関数
+        :return: 取引結果
+        """
+        # 必要量を持っているところを探す
+        seller_list = [animal for animal in animal_list if animal.request(self.purchase_amount)]
+        length = len(seller_list)
+        if length == 0:
+            log("【{0}】は購入できませんでした".format(self.name))
+            return "nobody"
+
+        # 必要量を手持ちの金額で売ってくれるところを探す
+        seller_list = [animal.price(self.purchase_amount) for animal in seller_list if
+                       animal.price(self.purchase_amount)[1] <= self.right]
+                            # animal.price:オブジェクトと販売価格のリスト
+        length = len(seller_list)
+        if length == 0:
+            log("【{0}】は権利不足でした".format(self.name))
+            return "shortage"
+
+        # 供給も手持ちも十分なので取引を行う
+        select = random.randint(0, length - 1)          # 取引先はランダムに選ぶ
+        seller = seller_list[select][0]                 # 売ってくれるAnimal
+        right = seller_list[select][1]                  # 価格
+        seller.sell(self.purchase_amount, right)        # 取引を行う
+
+        self.payment(self.purchase_amount, right)
+        log("【{0}】は【{1}】から{2}で購入しました".format(self.name, seller.name, right))
+        return "buy"
+
+    def price(self, amount):
+        """
+        購入量を提示して、価格を得る
+        :param amount: 購入量
+        :return:[このオブジェクト,販売価格]
+        """
+        return [self, amount]  # とりあえず、量と価格は同じ
+
+    def request(self, amount):
+        """
+        購入量を提示して、販売可能かどうか問い合わせる
+        :param amount:
+        :return:True:必要量はある False:販売不可
+        """
+        if self.value - self.consumption >= amount:  # 売ったあと、自分の分は残っているか
+            return True
+        else:
+            return False
+
+    def sell(self, amount, right):
+        """
+        販売処理
+        :param amount:販売量
+        :param right:取得する権利量
+        :return:
+        """
+
+        self.value -= amount
+        self.right += right
+
+    def payment(self, amount, right):
+        """
+        支払い
+        :param amount:購入量
+        :param right:支払いする権利量
+        :return:
+        """
+        self.value += amount
+        self.right -= right
+
+    def production(self):
+        """
+        生産：一定期間毎に価値を生産する
+        :return:
+        """
+        self.value += self.create_value
+
+    def consume(self):
+        """
+        消費：一定期間毎に価値を消費する
+        :return:
+        """
+        self.value -= self.consumption
+        if self.value < 0:
+            self.value = 0
+
+
+    #############
+    #   プロパティ Getter,setter
+    #############
+    #
+    #   Getter
+    #
     @property
     def name(self):
         return AnimalModel.animal_properties.at[self.index, 'name']
@@ -104,7 +234,9 @@ class AnimalModel:
     @property
     def purchase_amount(self):
         return AnimalModel.animal_properties.at[self.index, 'purchase_amount']
-
+    #
+    #   Setter
+    #
     @name.setter
     def name(self, text):
         AnimalModel.animal_properties.at[self.index, 'name'] = text
@@ -133,107 +265,72 @@ class AnimalModel:
     def purchase_amount(self, amount):
         AnimalModel.animal_properties.at[self.index, 'purchase_amount'] = amount
 
-    def get_name(self):
-        return self.name
-
-    def set_name(self, name):
-        self.name = name
-
-    def reset(self):
-        self.value = 0
-        self.right = self.initial_right
-
-    def buy(self, animal_list, log):
-        # 必要量を持っているところを探す
-        seller_list = [animal for animal in animal_list if animal.request(self.purchase_amount)]
-        length = len(seller_list)
-        if length == 0:
-            log("【{0}】は購入できませんでした".format(self.name))
-            return "nobody"
-
-        # 必要量を手持ちの金額で売ってくれるところを探す
-        seller_list = [animal.price(self.purchase_amount) for animal in seller_list if
-                       animal.price(self.purchase_amount)[1] <= self.right]
-        length = len(seller_list)
-        if length == 0:
-            log("【{0}】は権利不足でした".format(self.name))
-            return "shortage"
-
-        select = random.randint(0, length - 1)
-        seller = seller_list[select][0]
-        right = seller_list[select][1]
-        seller.sell(self.purchase_amount, right)
-
-        self.settlement(self.purchase_amount, right)
-        log("【{0}】は【{1}】から{2}で購入しました".format(self.name, seller.get_name(), right))
-        return "buy"
-
-    def price(self, amount):
-        return [self, amount]  # とりあえず、量と価格は同じ
-
-    def request(self, amount):
-        if self.value - self.consumption >= amount:  # 売ったあと、自分の分は残っているか
-            return True
-        else:
-            return False
-
-    def sell(self, amount, right):
-        self.value -= amount
-        self.right += right
-
-    def settlement(self, amount, right):
-        self.value += amount
-        self.right -= right
-
-    def production(self):
-        self.value += self.create_value
-
-    def consume(self):
-        self.value -= self.consumption
-        if self.value < 0:
-            self.value = 0
-
-
+############################################################
+#
+#   アニマルのユーザーインタフェース
+#
+############################################################
 class AnimalView(BaseicAnimalBook):
     def __init__(self, parent, model, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.TAB_TRAVERSAL, name=wx.PanelNameStr):
         super().__init__(parent, id, pos, size, style, name)
-        self.model = None
-        self.m_pos_x = None
-        self.m_pos_y = None
-        self.root_window = None  # この設定はself.m_name.SetValueより前
-        self.set_model(model)
+        self.model = None           # データ管理部
+        self.m_pos_x = None         # アイコン表示位置(X)
+        self.m_pos_y = None         # アイコン表示位置(Y)
+        self.root_window = None     # 最上位のView：この設定はself.m_name.SetValueより前
+        self.set_model(model)       # データ管理部のデータを反映させる
 
     def set_model(self, model):
+        """
+        データ管理部のデータを反映させる
+        :param model: データ管理部
+        :return:
+        """
         self.model = model
-        self.m_class_name.SetLabel(model.__class__.__name__)
-        self.m_staticText_name = self.model.name
-        self.set_control()
+        self.m_class_name.SetLabel(model.__class__.__name__)    # クラス名
+        self.m_staticText_name = self.model.name                # アニマル名
+        self.set_control()                                      # 各パラメータを表示
         self.m_name.SetValue(self.model.name)
 
     def set_root_window(self, root_window):
+        """
+        最上位のView
+        :param root_window:
+        :return:
+        """
         self.root_window = root_window
 
     def set_control(self):
-        self.m_gauge_value.SetValue(self.model.value / 10)
+        """
+        アニマルBook(左側の表示）の設定
+        :return:
+        """
+        self.m_gauge_value.SetValue(self.model.value / 10)              # 価値のプログレスバー
         self.m_staticText_value.SetLabel(str(self.model.value))
 
-        self.m_slider_value.SetValue(self.model.create_value)
+        self.m_slider_value.SetValue(self.model.create_value)           # 生産量のスライダー
         self.m_textCtrl_value.SetValue(str(self.model.create_value))
 
-        self.m_gauge_right.SetValue(self.model.right / 5)
+        self.m_gauge_right.SetValue(self.model.right / 5)               # 権利のプログレスバー
         self.m_staticText_right.SetLabel(str(self.model.right))
 
-        self.m_slider_right.SetValue(self.model.initial_right)
+        self.m_slider_right.SetValue(self.model.initial_right)          # 権利の初期値のスライダー
         self.m_textCtrl_right.SetValue(str(self.model.initial_right))
 
-        self.m_slider_purchase_amount.SetValue(self.model.purchase_amount)
+        self.m_slider_purchase_amount.SetValue(self.model.purchase_amount)  # 購入量のスライダー
         self.m_textCtrl_purchase_amount.SetValue(str(self.model.purchase_amount))
 
-        self.m_slider_consumption.SetValue(self.model.consumption)
+        self.m_slider_consumption.SetValue(self.model.consumption)      # 消費量のスライダー
         self.m_textCtrl_consumption.SetValue(str(self.model.consumption))
 
     def paint(self, panel, x=None, y=None):
+        """
+        アイコンを描画
+        :param panel: 上位Vew
+        :param x:始点(X)
+        :param y:始点(Y)
+        :return:
+        """
         dc = wx.PaintDC(panel)
         dc.SetPen(wx.Pen('blue'))
 
@@ -339,7 +436,7 @@ class AnimalView(BaseicAnimalBook):
         self.set_control()
 
     def onAnimalNameChange(self, event):
-        self.model.set_name(self.m_name.GetValue())
+        self.model.name = self.m_name.GetValue()
         if self.root_window is not None:
             self.root_window.Refresh()
 
