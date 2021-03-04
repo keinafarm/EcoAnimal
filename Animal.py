@@ -2,7 +2,7 @@ import wx
 from SimpleBookSample import BaseicAnimalBook, DialogParameterSetting
 import random
 import pandas as pd
-
+import matplotlib.pyplot as plt
 
 # https://qiita.com/ysdyt/items/9ccca82fc5b504e7913a
 # https://aiacademy.jp/media/?p=152
@@ -206,7 +206,15 @@ class AnimalModel:
         価値と権利の値を記憶する
         :return:
         """
-        self.history = self.history.append([[self.value, self.right]])
+        self.history = self.history.append({'value':self.value,  'right':self.right}, ignore_index=True)
+
+    #############
+    #   グラフ表示
+    #############
+    def graph(self):
+        self.history.plot()
+        print(self.history)
+        plt.show()
 
     #############
     #   プロパティ Getter,setter
@@ -271,6 +279,7 @@ class AnimalModel:
     @purchase_amount.setter
     def purchase_amount(self, amount):
         AnimalModel.animal_properties.at[self.index, 'purchase_amount'] = amount
+
 
 ############################################################
 #
@@ -465,6 +474,8 @@ class AnimalView(BaseicAnimalBook):
     def context_menu_select(self, event):
         id = event.GetId()
         print("Context Menu ID={0}".format(id))
+        if id == 1:
+            self.model.graph()
 
 ############################################################
 #
