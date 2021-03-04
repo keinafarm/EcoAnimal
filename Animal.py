@@ -91,6 +91,7 @@ class AnimalModel:
         AnimalModel.animal_properties.at[self.index, 'object'] = self
         self.value = self.create_value
         self.right = self.initial_right
+        self.history = pd.DataFrame(columns=['value', 'right'])
 
     def set_parameter(self, source):
         """
@@ -200,6 +201,12 @@ class AnimalModel:
         if self.value < 0:
             self.value = 0
 
+    def memory(self):
+        """
+        価値と権利の値を記憶する
+        :return:
+        """
+        self.history = self.history.append([[self.value, self.right]])
 
     #############
     #   プロパティ Getter,setter

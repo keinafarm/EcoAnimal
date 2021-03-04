@@ -26,4 +26,5 @@ class Market:
             animal_buyer.buy(self.animal_list, self.log)    # 取引
 
         for animal in self.animal_list:
-            animal.consume()  # 消費
+            animal.consume()    # 消費
+            animal.memory()     # 履歴に保存
