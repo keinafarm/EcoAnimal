@@ -449,6 +449,23 @@ class AnimalView(BaseicAnimalBook):
         self.model.set_parameter(dialog)
         self.set_control()
 
+    def onRightUp(self, event):
+        """
+        https://python-minutes.blogspot.com/2017/01/pythongui.html
+        :param event:
+        :return:
+        """
+        menu = wx.Menu()
+        item_1 = wx.MenuItem(menu, 1, 'グラフ')
+        menu.Append(item_1)
+        menu.Bind(wx.EVT_MENU, self.context_menu_select)
+
+        self.PopupMenu(menu)
+
+    def context_menu_select(self, event):
+        id = event.GetId()
+        print("Context Menu ID={0}".format(id))
+
 ############################################################
 #
 #   一括設定ダイアログのユーザーインタフェース
