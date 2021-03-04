@@ -53,6 +53,14 @@ class AnimalModel:
         self.value = self.create_value
         self.right = self.initial_right
 
+    def set_parameter(self, dialog):
+        self.create_value = dialog.create_value
+        self.initial_right = dialog.initial_right
+        self.purchase_amount = dialog.purchase_amount
+        self.consumption = dialog.consumption
+        #self.value = self.create_value
+        #self.right = self.initial_right
+
     @property
     def name(self):
         return AnimalModel.animal_properties.at[self.index, 'name']
@@ -320,10 +328,7 @@ class AnimalView(BaseicAnimalBook):
             self.root_window.Refresh()
 
     def set_parameter(self, dialog):
-        self.model.create_value = dialog.create_value
-        self.model.initial_right = dialog.initial_right
-        self.model.purchase_amount = dialog.purchase_amount
-        self.model.consumption = dialog.consumption
+        self.model.set_parameter(dialog)
         self.set_control()
 
 
