@@ -10,51 +10,10 @@
 import wx
 from Animal import AnimalModel, AnimalParameterSettingDialog, AnimalView
 from Market import Market
-import pandas as pd
 from SimpleBookSample import MainFrame
-import openpyxl
 
 ANIMALS = 108  # アニマルの数（色んな数で割りやすいから２と3の倍数にした）
 
-
-class AnimalParameter:
-    df = pd.DataFrame({  # アニマルのプロパティの初期値
-        'object': [None],
-        'name': [None],  # アニマル名
-        'initial_right': [50],  # 権利の初期値
-        'create_value': [30],  # 価値の生産量
-        'value': [0],  # 価値の量
-        'right': [50],  # 権利の量
-        'consumption': [30],  # 消費量
-        'purchase_amount': [30],  # 購入量
-    })
-
-    @classmethod
-    def get_property(cls):
-        """
-        保存してある初期値データを提供する
-        :return:
-        """
-        return cls.df.copy()
-
-    @classmethod
-    def store_property(cls, target):
-        """
-        初期値データを保存する
-        :param target: 新たな初期値が格納されているオブジェクト
-        :return:
-        """
-        cls.df.at[0,'initial_right'] = target.initial_right
-        cls.df.at[0,'create_value'] = target.create_value
-        cls.df.at[0,'consumption'] = target.consumption
-        cls.df.at[0,'purchase_amount'] = target.purchase_amount
-
-    @classmethod
-    def load_property(cls, target):
-        target.initial_right = cls.df.at[0, 'initial_right']
-        target.create_value = cls.df.at[0, 'create_value']
-        target.consumption = cls.df.at[0, 'consumption']
-        target.purchase_amount = cls.df.at[0, 'purchase_amount']
 
 
 class EcoAnimal:
@@ -63,15 +22,13 @@ class EcoAnimal:
             アプリのメインクラス
             全アニマルのデータをPandasのDataFrameで管理している
         """
-        self._animal_list = pd.DataFrame()  # アニマルリストを初期化
+        AnimalModel.init(ANIMALS)
+        self._animal_list = []
         for i in range(ANIMALS):
             # 初期値
             animal_name = "Animal{0}".format(i + 1)  # アニマル名の初期値
-            df = AnimalParameter.get_property()  # アニマルプロパティの初期値
-            df.at[0,"name"] = animal_name
-            animal = AnimalModel(df)  # アニマルを生成
-            df.at[0,'object'] = animal  # インスタンスを保存
-            self._animal_list = self._animal_list.append(df, ignore_index=True)  # リストに登録
+            animal = AnimalModel(i,animal_name)  # アニマルを生成
+            self._animal_list.append(animal)
 
         self.view = EcoAnimalView(None, self)  # viewを作成
         self.view.Show()  # 表示
@@ -82,9 +39,7 @@ class EcoAnimal:
         リスト形式でアニマルリストを提供する
         :return:
         """
-        df = self._animal_list.loc[:,'object']
-        ret_list = df.values.tolist()
-        return ret_list
+        return self._animal_list
 
     def reset(self):
         """
@@ -110,11 +65,9 @@ class EcoAnimal:
         https://note.nkmk.me/python-pandas-to-pickle-read-pickle/
         https://note.nkmk.me/python-pandas-to-excel/
         :param pathname: 出力先ファイル
-        :return: 
+        :return:
         """
-        save_list = self._animal_list.copy()
-        save_list.loc[:,'object'] = None          # オブジェクトはクリアしておく
-        save_list.to_excel(pathname, index=False)
+        pass
 
     def load(self, pathname):
         """
@@ -128,21 +81,7 @@ class EcoAnimal:
         :param pathname:
         :return:
         """
-        animal_list = pd.read_excel(pathname, index_col=None)
-        if len(animal_list) != ANIMALS:
-            self.view.m_statusBar.SetStatusText("データ数は{0}です。(現在:{1})".format(ANIMALS, len(animal_list)))  # あとでdialog化
-            return
-
-        self._animal_list = pd.DataFrame()  # アニマルリストを初期化
-        for i in range(ANIMALS):
-            df = animal_list.loc[i:i].copy(deep=False)                  # DataFrame型で取得しようと思ったら範囲していしないといけない
-                                                                        # deep=Falseでないと、参照になる
-            df.reset_index(drop=True, inplace=True)                     # indexをクリアしておかないと、AnimalModelが代入する時困る
-            animal = AnimalModel(df)
-            df['object'] = animal
-            self._animal_list = self._animal_list.append(df, ignore_index=True)  # リストに登録
-
-        self.view.restructure(self.animal_list)                         # 読み直したデータで画面を再構築する
+        pass
 
 
 class EcoAnimalView(MainFrame):
@@ -352,11 +291,11 @@ class EcoAnimalView(MainFrame):
         :param event:
         :return:
         """
-        dialog = AnimalParameterSettingDialog(self, AnimalParameter.load_property)
+        dialog = AnimalParameterSettingDialog(self, AnimalModel.load_property)
         result = dialog.ShowModal()
         if result != wx.ID_OK:
             return
-        AnimalParameter.store_property(dialog)
+        AnimalModel.store_property(dialog)
         for animal in self.animal_list:
             animal.set_parameter(dialog)
 

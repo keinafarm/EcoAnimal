@@ -1,75 +1,113 @@
 import wx
 from SimpleBookSample import BaseicAnimalBook, DialogParameterSetting
 import random
+import pandas as pd
 
 
 # https://qiita.com/ysdyt/items/9ccca82fc5b504e7913a
 # https://aiacademy.jp/media/?p=152
 
 class AnimalModel:
-    def __init__(self, df):
-        """
+    animal_properties = None
+    property_name_list = ['object', 'name', 'value', 'right', 'create_value', 'initial_right', 'consumption',
+                          'purchase_amount']
+    initial_values = {'object': None, 'name': None, 'right': 50, 'value': 30, 'create_value': 30, 'initial_right': 50,
+                      'consumption': 30, 'purchase_amount': 30}
 
-        :param df:
+    @classmethod
+    def init(cls, animals):
+        cls.animal_properties = pd.DataFrame([cls.initial_values] * animals, columns=cls.property_name_list)
+
+    @classmethod
+    def set_initial_values(cls, initial_value):
         """
-        self.df = df
-        self.value = self.df.create_value
+        全体の初期値を設定する
+        :param initial_value: 初期値リスト（辞書型）
+        :return:
+        """
+        cls.initial_values = initial_value
+
+    @classmethod
+    def load_property(cls, obj):
+        obj.initial_right = cls.initial_values['initial_right']
+        obj.create_value = cls.initial_values['create_value']
+        obj.consumption = cls.initial_values['consumption']
+        obj.purchase_amount = cls.initial_values['purchase_amount']
+
+    @classmethod
+    def store_property(cls, obj):
+         cls.initial_values['initial_right'] = obj.initial_right
+         cls.initial_values['create_value'] = obj.create_value
+         cls.initial_values['consumption'] = obj.consumption
+         cls.initial_values['purchase_amount'] = obj.purchase_amount
+
+
+    def __init__(self, index, name):
+        """
+        アニマルを生成する
+        :param index: index番号
+        """
+        self.index = index
+        self.name = name
+        AnimalModel.animal_properties.at[self.index, 'object'] = self
+        self.value = self.create_value
+        self.right = self.initial_right
 
     @property
     def name(self):
-        return self.df.at[0, 'name']
+        return AnimalModel.animal_properties.at[self.index, 'name']
 
     @property
     def initial_right(self):
-        return self.df.at[0, 'initial_right']
+        return AnimalModel.animal_properties.at[self.index, 'initial_right']
 
     @property
     def create_value(self):
-        return self.df.at[0, 'create_value']
+        return AnimalModel.animal_properties.at[self.index, 'create_value']
 
     @property
     def value(self):
-        return self.df.at[0, 'value']
+        return AnimalModel.animal_properties.at[self.index, 'value']
 
     @property
     def right(self):
-        return self.df.at[0, 'right']
+        return AnimalModel.animal_properties.at[self.index, 'right']
 
     @property
     def consumption(self):
-        return self.df.at[0, 'consumption']
+        return AnimalModel.animal_properties.at[self.index, 'consumption']
 
     @property
     def purchase_amount(self):
-        return self.df.at[0, 'purchase_amount']
+        return AnimalModel.animal_properties.at[self.index, 'purchase_amount']
 
     @name.setter
     def name(self, text):
-        self.df.at[0,'name'] = text
+        AnimalModel.animal_properties.at[self.index, 'name'] = text
 
     @initial_right.setter
     def initial_right(self, amount):
-        self.df.at[0,'initial_right'] = amount
+        AnimalModel.animal_properties.at[self.index, 'initial_right'] = amount
 
     @create_value.setter
     def create_value(self, amount):
-        self.df.at[0,'create_value'] = amount
+        AnimalModel.animal_properties.at[self.index, 'create_value'] = amount
 
     @value.setter
     def value(self, amount):
-        self.df.at[0,'value'] = amount
+        AnimalModel.animal_properties.at[self.index, 'value'] = amount
 
     @right.setter
     def right(self, amount):
-        self.df.at[0,'right'] = amount
+        AnimalModel.animal_properties.at[self.index, 'right'] = amount
 
     @consumption.setter
     def consumption(self, amount):
-        self.df.at[0,'consumption'] = amount
+        AnimalModel.animal_properties.at[self.index, 'consumption'] = amount
 
     @purchase_amount.setter
     def purchase_amount(self, amount):
-        self.df.at[0,'purchase_amount'] = amount
+        AnimalModel.animal_properties.at[self.index, 'purchase_amount'] = amount
 
     def get_name(self):
         return self.name
@@ -298,6 +336,13 @@ class AnimalParameterSettingDialog(DialogParameterSetting):
         self.purchase_amount = None
         initializer(self)
         self.set_control()
+
+    def get_initial_value(self):
+        values = {'create_value': self.create_value,
+                  "initial_right": self.initial_right,
+                  'consumption': self.consumption,
+                  'purchase_amount': self.purchase_amount}
+        return values
 
     def set_control(self):
         self.m_slider_value.SetValue(self.create_value)
