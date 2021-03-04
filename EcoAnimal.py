@@ -15,7 +15,6 @@ from SimpleBookSample import MainFrame
 ANIMALS = 108  # アニマルの数（色んな数で割りやすいから２と3の倍数にした）
 
 
-
 class EcoAnimal:
     def __init__(self):
         """
@@ -27,7 +26,7 @@ class EcoAnimal:
         for i in range(ANIMALS):
             # 初期値
             animal_name = "Animal{0}".format(i + 1)  # アニマル名の初期値
-            animal = AnimalModel(i,animal_name)  # アニマルを生成
+            animal = AnimalModel(i, animal_name)  # アニマルを生成
             self._animal_list.append(animal)
 
         self.view = EcoAnimalView(None, self)  # viewを作成
