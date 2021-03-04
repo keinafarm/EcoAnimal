@@ -214,6 +214,7 @@ class AnimalModel:
     def graph(self):
         self.history.plot()
         print(self.history)
+        plt.title("{0}".format(self.name))
         plt.show()
 
     #############
