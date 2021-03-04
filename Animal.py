@@ -13,10 +13,12 @@ class AnimalModel:
                           'purchase_amount']
     initial_values = {'object': None, 'name': None, 'right': 50, 'value': 30, 'create_value': 30, 'initial_right': 50,
                       'consumption': 30, 'purchase_amount': 30}
+    animal_count = 0
 
     @classmethod
     def init(cls, animals):
         cls.animal_properties = pd.DataFrame([cls.initial_values] * animals, columns=cls.property_name_list)
+        cls.animal_count = animals
 
     @classmethod
     def set_initial_values(cls, initial_value):
@@ -41,6 +43,20 @@ class AnimalModel:
          cls.initial_values['consumption'] = obj.consumption
          cls.initial_values['purchase_amount'] = obj.purchase_amount
 
+    @classmethod
+    def save(cls, pathname):
+        save_list = cls.animal_properties.copy()
+        save_list['object'] = None
+        save_list.to_excel(pathname)
+
+    @classmethod
+    def load(cls, pathname):
+        animal_list = pd.read_excel(pathname)
+        if len(animal_list) != cls.animal_count:
+            return "データ数は{0}です。(現在:{1})".format(cls.animal_count, len(animal_list))
+
+        cls.animal_properties = animal_list
+        return None
 
     def __init__(self, index, name):
         """

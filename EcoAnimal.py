@@ -66,7 +66,7 @@ class EcoAnimal:
         :param pathname: 出力先ファイル
         :return:
         """
-        pass
+        AnimalModel.save(pathname)
 
     def load(self, pathname):
         """
@@ -80,8 +80,9 @@ class EcoAnimal:
         :param pathname:
         :return:
         """
-        pass
-
+        msg = AnimalModel.load(pathname)
+        if msg is not None:
+            self.view.error(msg)
 
 class EcoAnimalView(MainFrame):
     def __init__(self, parent, model):
@@ -144,6 +145,12 @@ class EcoAnimalView(MainFrame):
             if j > 12:
                 i += 1
                 j = 0
+    ##########################
+    #   メッセージダイアログ
+    ##########################
+    def error(self, msg):
+        dialog = wx.MessageDialog(self,msg, "ERROR",wx.OK | wx.ICON_ERROR)
+        dialog.ShowModal()
 
     ##########################
     #   メニュー処理
@@ -166,7 +173,9 @@ class EcoAnimalView(MainFrame):
             try:
                 self.model.save(pathname)
             except IOError:
-                self.m_statusBar.SetStatusText("{0}に書き込めませんでした".format(pathname))
+                msg = "{0}に書き込めませんでした".format(pathname)
+                self.error(msg)
+                self.m_statusBar.SetStatusText(msg)
                 return
 
         self.m_statusBar.SetStatusText("{0}に保存しました".format(pathname))
@@ -189,10 +198,12 @@ class EcoAnimalView(MainFrame):
             try:
                 self.model.load(pathname)
             except IOError:
-                self.m_statusBar.SetStatusText("{0}から読み込めませんでした".format(pathname))
+                msg = "{0}から読み込めませんでした".format(pathname)
+                self.error(msg)
+                self.m_statusBar.SetStatusText(msg)
                 return
 
-        self.onReset()
+        self.onReset(event)
         self.m_statusBar.SetStatusText("{0}から読み出しました".format(pathname))
 
     def onLogSave(self, event):
