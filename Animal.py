@@ -442,7 +442,11 @@ class AnimalView(BaseicAnimalBook):
         self.model.set_parameter(dialog)
         self.set_control()
 
-
+############################################################
+#
+#   一括設定ダイアログのユーザーインタフェース
+#
+############################################################
 class AnimalParameterSettingDialog(DialogParameterSetting):
     def __init__(self, parent, initializer):
         super().__init__(parent)
