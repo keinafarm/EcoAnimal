@@ -11,6 +11,7 @@ import wx
 from Animal import AnimalModel, AnimalParameterSettingDialog, AnimalView
 from Market import Market
 from SimpleBookSample import MainFrame
+from Histogram import Histogram
 
 ANIMALS = 108  # アニマルの数（色んな数で割りやすいから２と3の倍数にした）
 
@@ -324,8 +325,10 @@ class EcoAnimalView(MainFrame):
         :return:
         """
         menu = wx.Menu()
-        item_1 = wx.MenuItem(menu, 1, 'グラフ')
+        item_1 = wx.MenuItem(menu, 1, '価値グラフ')
+        item_2 = wx.MenuItem(menu, 2, '権利グラフ')
         menu.Append(item_1)
+        menu.Append(item_2)
         menu.Bind(wx.EVT_MENU, self.context_menu_select)
 
         self.PopupMenu(menu)
@@ -333,6 +336,13 @@ class EcoAnimalView(MainFrame):
     def context_menu_select(self, event):
         id = event.GetId()
         print("Context Menu ID={0}".format(id))
+        hist = Histogram()
+        if id == 1:
+            hist.draw_graph(AnimalModel.animal_properties, 'value')
+        elif id == 2:
+            hist.draw_graph(AnimalModel.animal_properties, 'right')
+        else:
+            print("そんなメニューないです")
 
 if __name__ == "__main__":
     app = wx.App()
