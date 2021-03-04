@@ -317,6 +317,22 @@ class EcoAnimalView(MainFrame):
         self.model.reset()
         self.Refresh()
 
+    def onRightUp(self, event):
+        """
+        https://python-minutes.blogspot.com/2017/01/pythongui.html
+        :param event:
+        :return:
+        """
+        menu = wx.Menu()
+        item_1 = wx.MenuItem(menu, 1, 'グラフ')
+        menu.Append(item_1)
+        menu.Bind(wx.EVT_MENU, self.context_menu_select)
+
+        self.PopupMenu(menu)
+
+    def context_menu_select(self, event):
+        id = event.GetId()
+        print("Context Menu ID={0}".format(id))
 
 if __name__ == "__main__":
     app = wx.App()

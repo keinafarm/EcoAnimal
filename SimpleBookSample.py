@@ -119,6 +119,7 @@ class MainFrame ( wx.Frame ):
         self.Bind( wx.EVT_MENU, self.onParameterSetting, id = self.m_menuItem_parameter_setting.GetId() )
         self.Bind( wx.EVT_MENU, self.onReset, id = self.m_menuItem4.GetId() )
         self.m_panel.Bind( wx.EVT_PAINT, self.onPaint )
+        self.m_panel.Bind( wx.EVT_RIGHT_UP, self.onRightUp )
         self.Bind( wx.EVT_TIMER, self.onTimer, id=wx.ID_ANY )
 
     def __del__( self ):
@@ -160,6 +161,9 @@ class MainFrame ( wx.Frame ):
         event.Skip()
 
     def onPaint( self, event ):
+        event.Skip()
+
+    def onRightUp( self, event ):
         event.Skip()
 
     def onTimer( self, event ):
