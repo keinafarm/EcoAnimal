@@ -334,10 +334,8 @@ class AnimalView(BaseicAnimalBook):
         dc = wx.PaintDC(panel)
         dc.SetPen(wx.Pen('blue'))
 
-        if x is not None:
-            self.m_pos_x = x
-        if y is not None:
-            self.m_pos_y = y
+        self.m_pos_x = x
+        self.m_pos_y = y
 
         if self.model.right > 255:
             red = 255
