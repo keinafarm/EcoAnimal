@@ -327,8 +327,10 @@ class EcoAnimalView(MainFrame):
         menu = wx.Menu()
         item_1 = wx.MenuItem(menu, 1, '価値グラフ')
         item_2 = wx.MenuItem(menu, 2, '権利グラフ')
+        item_3 = wx.MenuItem(menu, 3, '権利/価値グラフ')
         menu.Append(item_1)
         menu.Append(item_2)
+        menu.Append(item_3)
         menu.Bind(wx.EVT_MENU, self.context_menu_select)
 
         self.PopupMenu(menu)
@@ -338,9 +340,11 @@ class EcoAnimalView(MainFrame):
         print("Context Menu ID={0}".format(id))
         hist = Histogram()
         if id == 1:
-            hist.draw_graph(AnimalModel.animal_properties, 'value')
+            hist.draw_graph(AnimalModel.animal_properties, ['value'])
         elif id == 2:
-            hist.draw_graph(AnimalModel.animal_properties, 'right')
+            hist.draw_graph(AnimalModel.animal_properties, ['right'])
+        elif id == 3:
+            hist.draw_graph(AnimalModel.animal_properties, ['value', 'right'])
         else:
             print("そんなメニューないです")
 
