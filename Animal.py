@@ -23,8 +23,8 @@ class AnimalModel:
     animal_properties = None
     property_name_list = ['object', 'name', 'value', 'right', 'create_value', 'initial_right', 'consumption',
                           'purchase_amount']
-    initial_values = {'object': None, 'name': None, 'right': 50, 'value': 30, 'create_value': 30, 'initial_right': 50,
-                      'consumption': 30, 'purchase_amount': 30}
+    initial_values = {'object': None, 'name': None, 'right': 50, 'value': 20, 'create_value': 20, 'initial_right': 50,
+                      'consumption': 20, 'purchase_amount': 20}
     animal_count = 0
 
     #############
@@ -380,14 +380,14 @@ class AnimalView(BaseicAnimalBook):
         dc.SetFont(wx.Font(wx.FontInfo(8)))
 
         dc.SetPen(wx.Pen('green', width=3))
-        line_length = self.model.value * 5 / 100
+        line_length = self.model.value * 10 / 100
         if line_length > 20:
             line_length = 20
         dc.DrawLine(wx.Point(self.m_pos_x + 1, self.m_pos_y + 20),
                     wx.Point(self.m_pos_x + 1, self.m_pos_y + 20 - line_length))
 
         dc.SetPen(wx.Pen('red', width=3))
-        line_length = self.model.right * 20 / 100
+        line_length = self.model.right * 10 / 100
         if line_length > 20:
             line_length = 20
         dc.DrawLine(wx.Point(self.m_pos_x + 6, self.m_pos_y + 20),
