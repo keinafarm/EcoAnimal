@@ -439,7 +439,7 @@ class AnimalView(BaseicAnimalBook):
         self.set_control()
 
     def onPurchaseAmountText(self, event):
-        value = int(self.m_slider_purchase_amount.GetValue())
+        value = int(self.m_textCtrl_purchase_amount.GetValue())
         if value > 100:
             value = 100
         elif value < 0:
