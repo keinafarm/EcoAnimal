@@ -26,7 +26,7 @@ class DataBase:
                                'initial_right': 50, 'consumption': 20, 'purchase_amount': 20}
         self.animal_count = 0
 
-    def migration(self, animals):
+    def initialize(self, animals):
         self.animal_properties = pd.DataFrame([self.initial_values] * animals, columns=self.property_name_list)
         self.animal_count = animals
 

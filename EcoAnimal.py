@@ -25,7 +25,7 @@ class EcoAnimal:
             全アニマルのデータをPandasのDataFrameで管理している
         """
         DataBase.create(DataBase)
-        DataBase.obj().migration(ANIMALS)
+        DataBase.obj().initialize(ANIMALS)
         self._animal_list = []
         for i in range(ANIMALS):
             # 初期値
