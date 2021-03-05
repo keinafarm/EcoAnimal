@@ -57,6 +57,12 @@ class MainFrame ( wx.Frame ):
 
         self.m_menu_run.AppendSeparator()
 
+        self.m_menuItem_10times = wx.MenuItem( self.m_menu_run, wx.ID_ANY, _(u"10回取引"), wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu_run.Append( self.m_menuItem_10times )
+
+        self.m_menuItem_50times = wx.MenuItem( self.m_menu_run, wx.ID_ANY, _(u"50回取引"), wx.EmptyString, wx.ITEM_NORMAL )
+        self.m_menu_run.Append( self.m_menuItem_50times )
+
         self.m_menubar.Append( self.m_menu_run, _(u"実行") )
 
         self.m_menu_BookList = wx.Menu()
@@ -114,6 +120,8 @@ class MainFrame ( wx.Frame ):
         self.Bind( wx.EVT_MENU, self.onTrade, id = self.m_menuItem5.GetId() )
         self.Bind( wx.EVT_MENU, self.onTradeRun, id = self.m_menuItem_trade_run.GetId() )
         self.Bind( wx.EVT_MENU, self.onTradeStop, id = self.m_menuItem_trade_stop.GetId() )
+        self.Bind( wx.EVT_MENU, self.on10times, id = self.m_menuItem_10times.GetId() )
+        self.Bind( wx.EVT_MENU, self.on50times, id = self.m_menuItem_50times.GetId() )
         self.Bind( wx.EVT_MENU, self.onNext, id = self.m_menuItem_next.GetId() )
         self.Bind( wx.EVT_MENU, self.onPrev, id = self.m_menuItem_prev.GetId() )
         self.Bind( wx.EVT_MENU, self.onParameterSetting, id = self.m_menuItem_parameter_setting.GetId() )
@@ -147,6 +155,12 @@ class MainFrame ( wx.Frame ):
         event.Skip()
 
     def onTradeStop( self, event ):
+        event.Skip()
+
+    def on10times( self, event ):
+        event.Skip()
+
+    def on50times( self, event ):
         event.Skip()
 
     def onNext( self, event ):

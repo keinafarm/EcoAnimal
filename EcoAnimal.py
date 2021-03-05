@@ -7,8 +7,6 @@
 #
 ########################################################################
 #
-#   Todo: 10,50回取引
-#
 
 import wx
 from Animal import AnimalModel, AnimalParameterSettingDialog, AnimalView
@@ -61,6 +59,10 @@ class EcoAnimal:
         market = Market(self.animal_list, self.view.log)  # 市場オブジェクトを生成
         market.trade()  # 市場オブジェクトに取引をさせる
         self.view.update_animals()  # 表示を更新
+
+    def trade_n_times( self, n ):
+        for i in range(n):
+            self.trade()
 
     def save(self, pathname):
         """
@@ -233,6 +235,13 @@ class EcoAnimalView(MainFrame):
         :return:
         """
         self.model.trade()
+
+    def on10times( self, event ):
+        self.model.trade_n_times(10)
+
+    def on50times( self, event ):
+        self.model.trade_n_times(50)
+
 
     def onTradeRun(self, event):
         """
