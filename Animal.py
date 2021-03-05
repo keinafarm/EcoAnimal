@@ -89,8 +89,7 @@ class AnimalModel:
         self.index = index
         self.name = name
         AnimalModel.animal_properties.at[self.index, 'object'] = self
-        self.value = self.create_value
-        self.right = self.initial_right
+        self.reset()
         self.history = pd.DataFrame(columns=['value', 'right'])
 
     def set_parameter(self, source):
@@ -109,7 +108,7 @@ class AnimalModel:
         初期状態に戻す
         :return:
         """
-        self.value = 0
+        self.value = self.create_value
         self.right = self.initial_right
 
     def buy(self, animal_list, log):
