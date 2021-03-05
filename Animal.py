@@ -4,6 +4,7 @@ import random
 import pandas as pd
 import matplotlib.pyplot as plt
 
+
 # https://qiita.com/ysdyt/items/9ccca82fc5b504e7913a
 # https://aiacademy.jp/media/?p=152
 
@@ -56,10 +57,10 @@ class AnimalModel:
 
     @classmethod
     def store_property(cls, obj):
-         cls.initial_values['initial_right'] = obj.initial_right
-         cls.initial_values['create_value'] = obj.create_value
-         cls.initial_values['consumption'] = obj.consumption
-         cls.initial_values['purchase_amount'] = obj.purchase_amount
+        cls.initial_values['initial_right'] = obj.initial_right
+        cls.initial_values['create_value'] = obj.create_value
+        cls.initial_values['consumption'] = obj.consumption
+        cls.initial_values['purchase_amount'] = obj.purchase_amount
 
     @classmethod
     def save(cls, pathname):
@@ -115,7 +116,7 @@ class AnimalModel:
         """
         買い取引
         :param animal_list: アニマルオブジェクトリスト
-        :param log(msg):ログ出力関数
+        :param log:ログ出力関数(msg)
         :return: 取引結果
         """
         # 必要量を持っているところを探す
@@ -128,29 +129,21 @@ class AnimalModel:
         # 必要量を手持ちの金額で売ってくれるところを探す
         seller_list = [animal.price(self.purchase_amount) for animal in seller_list if
                        animal.price(self.purchase_amount)[1] <= self.right]
-                            # animal.price:オブジェクトと販売価格のリスト
+        # animal.price:オブジェクトと販売価格のリスト
         length = len(seller_list)
         if length == 0:
             log("【{0}】は権利不足でした".format(self.name))
             return "shortage"
 
         # 供給も手持ちも十分なので取引を行う
-        select = random.randint(0, length - 1)          # 取引先はランダムに選ぶ
-        seller = seller_list[select][0]                 # 売ってくれるAnimal
-        right = seller_list[select][1]                  # 価格
-        seller.sell(self.purchase_amount, right)        # 取引を行う
+        select = random.randint(0, length - 1)  # 取引先はランダムに選ぶ
+        seller = seller_list[select][0]  # 売ってくれるAnimal
+        right = seller_list[select][1]  # 価格
+        seller.sell(self.purchase_amount, right)  # 取引を行う
 
         self.payment(self.purchase_amount, right)
         log("【{0}】は【{1}】から{2}で購入しました".format(self.name, seller.name, right))
         return "buy"
-
-    def price(self, amount):
-        """
-        購入量を提示して、価格を得る
-        :param amount: 購入量
-        :return:[このオブジェクト,販売価格]
-        """
-        return [self, amount]  # とりあえず、量と価格は同じ
 
     def request(self, amount):
         """
@@ -162,6 +155,14 @@ class AnimalModel:
             return True
         else:
             return False
+
+    def price(self, amount):
+        """
+        購入量を提示して、価格を得る
+        :param amount: 購入量
+        :return:[このオブジェクト,販売価格]
+        """
+        return [self, amount]  # とりあえず、量と価格は同じ
 
     def sell(self, amount, right):
         """
@@ -205,14 +206,17 @@ class AnimalModel:
         価値と権利の値を記憶する
         :return:
         """
-        self.history = self.history.append({'value':self.value,  'right':self.right}, ignore_index=True)
+        self.history = self.history.append({'value': self.value, 'right': self.right}, ignore_index=True)
 
     #############
     #   グラフ表示
     #############
     def graph(self):
+        """
+        価値と権利の遷移をグラフで表示する
+        :return:
+        """
         self.history.plot()
-        print(self.history)
         plt.title("{0}".format(self.name))
         plt.show()
 
@@ -249,6 +253,7 @@ class AnimalModel:
     @property
     def purchase_amount(self):
         return AnimalModel.animal_properties.at[self.index, 'purchase_amount']
+
     #
     #   Setter
     #
@@ -290,11 +295,11 @@ class AnimalView(BaseicAnimalBook):
     def __init__(self, parent, model, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
                  style=wx.TAB_TRAVERSAL, name=wx.PanelNameStr):
         super().__init__(parent, id, pos, size, style, name)
-        self.model = None           # データ管理部
-        self.m_pos_x = None         # アイコン表示位置(X)
-        self.m_pos_y = None         # アイコン表示位置(Y)
-        self.root_window = None     # 最上位のView：この設定はself.m_name.SetValueより前
-        self.set_model(model)       # データ管理部のデータを反映させる
+        self.model = None  # データ管理部
+        self.m_pos_x = None  # アイコン表示位置(X)
+        self.m_pos_y = None  # アイコン表示位置(Y)
+        self.root_window = None  # 最上位のView：この設定はself.m_name.SetValueより前
+        self.set_model(model)  # データ管理部のデータを反映させる
 
     def set_model(self, model):
         """
@@ -303,9 +308,9 @@ class AnimalView(BaseicAnimalBook):
         :return:
         """
         self.model = model
-        self.m_class_name.SetLabel(model.__class__.__name__)    # クラス名
-        self.m_staticText_name = self.model.name                # アニマル名
-        self.set_control()                                      # 各パラメータを表示
+        self.m_class_name.SetLabel(model.__class__.__name__)  # クラス名
+        self.m_staticText_name = self.model.name  # アニマル名
+        self.set_full_control()  # 各パラメータを表示
         self.m_name.SetValue(self.model.name)
 
     def set_root_window(self, root_window):
@@ -316,29 +321,57 @@ class AnimalView(BaseicAnimalBook):
         """
         self.root_window = root_window
 
-    def set_control(self):
+    #############
+    #   BOOKパネル表示
+    #############
+    def set_full_control(self):
         """
         アニマルBook(左側の表示）の設定
         :return:
         """
-        self.m_gauge_value.SetValue(self.model.value / 10)              # 価値のプログレスバー
+        self.m_gauge_value.SetValue(self.model.value / 10)  # 価値のプログレスバー
         self.m_staticText_value.SetLabel(str(self.model.value))
 
-        self.m_slider_value.SetValue(self.model.create_value)           # 生産量のスライダー
-        self.m_textCtrl_value.SetValue(str(self.model.create_value))
+        self.m_slider_create_value.SetValue(self.model.create_value)  # 生産量のスライダー
+        self.m_textCtrl_create_value.SetValue(str(self.model.create_value))
 
-        self.m_gauge_right.SetValue(self.model.right / 10)               # 権利のプログレスバー
+        self.m_gauge_right.SetValue(self.model.right / 10)  # 権利のプログレスバー
         self.m_staticText_right.SetLabel(str(self.model.right))
 
-        self.m_slider_right.SetValue(self.model.initial_right)          # 権利の初期値のスライダー
-        self.m_textCtrl_right.SetValue(str(self.model.initial_right))
+        self.m_slider_initial_right.SetValue(self.model.initial_right)  # 権利の初期値のスライダー
+        self.m_textCtrl_initial_right.SetValue(str(self.model.initial_right))
 
         self.m_slider_purchase_amount.SetValue(self.model.purchase_amount)  # 購入量のスライダー
         self.m_textCtrl_purchase_amount.SetValue(str(self.model.purchase_amount))
 
-        self.m_slider_consumption.SetValue(self.model.consumption)      # 消費量のスライダー
+        self.m_slider_consumption.SetValue(self.model.consumption)  # 消費量のスライダー
         self.m_textCtrl_consumption.SetValue(str(self.model.consumption))
 
+        self.set_control()
+
+    def set_control(self):
+        """
+        アニマルBook(左側の表示）の設定 価値と権利だけ
+        :return:
+        """
+        self.m_gauge_value.SetValue(self.model.value / 10)  # 価値のプログレスバー
+        self.m_staticText_value.SetLabel(str(self.model.value))
+
+        self.m_gauge_right.SetValue(self.model.right / 10)  # 権利のプログレスバー
+        self.m_staticText_right.SetLabel(str(self.model.right))
+
+    def set_parameter(self, dialog):
+        """
+        一括設定による設定
+        :param dialog:
+        :return:
+        """
+        self.model.set_parameter(dialog)
+        self.set_full_control()
+
+    #############
+    #   アイコン表示
+    #############
     def paint(self, panel, x=None, y=None):
         """
         アイコンを描画
@@ -394,50 +427,89 @@ class AnimalView(BaseicAnimalBook):
 
         dc.DrawText(self.m_name.GetValue(), self.m_pos_x - 20, self.m_pos_y + 25)
 
-    def onValueChanged(self, event):
-        self.model.create_value = self.m_slider_value.GetValue()
-        self.set_control()
+    #############
+    #   イベント処理
+    #############
+    def onCreateValueChanged(self, event):
+        """
+        BOOK:生産額スライダー変更
+        :param event:
+        :return:
+        """
+        self.model.create_value = self.m_slider_create_value.GetValue()
+        self.set_full_control()
 
-    def onRightChanged(self, event):
-        self.model.initial_right = self.m_slider_right.GetValue()
-        self.set_control()
-
-    def onValueText(self, event):
-        value = int(self.m_textCtrl_value.GetValue())
+    def onCreateValueText(self, event):
+        """
+        BOOK:生産額テキストEnter
+        :param event:
+        :return:
+        """
+        value = int(self.m_textCtrl_create_value.GetValue())
         if value > 100:
             value = 100
         elif value < 0:
             value = 0
         self.model.create_value = value
-        self.set_control()
+        self.set_full_control()
 
-    def onValueTextFocus( self, event ):
-        self.onValueText(event)
-        event.Skip()
+    def onCreateValueTextFocus(self, event):
+        """
+        BOOK:生産額テキストフォーカスアウト
+        :param event:
+        :return:
+        """
+        self.onCreateValueText(event)
+        event.Skip()  # これがないと、フォーカスがハズレない
 
-    def onRightText(self, event):
-        value = int(self.m_textCtrl_right.GetValue())
+    def onInitialRightChanged(self, event):
+        """
+        BOOK:権利初期値スライダー変更
+        :param event:
+        :return:
+        """
+        self.model.initial_right = self.m_slider_initial_right.GetValue()
+        self.set_full_control()
+
+    def onInitialRightText(self, event):
+        """
+        BOOK:権利初期値テキストEnter
+        :param event:
+        :return:
+        """
+        value = int(self.m_textCtrl_initial_right.GetValue())
         if value > 100:
             value = 100
         elif value < 0:
             value = 0
 
         self.model.initial_right = value
-        self.set_control()
+        self.set_full_control()
 
-    def onRightTextFocus( self, event ):
-        self.onRightText(event)
-        event.Skip()
+    def onInitialRightTextFocus(self, event):
+        """
+        BOOK:権利初期値テキストフォーカスアウト
+        :param event:
+        :return:
+        """
+        self.onInitialRightText(event)
+        event.Skip()  # これがないと、フォーカスがハズレない
 
     def onPurchaseAmountChanged(self, event):
+        """
+        BOOK:取引量スライダー変更
+        :param event:
+        :return:
+        """
         self.model.purchase_amount = self.m_slider_purchase_amount.GetValue()
-        self.set_control()
-
-    def onConsumptionChanged(self, event):
-        self.model.consumption = self.m_slider_consumption.GetValue()
-        self.set_control()
+        self.set_full_control()
 
     def onPurchaseAmountText(self, event):
+        """
+        BOOK:取引量テキストEnter
+        :param event:
+        :return:
+        """
         value = int(self.m_textCtrl_purchase_amount.GetValue())
         if value > 100:
             value = 100
@@ -445,13 +517,32 @@ class AnimalView(BaseicAnimalBook):
             value = 0
 
         self.model.purchase_amount = value
-        self.set_control()
+        self.set_full_control()
 
-    def onPurchaseAmountTextFocus( self, event ):
+    def onPurchaseAmountTextFocus(self, event):
+        """
+        BOOK:取引量テキストフォーカスアウト
+        :param event:
+        :return:
+        """
         self.onPurchaseAmountText(event)
         event.Skip()
 
+    def onConsumptionChanged(self, event):
+        """
+        BOOK:消費量スライダー変更
+        :param event:
+        :return:
+        """
+        self.model.consumption = self.m_slider_consumption.GetValue()
+        self.set_full_control()
+
     def onConsumptionText(self, event):
+        """
+        BOOK:消費量テキストEnter
+        :param event:
+        :return:
+        """
         value = int(self.m_textCtrl_consumption.GetValue())
         if value > 100:
             value = 100
@@ -459,20 +550,26 @@ class AnimalView(BaseicAnimalBook):
             value = 0
 
         self.model.consumption = value
-        self.set_control()
+        self.set_full_control()
 
-    def onConsumptionTextFocus( self, event ):
+    def onConsumptionTextFocus(self, event):
+        """
+        BOOK:消費量テキストフォーカスアウト
+        :param event:
+        :return:
+        """
         self.onConsumptionText(event)
         event.Skip()
 
     def onAnimalNameChange(self, event):
+        """
+        BOOK:アニマル名変更
+        :param event:
+        :return:
+        """
         self.model.name = self.m_name.GetValue()
         if self.root_window is not None:
             self.root_window.Refresh()
-
-    def set_parameter(self, dialog):
-        self.model.set_parameter(dialog)
-        self.set_control()
 
     def onRightUp(self, event):
         """
@@ -488,10 +585,11 @@ class AnimalView(BaseicAnimalBook):
         self.PopupMenu(menu)
 
     def context_menu_select(self, event):
-        id = event.GetId()
-        print("Context Menu ID={0}".format(id))
-        if id == 1:
+        menu_id = event.GetId()
+        print("Context Menu ID={0}".format(menu_id))
+        if menu_id == 1:
             self.model.graph()
+
 
 ############################################################
 #
@@ -500,6 +598,11 @@ class AnimalView(BaseicAnimalBook):
 ############################################################
 class AnimalParameterSettingDialog(DialogParameterSetting):
     def __init__(self, parent, initializer):
+        """
+        一括設定ダイアログ初期化
+        :param parent: 親window
+        :param initializer: 初期値設定関数
+        """
         super().__init__(parent)
         self.initial_right = None
         self.create_value = None
@@ -508,30 +611,23 @@ class AnimalParameterSettingDialog(DialogParameterSetting):
         initializer(self)
         self.set_control()
 
-    def get_initial_value(self):
-        values = {'create_value': self.create_value,
-                  "initial_right": self.initial_right,
-                  'consumption': self.consumption,
-                  'purchase_amount': self.purchase_amount}
-        return values
-
     def set_control(self):
-        self.m_slider_value.SetValue(self.create_value)
-        self.m_slider_right.SetValue(self.initial_right)
+        self.m_slider_create_value.SetValue(self.create_value)
+        self.m_slider_initial_right.SetValue(self.initial_right)
         self.m_slider_purchase_amount.SetValue(self.purchase_amount)
         self.m_slider_consumption.SetValue(self.consumption)
 
-        self.m_textCtrl_value.SetValue(str(self.create_value))
-        self.m_textCtrl_right.SetValue(str(self.initial_right))
+        self.m_textCtrl_create_value.SetValue(str(self.create_value))
+        self.m_textCtrl_initial_right.SetValue(str(self.initial_right))
         self.m_textCtrl_purchase_amount.SetValue(str(self.purchase_amount))
         self.m_textCtrl_consumption.SetValue(str(self.consumption))
 
     def onValueChanged(self, event):
-        self.create_value = self.m_slider_value.GetValue()
+        self.create_value = self.m_slider_create_value.GetValue()
         self.set_control()
 
     def onRightChanged(self, event):
-        self.initial_right = self.m_slider_right.GetValue()
+        self.initial_right = self.m_slider_initial_right.GetValue()
         self.set_control()
 
     def onPurchaseAmountChanged(self, event):
@@ -543,7 +639,7 @@ class AnimalParameterSettingDialog(DialogParameterSetting):
         self.set_control()
 
     def onValueText(self, event):
-        value = int(self.m_textCtrl_value.GetValue())
+        value = int(self.m_textCtrl_create_value.GetValue())
         if value > 100:
             value = 100
         elif value < 0:
@@ -553,10 +649,10 @@ class AnimalParameterSettingDialog(DialogParameterSetting):
 
     def onValueTextFocus(self, event):
         self.onValueText(event)
-        event.Skip()        # これ入れないと、二回目にカーソルが入れられない
+        event.Skip()  # これ入れないと、二回目にカーソルが入れられない
 
     def onRightText(self, event):
-        value = int(self.m_textCtrl_right.GetValue())
+        value = int(self.m_textCtrl_initial_right.GetValue())
         if value > 100:
             value = 100
         elif value < 0:
@@ -567,7 +663,7 @@ class AnimalParameterSettingDialog(DialogParameterSetting):
 
     def onRightTextFocus(self, event):
         self.onRightText(event)
-        event.Skip()        # これ入れないと、二回目にカーソルが入れられない
+        event.Skip()  # これ入れないと、二回目にカーソルが入れられない
 
     def onPurchaseAmountText(self, event):
         value = int(self.m_textCtrl_purchase_amount.GetValue())
@@ -581,7 +677,7 @@ class AnimalParameterSettingDialog(DialogParameterSetting):
 
     def onPurchaseAmountTextFocus(self, event):
         self.onPurchaseAmountText(event)
-        event.Skip()        # これ入れないと、二回目にカーソルが入れられない
+        event.Skip()  # これ入れないと、二回目にカーソルが入れられない
 
     def onConsumptionText(self, event):
         value = int(self.m_textCtrl_consumption.GetValue())
@@ -595,5 +691,4 @@ class AnimalParameterSettingDialog(DialogParameterSetting):
 
     def onConsumptionTextFocus(self, event):
         self.onConsumptionText(event)
-        event.Skip()        # これ入れないと、二回目にカーソルが入れられない
-
+        event.Skip()  # これ入れないと、二回目にカーソルが入れられない

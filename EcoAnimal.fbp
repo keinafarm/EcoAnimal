@@ -527,7 +527,7 @@
                 <event name="OnTimer">onTimer</event>
             </object>
         </object>
-        <object class="Panel" expanded="1">
+        <object class="Panel" expanded="0">
             <property name="aui_managed">0</property>
             <property name="aui_manager_style">wxAUI_MGR_DEFAULT</property>
             <property name="bg"></property>
@@ -1450,7 +1450,7 @@
                                             <property name="minimize_button">0</property>
                                             <property name="minimum_size">-1,10</property>
                                             <property name="moveable">1</property>
-                                            <property name="name">m_slider_value</property>
+                                            <property name="name">m_slider_create_value</property>
                                             <property name="pane_border">1</property>
                                             <property name="pane_position"></property>
                                             <property name="pane_size"></property>
@@ -1472,7 +1472,7 @@
                                             <property name="window_extra_style"></property>
                                             <property name="window_name"></property>
                                             <property name="window_style"></property>
-                                            <event name="OnSlider">onValueChanged</event>
+                                            <event name="OnSlider">onCreateValueChanged</event>
                                         </object>
                                     </object>
                                     <object class="gbsizeritem" expanded="0">
@@ -1583,7 +1583,7 @@
                                             <property name="minimize_button">0</property>
                                             <property name="minimum_size">-1,10</property>
                                             <property name="moveable">1</property>
-                                            <property name="name">m_slider_right</property>
+                                            <property name="name">m_slider_initial_right</property>
                                             <property name="pane_border">1</property>
                                             <property name="pane_position"></property>
                                             <property name="pane_size"></property>
@@ -1605,7 +1605,7 @@
                                             <property name="window_extra_style"></property>
                                             <property name="window_name"></property>
                                             <property name="window_style"></property>
-                                            <event name="OnSlider">onRightChanged</event>
+                                            <event name="OnSlider">onInitialRightChanged</event>
                                         </object>
                                     </object>
                                     <object class="gbsizeritem" expanded="0">
@@ -1779,7 +1779,7 @@
                                             <property name="minimize_button">0</property>
                                             <property name="minimum_size">25,12</property>
                                             <property name="moveable">1</property>
-                                            <property name="name">m_textCtrl_value</property>
+                                            <property name="name">m_textCtrl_create_value</property>
                                             <property name="pane_border">1</property>
                                             <property name="pane_position"></property>
                                             <property name="pane_size"></property>
@@ -1801,8 +1801,8 @@
                                             <property name="window_extra_style"></property>
                                             <property name="window_name"></property>
                                             <property name="window_style"></property>
-                                            <event name="OnKillFocus">onValueTextFocus</event>
-                                            <event name="OnTextEnter">onValueText</event>
+                                            <event name="OnKillFocus">onCreateValueTextFocus</event>
+                                            <event name="OnTextEnter">onCreateValueText</event>
                                         </object>
                                     </object>
                                     <object class="gbsizeritem" expanded="0">
@@ -1848,7 +1848,7 @@
                                             <property name="minimize_button">0</property>
                                             <property name="minimum_size">25,12</property>
                                             <property name="moveable">1</property>
-                                            <property name="name">m_textCtrl_right</property>
+                                            <property name="name">m_textCtrl_initial_right</property>
                                             <property name="pane_border">1</property>
                                             <property name="pane_position"></property>
                                             <property name="pane_size"></property>
@@ -1870,8 +1870,8 @@
                                             <property name="window_extra_style"></property>
                                             <property name="window_name"></property>
                                             <property name="window_style"></property>
-                                            <event name="OnKillFocus">onRightTextFocus</event>
-                                            <event name="OnTextEnter">onRightText</event>
+                                            <event name="OnKillFocus">onInitialRightTextFocus</event>
+                                            <event name="OnTextEnter">onInitialRightText</event>
                                         </object>
                                     </object>
                                 </object>
@@ -2507,7 +2507,7 @@
             <property name="window_extra_style"></property>
             <property name="window_name"></property>
             <property name="window_style"></property>
-            <object class="wxGridBagSizer" expanded="0">
+            <object class="wxGridBagSizer" expanded="1">
                 <property name="empty_cell_size"></property>
                 <property name="flexible_direction">wxBOTH</property>
                 <property name="growablecols"></property>
@@ -2689,7 +2689,7 @@
                         <property name="minimize_button">0</property>
                         <property name="minimum_size">25,12</property>
                         <property name="moveable">1</property>
-                        <property name="name">m_textCtrl_value</property>
+                        <property name="name">m_textCtrl_create_value</property>
                         <property name="pane_border">1</property>
                         <property name="pane_position"></property>
                         <property name="pane_size"></property>
@@ -2759,7 +2759,7 @@
                         <property name="minimize_button">0</property>
                         <property name="minimum_size">-1,10</property>
                         <property name="moveable">1</property>
-                        <property name="name">m_slider_value</property>
+                        <property name="name">m_slider_create_value</property>
                         <property name="pane_border">1</property>
                         <property name="pane_position"></property>
                         <property name="pane_size"></property>
@@ -2892,7 +2892,7 @@
                         <property name="minimize_button">0</property>
                         <property name="minimum_size">-1,10</property>
                         <property name="moveable">1</property>
-                        <property name="name">m_slider_right</property>
+                        <property name="name">m_slider_initial_right</property>
                         <property name="pane_border">1</property>
                         <property name="pane_position"></property>
                         <property name="pane_size"></property>
@@ -2960,7 +2960,7 @@
                         <property name="minimize_button">0</property>
                         <property name="minimum_size">25,12</property>
                         <property name="moveable">1</property>
-                        <property name="name">m_textCtrl_right</property>
+                        <property name="name">m_textCtrl_initial_right</property>
                         <property name="pane_border">1</property>
                         <property name="pane_position"></property>
                         <property name="pane_size"></property>

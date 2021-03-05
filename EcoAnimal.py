@@ -60,7 +60,7 @@ class EcoAnimal:
         market.trade()  # 市場オブジェクトに取引をさせる
         self.view.update_animals()  # 表示を更新
 
-    def trade_n_times( self, n ):
+    def trade_n_times(self, n):
         for i in range(n):
             self.trade()
 
@@ -77,8 +77,8 @@ class EcoAnimal:
     def load(self, pathname):
         """
         https://note.nkmk.me/python-pandas-dataframe-for-iteration/
-        df.loc[x:y]['colomn'] = は スライスで作成されたコピーに代入している
-        df.loc[x:y,'colomn'] = は スライスで指定した場所に直接代入している
+        df.loc[x:y]['column'] = は スライスで作成されたコピーに代入している
+        df.loc[x:y,'column'] = は スライスで指定した場所に直接代入している
 
         df.reset_index(drop=True, inplace=True)
         取り出したData Frameのindexを0にする
@@ -89,6 +89,7 @@ class EcoAnimal:
         msg = AnimalModel.load(pathname)
         if msg is not None:
             self.view.error(msg)
+
 
 class EcoAnimalView(MainFrame):
     def __init__(self, parent, model):
@@ -150,11 +151,12 @@ class EcoAnimalView(MainFrame):
             if j > 12:
                 i += 1
                 j = 0
+
     ##########################
     #   メッセージダイアログ
     ##########################
     def error(self, msg):
-        dialog = wx.MessageDialog(self,msg, "ERROR",wx.OK | wx.ICON_ERROR)
+        dialog = wx.MessageDialog(self, msg, "ERROR", wx.OK | wx.ICON_ERROR)
         dialog.ShowModal()
 
     ##########################
@@ -236,12 +238,11 @@ class EcoAnimalView(MainFrame):
         """
         self.model.trade()
 
-    def on10times( self, event ):
+    def on10times(self, event):
         self.model.trade_n_times(10)
 
-    def on50times( self, event ):
+    def on50times(self, event):
         self.model.trade_n_times(50)
-
 
     def onTradeRun(self, event):
         """
@@ -293,7 +294,8 @@ class EcoAnimalView(MainFrame):
             book = panel.m_simplebook  # Bookの
             last_page = book.GetPageCount()  # ページ数と
             current_page = book.GetSelection()  # 現在のページを取得して
-            if current_page < last_page:  # 最後まで行ってなかったら
+            if current_page < last_page-1:  # 最後まで行ってなかったら
+                print("page={0}:{1}".format(current_page, last_page))
                 book.ChangeSelection(current_page + 1)  # ページをめくる
 
     def prev_page(self):
@@ -348,19 +350,19 @@ class EcoAnimalView(MainFrame):
         self.PopupMenu(menu)
 
     def context_menu_select(self, event):
-        id = event.GetId()
-        print("Context Menu ID={0}".format(id))
+        menu_id = event.GetId()
+        print("Context Menu ID={0}".format(menu_id))
         hist = Histogram()
-        if id == 1:
+        if menu_id == 1:
             hist.draw_graph(AnimalModel.animal_properties, ['value'])
-        elif id == 2:
+        elif menu_id == 2:
             hist.draw_graph(AnimalModel.animal_properties, ['right'])
-        elif id == 3:
+        elif menu_id == 3:
             hist.draw_graph(AnimalModel.animal_properties, ['value', 'right'])
         else:
             print("そんなメニューないです")
 
-    def onRightUpLogText( self, event ):
+    def onRightUpLogText(self, event):
         """
         LOG出力欄のコンテキストメニュー
         :param event:
@@ -369,15 +371,14 @@ class EcoAnimalView(MainFrame):
         menu = wx.Menu()
         item_1 = wx.MenuItem(menu, 1, 'ログ出力')
         menu.Append(item_1)
-        menu.Bind(wx.EVT_MENU, self.context_menu_select)
+        menu.Bind(wx.EVT_MENU, self.context_log_menu_select)
 
         self.PopupMenu(menu)
 
-    def context_menu_select(self, event):
-        id = event.GetId()
-        print("Context Menu ID={0}".format(id))
-        hist = Histogram()
-        if id == 1:
+    def context_log_menu_select(self, event):
+        menu_id = event.GetId()
+        print("Context Menu ID={0}".format(menu_id))
+        if menu_id == 1:
             self.logTextOut()
         else:
             print("そんなメニューないです")
@@ -405,6 +406,7 @@ class EcoAnimalView(MainFrame):
                 return
 
         self.m_statusBar.SetStatusText("{0}に保存しました".format(pathname))
+
 
 if __name__ == "__main__":
     app = wx.App()
