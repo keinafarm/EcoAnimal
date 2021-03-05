@@ -393,7 +393,6 @@ class AnimalView(BaseicAnimalBook):
             red = self.model.right
         green = 0
         blue = 200
-        print("red={0}".format(red))
         dc.SetBrush(wx.Brush(wx.Colour(red, green, blue)))
         dc.DrawCircle(self.m_pos_x - 6, self.m_pos_y, 4)
 
@@ -587,7 +586,6 @@ class AnimalView(BaseicAnimalBook):
 
     def context_menu_select(self, event):
         menu_id = event.GetId()
-        print("Context Menu ID={0}".format(menu_id))
         if menu_id == 1:
             self.model.graph()
 
