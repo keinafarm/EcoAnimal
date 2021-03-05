@@ -111,6 +111,7 @@ class AnimalModel:
         """
         self.value = self.create_value
         self.right = self.initial_right
+        self.history = pd.DataFrame(columns=['value', 'right'])
 
     def buy(self, animal_list, log):
         """
