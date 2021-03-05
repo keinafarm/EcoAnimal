@@ -1,7 +1,5 @@
-import numpy as np
-import pandas as pd
-import scipy.stats as st
 import matplotlib.pyplot as plt
+
 
 ############################################################
 #
@@ -10,7 +8,7 @@ import matplotlib.pyplot as plt
 #   https://qiita.com/kenichiro_nishioka/items/8e307e164a4e0a279734
 ############################################################
 
-class   Histogram:
+class Histogram:
     def __init__(self):
         pass
 

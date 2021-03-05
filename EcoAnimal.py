@@ -13,6 +13,7 @@ from Animal import AnimalModel, AnimalParameterSettingDialog, AnimalView
 from Market import Market
 from SimpleBookSample import MainFrame
 from Histogram import Histogram
+from DataBase import DataBase
 
 ANIMALS = 108  # アニマルの数（色んな数で割りやすいから２と3の倍数にした）
 
@@ -23,7 +24,8 @@ class EcoAnimal:
             アプリのメインクラス
             全アニマルのデータをPandasのDataFrameで管理している
         """
-        AnimalModel.init(ANIMALS)
+        DataBase.create(DataBase)
+        DataBase.obj().migration(ANIMALS)
         self._animal_list = []
         for i in range(ANIMALS):
             # 初期値
@@ -72,7 +74,7 @@ class EcoAnimal:
         :param pathname: 出力先ファイル
         :return:
         """
-        AnimalModel.save(pathname)
+        DataBase.obj().save(pathname)
 
     def load(self, pathname):
         """
@@ -86,7 +88,7 @@ class EcoAnimal:
         :param pathname:
         :return:
         """
-        msg = AnimalModel.load(pathname)
+        msg = DataBase.obj().load(pathname)
         if msg is not None:
             self.view.error(msg)
 
@@ -315,11 +317,11 @@ class EcoAnimalView(MainFrame):
         :param event:
         :return:
         """
-        dialog = AnimalParameterSettingDialog(self, AnimalModel.load_property)
+        dialog = AnimalParameterSettingDialog(self, DataBase.obj().load_property)
         result = dialog.ShowModal()
         if result != wx.ID_OK:
             return
-        AnimalModel.store_property(dialog)
+        DataBase.obj().store_property(dialog)
         for animal in self.animal_list:
             animal.set_parameter(dialog)
 
@@ -354,11 +356,11 @@ class EcoAnimalView(MainFrame):
         print("Context Menu ID={0}".format(menu_id))
         hist = Histogram()
         if menu_id == 1:
-            hist.draw_graph(AnimalModel.animal_properties, ['value'])
+            hist.draw_graph(DataBase.obj().df, ['value'])
         elif menu_id == 2:
-            hist.draw_graph(AnimalModel.animal_properties, ['right'])
+            hist.draw_graph(DataBase.obj().df, ['right'])
         elif menu_id == 3:
-            hist.draw_graph(AnimalModel.animal_properties, ['value', 'right'])
+            hist.draw_graph(DataBase.obj().df, ['value', 'right'])
         else:
             print("そんなメニューないです")
 

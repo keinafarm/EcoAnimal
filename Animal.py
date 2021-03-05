@@ -3,6 +3,7 @@ from SimpleBookSample import BaseicAnimalBook, DialogParameterSetting
 import random
 import pandas as pd
 import matplotlib.pyplot as plt
+from DataBase import DataBase
 
 
 # https://qiita.com/ysdyt/items/9ccca82fc5b504e7913a
@@ -15,67 +16,6 @@ import matplotlib.pyplot as plt
 ############################################################
 
 class AnimalModel:
-    #############
-    #
-    #   クラス変数
-    #
-    #############
-
-    animal_properties = None
-    property_name_list = ['object', 'name', 'value', 'right', 'create_value', 'initial_right', 'consumption',
-                          'purchase_amount']
-    initial_values = {'object': None, 'name': None, 'right': 50, 'value': 20, 'create_value': 20, 'initial_right': 50,
-                      'consumption': 20, 'purchase_amount': 20}
-    animal_count = 0
-
-    #############
-    #
-    #   クラスメソッド
-    #
-    #############
-
-    @classmethod
-    def init(cls, animals):
-        cls.animal_properties = pd.DataFrame([cls.initial_values] * animals, columns=cls.property_name_list)
-        cls.animal_count = animals
-
-    @classmethod
-    def set_initial_values(cls, initial_value):
-        """
-        全体の初期値を設定する
-        :param initial_value: 初期値リスト（辞書型）
-        :return:
-        """
-        cls.initial_values = initial_value
-
-    @classmethod
-    def load_property(cls, obj):
-        obj.initial_right = cls.initial_values['initial_right']
-        obj.create_value = cls.initial_values['create_value']
-        obj.consumption = cls.initial_values['consumption']
-        obj.purchase_amount = cls.initial_values['purchase_amount']
-
-    @classmethod
-    def store_property(cls, obj):
-        cls.initial_values['initial_right'] = obj.initial_right
-        cls.initial_values['create_value'] = obj.create_value
-        cls.initial_values['consumption'] = obj.consumption
-        cls.initial_values['purchase_amount'] = obj.purchase_amount
-
-    @classmethod
-    def save(cls, pathname):
-        save_list = cls.animal_properties.copy()
-        save_list['object'] = None
-        save_list.to_excel(pathname)
-
-    @classmethod
-    def load(cls, pathname):
-        animal_list = pd.read_excel(pathname)
-        if len(animal_list) != cls.animal_count:
-            return "データ数は{0}です。(現在:{1})".format(cls.animal_count, len(animal_list))
-
-        cls.animal_properties = animal_list
-        return None
 
     #############
     #
@@ -89,7 +29,7 @@ class AnimalModel:
         """
         self.index = index
         self.name = name
-        AnimalModel.animal_properties.at[self.index, 'object'] = self
+        DataBase.obj().set_object(index, self)
         self.reset()
         self.history = pd.DataFrame(columns=['value', 'right'])
 
@@ -229,62 +169,62 @@ class AnimalModel:
     #
     @property
     def name(self):
-        return AnimalModel.animal_properties.at[self.index, 'name']
+        return DataBase.obj().get_name(self.index)
 
     @property
     def initial_right(self):
-        return AnimalModel.animal_properties.at[self.index, 'initial_right']
+        return DataBase.obj().get_initial_right(self.index)
 
     @property
     def create_value(self):
-        return AnimalModel.animal_properties.at[self.index, 'create_value']
+        return DataBase.obj().get_create_value(self.index)
 
     @property
     def value(self):
-        return AnimalModel.animal_properties.at[self.index, 'value']
+        return DataBase.obj().get_value(self.index)
 
     @property
     def right(self):
-        return AnimalModel.animal_properties.at[self.index, 'right']
+        return DataBase.obj().get_right(self.index)
 
     @property
     def consumption(self):
-        return AnimalModel.animal_properties.at[self.index, 'consumption']
+        return DataBase.obj().get_consumption(self.index)
 
     @property
     def purchase_amount(self):
-        return AnimalModel.animal_properties.at[self.index, 'purchase_amount']
+        return DataBase.obj().get_purchase_amount(self.index)
 
     #
     #   Setter
     #
     @name.setter
     def name(self, text):
-        AnimalModel.animal_properties.at[self.index, 'name'] = text
+        DataBase.obj().set_name(self.index, text)
 
     @initial_right.setter
     def initial_right(self, amount):
-        AnimalModel.animal_properties.at[self.index, 'initial_right'] = amount
+        DataBase.obj().set_initial_right(self.index, amount)
 
     @create_value.setter
     def create_value(self, amount):
-        AnimalModel.animal_properties.at[self.index, 'create_value'] = amount
+        DataBase.obj().set_create_value(self.index, amount)
 
     @value.setter
     def value(self, amount):
-        AnimalModel.animal_properties.at[self.index, 'value'] = amount
+        DataBase.obj().set_value(self.index, amount)
 
     @right.setter
     def right(self, amount):
-        AnimalModel.animal_properties.at[self.index, 'right'] = amount
+        DataBase.obj().set_right(self.index, amount)
 
     @consumption.setter
     def consumption(self, amount):
-        AnimalModel.animal_properties.at[self.index, 'consumption'] = amount
+        DataBase.obj().set_consumption(self.index, amount)
 
     @purchase_amount.setter
     def purchase_amount(self, amount):
-        AnimalModel.animal_properties.at[self.index, 'purchase_amount'] = amount
+        DataBase.obj().set_purchase_amount(self.index, amount)
 
 
 ############################################################

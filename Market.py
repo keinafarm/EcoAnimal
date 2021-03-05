@@ -11,8 +11,8 @@ class Market:
         :param animal_list: ModelのAnimalリスト
         :param log: Viewのlog表示
         """
-        self.animal_list = animal_list              # ModelのAnimalリスト
-        self.log = log                              # Viewのlog表示
+        self.animal_list = animal_list  # ModelのAnimalリスト
+        self.log = log  # Viewのlog表示
 
     def trade(self):
         """
@@ -23,8 +23,8 @@ class Market:
             animal.production()  # 生産
 
         for animal_buyer in self.animal_list:
-            animal_buyer.buy(self.animal_list, self.log)    # 取引
+            animal_buyer.buy(self.animal_list, self.log)  # 取引
 
         for animal in self.animal_list:
-            animal.consume()    # 消費
-            animal.memory()     # 履歴に保存
+            animal.consume()  # 消費
+            animal.memory()  # 履歴に保存
