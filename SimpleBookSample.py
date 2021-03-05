@@ -93,10 +93,10 @@ class MainFrame ( wx.Frame ):
 
         self.bSizer_animal_list.Add( self.m_scrolledWindow, wx.GBPosition( 0, 1 ), wx.GBSpan( 1, 1 ), wx.EXPAND |wx.ALL, 5 )
 
-        self.m_textCtrl = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE )
-        self.m_textCtrl.SetMinSize( wx.Size( 1190,200 ) )
+        self.m_textCtrl_log = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.DefaultSize, wx.TE_MULTILINE )
+        self.m_textCtrl_log.SetMinSize( wx.Size( 1190,200 ) )
 
-        self.bSizer_animal_list.Add( self.m_textCtrl, wx.GBPosition( 1, 0 ), wx.GBSpan( 1, 2 ), wx.ALL, 5 )
+        self.bSizer_animal_list.Add( self.m_textCtrl_log, wx.GBPosition( 1, 0 ), wx.GBSpan( 1, 2 ), wx.ALL, 5 )
 
 
         self.SetSizer( self.bSizer_animal_list )
@@ -120,6 +120,7 @@ class MainFrame ( wx.Frame ):
         self.Bind( wx.EVT_MENU, self.onReset, id = self.m_menuItem4.GetId() )
         self.m_panel.Bind( wx.EVT_PAINT, self.onPaint )
         self.m_panel.Bind( wx.EVT_RIGHT_UP, self.onRightUp )
+        self.m_textCtrl_log.Bind( wx.EVT_RIGHT_UP, self.onRightUpLogText )
         self.Bind( wx.EVT_TIMER, self.onTimer, id=wx.ID_ANY )
 
     def __del__( self ):
@@ -164,6 +165,9 @@ class MainFrame ( wx.Frame ):
         event.Skip()
 
     def onRightUp( self, event ):
+        event.Skip()
+
+    def onRightUpLogText( self, event ):
         event.Skip()
 
     def onTimer( self, event ):

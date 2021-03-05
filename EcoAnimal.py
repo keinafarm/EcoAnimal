@@ -6,6 +6,9 @@
 #   https://note.nkmk.me/python-pandas-assign-append/
 #
 ########################################################################
+#
+#   Todo: 10,50回取引
+#
 
 import wx
 from Animal import AnimalModel, AnimalParameterSettingDialog, AnimalView
@@ -118,7 +121,7 @@ class EcoAnimalView(MainFrame):
         :param text:出力するログ
         :return:
         """
-        self.m_textCtrl.AppendText(text + '\n')
+        self.m_textCtrl_log.AppendText(text + '\n')
 
     def update_animals(self):
         """
@@ -162,7 +165,7 @@ class EcoAnimalView(MainFrame):
         :param event:
         :return:
         """
-        with wx.FileDialog(self, "アニマルデータを保存", wildcard="CSV files (*.xlsx)|*.xlsx",
+        with wx.FileDialog(self, "アニマルデータを保存", wildcard="EXCEL files (*.xlsx)|*.xlsx",
                            style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
 
             if fileDialog.ShowModal() == wx.ID_CANCEL:
@@ -187,7 +190,7 @@ class EcoAnimalView(MainFrame):
         :return:
         """
         # otherwise ask the user what new file to open
-        with wx.FileDialog(self, "アニマルデータを読み出し", wildcard="CSV files (*.xlsx)|*.xlsx",
+        with wx.FileDialog(self, "アニマルデータを読み出し", wildcard="EXCEL files (*.xlsx)|*.xlsx",
                            style=wx.FD_OPEN | wx.FD_FILE_MUST_EXIST) as fileDialog:
 
             if fileDialog.ShowModal() == wx.ID_CANCEL:
@@ -347,6 +350,52 @@ class EcoAnimalView(MainFrame):
             hist.draw_graph(AnimalModel.animal_properties, ['value', 'right'])
         else:
             print("そんなメニューないです")
+
+    def onRightUpLogText( self, event ):
+        """
+        LOG出力欄のコンテキストメニュー
+        :param event:
+        :return:
+        """
+        menu = wx.Menu()
+        item_1 = wx.MenuItem(menu, 1, 'ログ出力')
+        menu.Append(item_1)
+        menu.Bind(wx.EVT_MENU, self.context_menu_select)
+
+        self.PopupMenu(menu)
+
+    def context_menu_select(self, event):
+        id = event.GetId()
+        print("Context Menu ID={0}".format(id))
+        hist = Histogram()
+        if id == 1:
+            self.logTextOut()
+        else:
+            print("そんなメニューないです")
+
+    def logTextOut(self):
+        """
+        ログ出力処理
+        :return:
+        """
+        with wx.FileDialog(self, "ログデータを保存", wildcard="LOG files (*.log)|*.log",
+                           style=wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT) as fileDialog:
+
+            if fileDialog.ShowModal() == wx.ID_CANCEL:
+                return  # the user changed their mind
+
+            # save the current contents in the file
+            pathname = fileDialog.GetPath()
+            try:
+                with open(pathname, mode='w') as fp:
+                    fp.write(self.m_textCtrl_log.GetValue())
+            except IOError:
+                msg = "{0}に書き込めませんでした".format(pathname)
+                self.error(msg)
+                self.m_statusBar.SetStatusText(msg)
+                return
+
+        self.m_statusBar.SetStatusText("{0}に保存しました".format(pathname))
 
 if __name__ == "__main__":
     app = wx.App()

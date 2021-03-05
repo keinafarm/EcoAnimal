@@ -463,7 +463,7 @@
                         <property name="minimize_button">0</property>
                         <property name="minimum_size">1190,200</property>
                         <property name="moveable">1</property>
-                        <property name="name">m_textCtrl</property>
+                        <property name="name">m_textCtrl_log</property>
                         <property name="pane_border">1</property>
                         <property name="pane_position"></property>
                         <property name="pane_size"></property>
@@ -485,6 +485,7 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style"></property>
+                        <event name="OnRightUp">onRightUpLogText</event>
                     </object>
                 </object>
             </object>
@@ -498,7 +499,7 @@
                 <event name="OnTimer">onTimer</event>
             </object>
         </object>
-        <object class="Panel" expanded="0">
+        <object class="Panel" expanded="1">
             <property name="aui_managed">0</property>
             <property name="aui_manager_style">wxAUI_MGR_DEFAULT</property>
             <property name="bg"></property>
