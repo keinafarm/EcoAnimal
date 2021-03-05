@@ -417,11 +417,15 @@ class BaseicAnimalBook ( wx.Panel ):
         self.m_staticText_right.Bind( wx.EVT_RIGHT_UP, self.onRightUp )
         self.m_slider_value.Bind( wx.EVT_SLIDER, self.onValueChanged )
         self.m_slider_right.Bind( wx.EVT_SLIDER, self.onRightChanged )
+        self.m_textCtrl_value.Bind( wx.EVT_KILL_FOCUS, self.onValueTextFocus )
         self.m_textCtrl_value.Bind( wx.EVT_TEXT_ENTER, self.onValueText )
+        self.m_textCtrl_right.Bind( wx.EVT_KILL_FOCUS, self.onRightTextFocus )
         self.m_textCtrl_right.Bind( wx.EVT_TEXT_ENTER, self.onRightText )
         self.m_slider_purchase_amount.Bind( wx.EVT_SLIDER, self.onPurchaseAmountChanged )
         self.m_slider_consumption.Bind( wx.EVT_SLIDER, self.onConsumptionChanged )
+        self.m_textCtrl_purchase_amount.Bind( wx.EVT_KILL_FOCUS, self.onPurchaseAmountTextFocus )
         self.m_textCtrl_purchase_amount.Bind( wx.EVT_TEXT_ENTER, self.onPurchaseAmountText )
+        self.m_textCtrl_consumption.Bind( wx.EVT_KILL_FOCUS, self.onConsumptionTextFocus )
         self.m_textCtrl_consumption.Bind( wx.EVT_TEXT_ENTER, self.onConsumptionText )
 
     def __del__( self ):
@@ -456,7 +460,13 @@ class BaseicAnimalBook ( wx.Panel ):
     def onRightChanged( self, event ):
         event.Skip()
 
+    def onValueTextFocus( self, event ):
+        event.Skip()
+
     def onValueText( self, event ):
+        event.Skip()
+
+    def onRightTextFocus( self, event ):
         event.Skip()
 
     def onRightText( self, event ):
@@ -468,7 +478,13 @@ class BaseicAnimalBook ( wx.Panel ):
     def onConsumptionChanged( self, event ):
         event.Skip()
 
+    def onPurchaseAmountTextFocus( self, event ):
+        event.Skip()
+
     def onPurchaseAmountText( self, event ):
+        event.Skip()
+
+    def onConsumptionTextFocus( self, event ):
         event.Skip()
 
     def onConsumptionText( self, event ):
@@ -594,16 +610,16 @@ class DialogParameterSetting ( wx.Dialog ):
         self.Centre( wx.BOTH )
 
         # Connect Events
-        self.m_textCtrl_value.Bind( wx.EVT_KILL_FOCUS, self.onValueTextForcus )
+        self.m_textCtrl_value.Bind( wx.EVT_KILL_FOCUS, self.onValueTextFocus )
         self.m_textCtrl_value.Bind( wx.EVT_TEXT_ENTER, self.onValueText )
         self.m_slider_value.Bind( wx.EVT_SLIDER, self.onValueChanged )
         self.m_slider_right.Bind( wx.EVT_SLIDER, self.onRightChanged )
-        self.m_textCtrl_right.Bind( wx.EVT_KILL_FOCUS, self.onRightTextForcus )
+        self.m_textCtrl_right.Bind( wx.EVT_KILL_FOCUS, self.onRightTextFocus )
         self.m_textCtrl_right.Bind( wx.EVT_TEXT_ENTER, self.onRightText )
-        self.m_textCtrl_purchase_amount.Bind( wx.EVT_KILL_FOCUS, self.onPurchaseAmountTextForcus )
+        self.m_textCtrl_purchase_amount.Bind( wx.EVT_KILL_FOCUS, self.onPurchaseAmountTextFocus )
         self.m_textCtrl_purchase_amount.Bind( wx.EVT_TEXT_ENTER, self.onPurchaseAmountText )
         self.m_slider_purchase_amount.Bind( wx.EVT_SLIDER, self.onPurchaseAmountChanged )
-        self.m_textCtrl_consumption.Bind( wx.EVT_KILL_FOCUS, self.onConsumptionTextForcus )
+        self.m_textCtrl_consumption.Bind( wx.EVT_KILL_FOCUS, self.onConsumptionTextFocus )
         self.m_textCtrl_consumption.Bind( wx.EVT_TEXT_ENTER, self.onConsumptionText )
         self.m_slider_consumption.Bind( wx.EVT_SLIDER, self.onConsumptionChanged )
         self.m_button_cancel.Bind( wx.EVT_BUTTON, self.onCancel )
@@ -614,7 +630,7 @@ class DialogParameterSetting ( wx.Dialog ):
 
 
     # Virtual event handlers, overide them in your derived class
-    def onValueTextForcus( self, event ):
+    def onValueTextFocus( self, event ):
         event.Skip()
 
     def onValueText( self, event ):
@@ -626,13 +642,13 @@ class DialogParameterSetting ( wx.Dialog ):
     def onRightChanged( self, event ):
         event.Skip()
 
-    def onRightTextForcus( self, event ):
+    def onRightTextFocus( self, event ):
         event.Skip()
 
     def onRightText( self, event ):
         event.Skip()
 
-    def onPurchaseAmountTextForcus( self, event ):
+    def onPurchaseAmountTextFocus( self, event ):
         event.Skip()
 
     def onPurchaseAmountText( self, event ):
@@ -641,7 +657,7 @@ class DialogParameterSetting ( wx.Dialog ):
     def onPurchaseAmountChanged( self, event ):
         event.Skip()
 
-    def onConsumptionTextForcus( self, event ):
+    def onConsumptionTextFocus( self, event ):
         event.Skip()
 
     def onConsumptionText( self, event ):

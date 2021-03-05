@@ -1772,6 +1772,7 @@
                                             <property name="window_extra_style"></property>
                                             <property name="window_name"></property>
                                             <property name="window_style"></property>
+                                            <event name="OnKillFocus">onValueTextFocus</event>
                                             <event name="OnTextEnter">onValueText</event>
                                         </object>
                                     </object>
@@ -1840,6 +1841,7 @@
                                             <property name="window_extra_style"></property>
                                             <property name="window_name"></property>
                                             <property name="window_style"></property>
+                                            <event name="OnKillFocus">onRightTextFocus</event>
                                             <event name="OnTextEnter">onRightText</event>
                                         </object>
                                     </object>
@@ -2370,6 +2372,7 @@
                                             <property name="window_extra_style"></property>
                                             <property name="window_name"></property>
                                             <property name="window_style"></property>
+                                            <event name="OnKillFocus">onPurchaseAmountTextFocus</event>
                                             <event name="OnTextEnter">onPurchaseAmountText</event>
                                         </object>
                                     </object>
@@ -2438,6 +2441,7 @@
                                             <property name="window_extra_style"></property>
                                             <property name="window_name"></property>
                                             <property name="window_style"></property>
+                                            <event name="OnKillFocus">onConsumptionTextFocus</event>
                                             <event name="OnTextEnter">onConsumptionText</event>
                                         </object>
                                     </object>
@@ -2474,7 +2478,7 @@
             <property name="window_extra_style"></property>
             <property name="window_name"></property>
             <property name="window_style"></property>
-            <object class="wxGridBagSizer" expanded="1">
+            <object class="wxGridBagSizer" expanded="0">
                 <property name="empty_cell_size"></property>
                 <property name="flexible_direction">wxBOTH</property>
                 <property name="growablecols"></property>
@@ -2678,7 +2682,7 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style"></property>
-                        <event name="OnKillFocus">onValueTextForcus</event>
+                        <event name="OnKillFocus">onValueTextFocus</event>
                         <event name="OnTextEnter">onValueText</event>
                     </object>
                 </object>
@@ -2949,7 +2953,7 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style"></property>
-                        <event name="OnKillFocus">onRightTextForcus</event>
+                        <event name="OnKillFocus">onRightTextFocus</event>
                         <event name="OnTextEnter">onRightText</event>
                     </object>
                 </object>
@@ -3082,7 +3086,7 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style"></property>
-                        <event name="OnKillFocus">onPurchaseAmountTextForcus</event>
+                        <event name="OnKillFocus">onPurchaseAmountTextFocus</event>
                         <event name="OnTextEnter">onPurchaseAmountText</event>
                     </object>
                 </object>
@@ -3284,7 +3288,7 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style"></property>
-                        <event name="OnKillFocus">onConsumptionTextForcus</event>
+                        <event name="OnKillFocus">onConsumptionTextFocus</event>
                         <event name="OnTextEnter">onConsumptionText</event>
                     </object>
                 </object>
