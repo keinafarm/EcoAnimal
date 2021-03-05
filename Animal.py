@@ -328,7 +328,7 @@ class AnimalView(BaseicAnimalBook):
         self.m_slider_value.SetValue(self.model.create_value)           # 生産量のスライダー
         self.m_textCtrl_value.SetValue(str(self.model.create_value))
 
-        self.m_gauge_right.SetValue(self.model.right / 5)               # 権利のプログレスバー
+        self.m_gauge_right.SetValue(self.model.right / 10)               # 権利のプログレスバー
         self.m_staticText_right.SetLabel(str(self.model.right))
 
         self.m_slider_right.SetValue(self.model.initial_right)          # 権利の初期値のスライダー
