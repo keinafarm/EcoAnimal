@@ -536,6 +536,10 @@ class AnimalParameterSettingDialog(DialogParameterSetting):
         self.create_value = value
         self.set_control()
 
+    def onValueTextForcus(self, event):
+        self.onValueText(event)
+        event.Skip()        # これ入れないと、二回目にカーソルが入れられない
+
     def onRightText(self, event):
         value = int(self.m_textCtrl_right.GetValue())
         if value > 100:
@@ -546,8 +550,12 @@ class AnimalParameterSettingDialog(DialogParameterSetting):
         self.initial_right = value
         self.set_control()
 
+    def onRightTextForcus(self, event):
+        self.onRightText(event)
+        event.Skip()        # これ入れないと、二回目にカーソルが入れられない
+
     def onPurchaseAmountText(self, event):
-        value = int(self.m_slider_purchase_amount.GetValue())
+        value = int(self.m_textCtrl_purchase_amount.GetValue())
         if value > 100:
             value = 100
         elif value < 0:
@@ -555,6 +563,10 @@ class AnimalParameterSettingDialog(DialogParameterSetting):
 
         self.purchase_amount = value
         self.set_control()
+
+    def onPurchaseAmountTextForcus(self, event):
+        self.onPurchaseAmountText(event)
+        event.Skip()        # これ入れないと、二回目にカーソルが入れられない
 
     def onConsumptionText(self, event):
         value = int(self.m_textCtrl_consumption.GetValue())
@@ -565,3 +577,8 @@ class AnimalParameterSettingDialog(DialogParameterSetting):
 
         self.consumption = value
         self.set_control()
+
+    def onConsumptionTextForcus(self, event):
+        self.onConsumptionText(event)
+        event.Skip()        # これ入れないと、二回目にカーソルが入れられない
+

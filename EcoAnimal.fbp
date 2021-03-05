@@ -498,7 +498,7 @@
                 <event name="OnTimer">onTimer</event>
             </object>
         </object>
-        <object class="Panel" expanded="1">
+        <object class="Panel" expanded="0">
             <property name="aui_managed">0</property>
             <property name="aui_manager_style">wxAUI_MGR_DEFAULT</property>
             <property name="bg"></property>
@@ -2448,7 +2448,7 @@
                 </object>
             </object>
         </object>
-        <object class="Dialog" expanded="0">
+        <object class="Dialog" expanded="1">
             <property name="aui_managed">0</property>
             <property name="aui_manager_style">wxAUI_MGR_DEFAULT</property>
             <property name="bg"></property>
@@ -2474,7 +2474,7 @@
             <property name="window_extra_style"></property>
             <property name="window_name"></property>
             <property name="window_style"></property>
-            <object class="wxGridBagSizer" expanded="0">
+            <object class="wxGridBagSizer" expanded="1">
                 <property name="empty_cell_size"></property>
                 <property name="flexible_direction">wxBOTH</property>
                 <property name="growablecols"></property>
@@ -2678,6 +2678,7 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style"></property>
+                        <event name="OnKillFocus">onValueTextForcus</event>
                         <event name="OnTextEnter">onValueText</event>
                     </object>
                 </object>
@@ -2948,6 +2949,7 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style"></property>
+                        <event name="OnKillFocus">onRightTextForcus</event>
                         <event name="OnTextEnter">onRightText</event>
                     </object>
                 </object>
@@ -3080,6 +3082,7 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style"></property>
+                        <event name="OnKillFocus">onPurchaseAmountTextForcus</event>
                         <event name="OnTextEnter">onPurchaseAmountText</event>
                     </object>
                 </object>
@@ -3281,6 +3284,7 @@
                         <property name="window_extra_style"></property>
                         <property name="window_name"></property>
                         <property name="window_style"></property>
+                        <event name="OnKillFocus">onConsumptionTextForcus</event>
                         <event name="OnTextEnter">onConsumptionText</event>
                     </object>
                 </object>

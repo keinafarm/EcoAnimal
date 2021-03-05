@@ -594,12 +594,16 @@ class DialogParameterSetting ( wx.Dialog ):
         self.Centre( wx.BOTH )
 
         # Connect Events
+        self.m_textCtrl_value.Bind( wx.EVT_KILL_FOCUS, self.onValueTextForcus )
         self.m_textCtrl_value.Bind( wx.EVT_TEXT_ENTER, self.onValueText )
         self.m_slider_value.Bind( wx.EVT_SLIDER, self.onValueChanged )
         self.m_slider_right.Bind( wx.EVT_SLIDER, self.onRightChanged )
+        self.m_textCtrl_right.Bind( wx.EVT_KILL_FOCUS, self.onRightTextForcus )
         self.m_textCtrl_right.Bind( wx.EVT_TEXT_ENTER, self.onRightText )
+        self.m_textCtrl_purchase_amount.Bind( wx.EVT_KILL_FOCUS, self.onPurchaseAmountTextForcus )
         self.m_textCtrl_purchase_amount.Bind( wx.EVT_TEXT_ENTER, self.onPurchaseAmountText )
         self.m_slider_purchase_amount.Bind( wx.EVT_SLIDER, self.onPurchaseAmountChanged )
+        self.m_textCtrl_consumption.Bind( wx.EVT_KILL_FOCUS, self.onConsumptionTextForcus )
         self.m_textCtrl_consumption.Bind( wx.EVT_TEXT_ENTER, self.onConsumptionText )
         self.m_slider_consumption.Bind( wx.EVT_SLIDER, self.onConsumptionChanged )
         self.m_button_cancel.Bind( wx.EVT_BUTTON, self.onCancel )
@@ -610,6 +614,9 @@ class DialogParameterSetting ( wx.Dialog ):
 
 
     # Virtual event handlers, overide them in your derived class
+    def onValueTextForcus( self, event ):
+        event.Skip()
+
     def onValueText( self, event ):
         event.Skip()
 
@@ -619,13 +626,22 @@ class DialogParameterSetting ( wx.Dialog ):
     def onRightChanged( self, event ):
         event.Skip()
 
+    def onRightTextForcus( self, event ):
+        event.Skip()
+
     def onRightText( self, event ):
+        event.Skip()
+
+    def onPurchaseAmountTextForcus( self, event ):
         event.Skip()
 
     def onPurchaseAmountText( self, event ):
         event.Skip()
 
     def onPurchaseAmountChanged( self, event ):
+        event.Skip()
+
+    def onConsumptionTextForcus( self, event ):
         event.Skip()
 
     def onConsumptionText( self, event ):
