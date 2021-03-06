@@ -317,7 +317,7 @@ class EcoAnimalView(MainFrame):
         :param event:
         :return:
         """
-        dialog = AnimalParameterSettingDialog(self, DataBase.obj().load_property)
+        dialog = AnimalParameterSettingDialog(self, DataBase.obj().load_property, "全アニマルのパラメータを設定します")
         result = dialog.ShowModal()
         if result != wx.ID_OK:
             return

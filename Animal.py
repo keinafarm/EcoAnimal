@@ -518,8 +518,10 @@ class AnimalView(BaseicAnimalBook):
         :return:
         """
         menu = wx.Menu()
-        item_1 = wx.MenuItem(menu, 1, 'グラフ')
+        item_1 = wx.MenuItem(menu, 1, 'パラメータ設定')
+        item_2 = wx.MenuItem(menu, 2, 'グラフ')
         menu.Append(item_1)
+        menu.Append(item_2)
         menu.Bind(wx.EVT_MENU, self.context_menu_select)
 
         self.PopupMenu(menu)
@@ -527,7 +529,22 @@ class AnimalView(BaseicAnimalBook):
     def context_menu_select(self, event):
         menu_id = event.GetId()
         if menu_id == 1:
+            self.parameter_setting()
+        if menu_id == 2:
             self.model.graph()
+
+    def load_property(self, obj):
+        obj.initial_right = self.model.initial_right
+        obj.create_value = self.model.create_value
+        obj.consumption = self.model.consumption
+        obj.purchase_amount = self.model.purchase_amount
+
+    def parameter_setting(self):
+        dialog = AnimalParameterSettingDialog(self, self.load_property, "{0}のパラメータを設定".format(self.model.name))
+        result = dialog.ShowModal()
+        if result != wx.ID_OK:
+            return
+        self.set_parameter(dialog)
 
 
 ############################################################
@@ -536,13 +553,14 @@ class AnimalView(BaseicAnimalBook):
 #
 ############################################################
 class AnimalParameterSettingDialog(DialogParameterSetting):
-    def __init__(self, parent, initializer):
+    def __init__(self, parent, initializer, tips):
         """
         一括設定ダイアログ初期化
         :param parent: 親window
         :param initializer: 初期値設定関数
         """
         super().__init__(parent)
+        self.m_staticText_tips = tips
         self.initial_right = None
         self.create_value = None
         self.consumption = None

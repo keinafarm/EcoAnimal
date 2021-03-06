@@ -516,33 +516,33 @@ class BaseicAnimalBook ( wx.Panel ):
 class DialogParameterSetting ( wx.Dialog ):
 
     def __init__( self, parent ):
-        wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = _(u"パラメータ設定"), pos = wx.DefaultPosition, size = wx.Size( 266,237 ), style = wx.DEFAULT_DIALOG_STYLE )
+        wx.Dialog.__init__ ( self, parent, id = wx.ID_ANY, title = _(u"パラメータ設定"), pos = wx.DefaultPosition, size = wx.Size( 266,299 ), style = wx.DEFAULT_DIALOG_STYLE )
 
         self.SetSizeHints( wx.DefaultSize, wx.DefaultSize )
 
-        gbSizer2 = wx.GridBagSizer( 2, 2 )
-        gbSizer2.SetFlexibleDirection( wx.BOTH )
-        gbSizer2.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
+        self.m_gbSizer = wx.GridBagSizer( 2, 2 )
+        self.m_gbSizer.SetFlexibleDirection( wx.BOTH )
+        self.m_gbSizer.SetNonFlexibleGrowMode( wx.FLEX_GROWMODE_SPECIFIED )
 
-        self.m_staticText10 = wx.StaticText( self, wx.ID_ANY, _(u"全アニマルのパラメータを設定します"), wx.DefaultPosition, wx.DefaultSize, 0 )
-        self.m_staticText10.Wrap( -1 )
+        self.m_staticText_tips = wx.StaticText( self, wx.ID_ANY, _(u"全アニマルのパラメータを設定します"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText_tips.Wrap( -1 )
 
-        self.m_staticText10.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_staticText_tips.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
 
-        gbSizer2.Add( self.m_staticText10, wx.GBPosition( 0, 0 ), wx.GBSpan( 1, 3 ), wx.ALL, 5 )
+        self.m_gbSizer.Add( self.m_staticText_tips, wx.GBPosition( 0, 0 ), wx.GBSpan( 1, 3 ), wx.ALL, 5 )
 
         self.m_staticText8 = wx.StaticText( self, wx.ID_ANY, _(u"生産量"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText8.Wrap( -1 )
 
         self.m_staticText8.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
 
-        gbSizer2.Add( self.m_staticText8, wx.GBPosition( 1, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        self.m_gbSizer.Add( self.m_staticText8, wx.GBPosition( 1, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
         self.m_textCtrl_create_value = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 25,12 ), wx.TE_PROCESS_ENTER )
         self.m_textCtrl_create_value.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
         self.m_textCtrl_create_value.SetMinSize( wx.Size( 25,12 ) )
 
-        gbSizer2.Add( self.m_textCtrl_create_value, wx.GBPosition( 1, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        self.m_gbSizer.Add( self.m_textCtrl_create_value, wx.GBPosition( 1, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
         self.m_slider_create_value = wx.Slider( self, wx.ID_ANY, 10, 0, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.SL_HORIZONTAL|wx.SL_SELRANGE )
         self.m_slider_create_value.SetFont( wx.Font( 8, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
@@ -550,14 +550,14 @@ class DialogParameterSetting ( wx.Dialog ):
         self.m_slider_create_value.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
         self.m_slider_create_value.SetMinSize( wx.Size( -1,10 ) )
 
-        gbSizer2.Add( self.m_slider_create_value, wx.GBPosition( 1, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        self.m_gbSizer.Add( self.m_slider_create_value, wx.GBPosition( 1, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
         self.m_staticText9 = wx.StaticText( self, wx.ID_ANY, _(u"権利初期値"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText9.Wrap( -1 )
 
         self.m_staticText9.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
 
-        gbSizer2.Add( self.m_staticText9, wx.GBPosition( 2, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        self.m_gbSizer.Add( self.m_staticText9, wx.GBPosition( 2, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
         self.m_slider_initial_right = wx.Slider( self, wx.ID_ANY, 50, 0, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.SL_HORIZONTAL|wx.SL_SELRANGE )
         self.m_slider_initial_right.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
@@ -565,26 +565,26 @@ class DialogParameterSetting ( wx.Dialog ):
         self.m_slider_initial_right.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
         self.m_slider_initial_right.SetMinSize( wx.Size( -1,10 ) )
 
-        gbSizer2.Add( self.m_slider_initial_right, wx.GBPosition( 2, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        self.m_gbSizer.Add( self.m_slider_initial_right, wx.GBPosition( 2, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
         self.m_textCtrl_initial_right = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 25,12 ), wx.TE_PROCESS_ENTER )
         self.m_textCtrl_initial_right.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
         self.m_textCtrl_initial_right.SetMinSize( wx.Size( 25,12 ) )
 
-        gbSizer2.Add( self.m_textCtrl_initial_right, wx.GBPosition( 2, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        self.m_gbSizer.Add( self.m_textCtrl_initial_right, wx.GBPosition( 2, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
         self.m_staticText81 = wx.StaticText( self, wx.ID_ANY, _(u"購入量"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText81.Wrap( -1 )
 
         self.m_staticText81.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
 
-        gbSizer2.Add( self.m_staticText81, wx.GBPosition( 3, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        self.m_gbSizer.Add( self.m_staticText81, wx.GBPosition( 3, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
         self.m_textCtrl_purchase_amount = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 25,12 ), wx.TE_PROCESS_ENTER )
         self.m_textCtrl_purchase_amount.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
         self.m_textCtrl_purchase_amount.SetMinSize( wx.Size( 25,12 ) )
 
-        gbSizer2.Add( self.m_textCtrl_purchase_amount, wx.GBPosition( 3, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        self.m_gbSizer.Add( self.m_textCtrl_purchase_amount, wx.GBPosition( 3, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
         self.m_slider_purchase_amount = wx.Slider( self, wx.ID_ANY, 10, 0, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.SL_HORIZONTAL|wx.SL_SELRANGE )
         self.m_slider_purchase_amount.SetFont( wx.Font( 8, wx.FONTFAMILY_SWISS, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
@@ -592,20 +592,20 @@ class DialogParameterSetting ( wx.Dialog ):
         self.m_slider_purchase_amount.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
         self.m_slider_purchase_amount.SetMinSize( wx.Size( -1,10 ) )
 
-        gbSizer2.Add( self.m_slider_purchase_amount, wx.GBPosition( 3, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        self.m_gbSizer.Add( self.m_slider_purchase_amount, wx.GBPosition( 3, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
         self.m_staticText91 = wx.StaticText( self, wx.ID_ANY, _(u"消費量"), wx.DefaultPosition, wx.DefaultSize, 0 )
         self.m_staticText91.Wrap( -1 )
 
         self.m_staticText91.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
 
-        gbSizer2.Add( self.m_staticText91, wx.GBPosition( 4, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        self.m_gbSizer.Add( self.m_staticText91, wx.GBPosition( 4, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
         self.m_textCtrl_consumption = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 25,12 ), wx.TE_PROCESS_ENTER )
         self.m_textCtrl_consumption.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
         self.m_textCtrl_consumption.SetMinSize( wx.Size( 25,12 ) )
 
-        gbSizer2.Add( self.m_textCtrl_consumption, wx.GBPosition( 4, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        self.m_gbSizer.Add( self.m_textCtrl_consumption, wx.GBPosition( 4, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
         self.m_slider_consumption = wx.Slider( self, wx.ID_ANY, 50, 0, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.SL_HORIZONTAL|wx.SL_SELRANGE )
         self.m_slider_consumption.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
@@ -613,16 +613,16 @@ class DialogParameterSetting ( wx.Dialog ):
         self.m_slider_consumption.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
         self.m_slider_consumption.SetMinSize( wx.Size( -1,10 ) )
 
-        gbSizer2.Add( self.m_slider_consumption, wx.GBPosition( 4, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        self.m_gbSizer.Add( self.m_slider_consumption, wx.GBPosition( 4, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
         self.m_button_cancel = wx.Button( self, wx.ID_CANCEL, _(u"Cancel"), wx.DefaultPosition, wx.DefaultSize, 0 )
-        gbSizer2.Add( self.m_button_cancel, wx.GBPosition( 7, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        self.m_gbSizer.Add( self.m_button_cancel, wx.GBPosition( 10, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
         self.m_button_ok = wx.Button( self, wx.ID_OK, _(u"OK"), wx.DefaultPosition, wx.DefaultSize, 0 )
-        gbSizer2.Add( self.m_button_ok, wx.GBPosition( 7, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+        self.m_gbSizer.Add( self.m_button_ok, wx.GBPosition( 10, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
 
-        self.SetSizer( gbSizer2 )
+        self.SetSizer( self.m_gbSizer )
         self.Layout()
 
         self.Centre( wx.BOTH )
