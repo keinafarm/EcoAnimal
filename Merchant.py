@@ -1,12 +1,14 @@
 ############################################################
 #
-#   商人：自らは生産しないが、購入したものに利益を載せて販売する人
+#   商人：購入したものに利益を載せて販売する人
 #
 ############################################################
 
 from DataBase import DataBase
 from Animal import AnimalModel, AnimalParameterSettingDialog, AnimalView
 import wx
+import gettext
+_ = gettext.gettext
 
 #############
 #
@@ -62,28 +64,53 @@ class MerchantModel(AnimalModel):
         """
         return [self, amount * (1 + self.margin / 100)]  # 価格はマージンを載せる
 
-    def load_property(self, obj):
-        obj.margin = self.model.margin
-
-    def parameter_setting(self):
-        dialog = MerchantParameterSettingDialog(self, self.load_property, "{0}のパラメータを設定".format(self.model.name))
-        result = dialog.ShowModal()
-        if result != wx.ID_OK:
-            return
-        self.set_parameter(dialog)
-
 #############
 #
 #   個別のデータ設定オブジェクト(View)
 #
 #############
+class MerchantView(AnimalView):
+    def __init__(self, parent, model, id=wx.ID_ANY, pos=wx.DefaultPosition, size=wx.DefaultSize,
+                     style=wx.TAB_TRAVERSAL, name=wx.PanelNameStr):
+            super().__init__(parent, model, id, pos, size, style, name)
+
+    def load_property(self, obj):
+        super().load_property(obj)
+        obj.margin = self.model.margin
+
+    def make_dialog(self):
+        dialog = MerchantParameterSettingDialog(self, self.load_property, "{0}のパラメータを設定".format(self.model.name))
+        return dialog
+
+############################################################
+#
+#   設定ダイアログのユーザーインタフェース
+#
+############################################################
 
 class MerchantParameterSettingDialog(AnimalParameterSettingDialog):
     def __init__(self, parent, initializer, tips):
         self.margin = None
         super().__init__(parent, initializer, tips)
+        # 「利幅」ラベル
+        self.m_staticText91 = wx.StaticText( self, wx.ID_ANY, _(u"利幅"), wx.DefaultPosition, wx.DefaultSize, 0 )
+        self.m_staticText91.Wrap( -1 )
 
+        self.m_staticText91.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_gbSizer.Add( self.m_staticText91, wx.GBPosition( 5, 0 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+
+        # 「利幅」テキスト入力
+        self.m_textCtrl_margin = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 25,12 ), wx.TE_PROCESS_ENTER )
+        self.m_textCtrl_margin.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
+        self.m_textCtrl_margin.SetMinSize( wx.Size( 25,12 ) )
+
+        self.m_gbSizer.Add( self.m_textCtrl_margin, wx.GBPosition( 5, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
+
+
+        # 「利幅」スライダー
         self.m_slider_margin = wx.Slider( self, wx.ID_ANY, 50, 0, 100, wx.DefaultPosition, wx.Size( -1,10 ), wx.SL_HORIZONTAL|wx.SL_SELRANGE )
+
         self.m_slider_margin.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
         self.m_slider_margin.SetForegroundColour( wx.Colour( 255, 0, 0 ) )
         self.m_slider_margin.SetBackgroundColour( wx.SystemSettings.GetColour( wx.SYS_COLOUR_WINDOW ) )
@@ -91,18 +118,14 @@ class MerchantParameterSettingDialog(AnimalParameterSettingDialog):
 
         self.m_gbSizer.Add( self.m_slider_margin, wx.GBPosition( 5, 2 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
 
-        self.m_textCtrl_margin = wx.TextCtrl( self, wx.ID_ANY, wx.EmptyString, wx.DefaultPosition, wx.Size( 25,12 ), wx.TE_PROCESS_ENTER )
-        self.m_textCtrl_margin.SetFont( wx.Font( 8, wx.FONTFAMILY_DEFAULT, wx.FONTSTYLE_NORMAL, wx.FONTWEIGHT_NORMAL, False, wx.EmptyString ) )
-        self.m_textCtrl_margin.SetMinSize( wx.Size( 25,12 ) )
-
-        self.m_gbSizer.Add( self.m_textCtrl_margin, wx.GBPosition( 4, 1 ), wx.GBSpan( 1, 1 ), wx.ALL, 5 )
-
+        # 「利幅」イベント
         self.m_textCtrl_margin.Bind( wx.EVT_KILL_FOCUS, self.onMarginTextFocus )
         self.m_textCtrl_margin.Bind( wx.EVT_TEXT_ENTER, self.onMarginText )
         self.m_slider_margin.Bind( wx.EVT_SLIDER, self.onMarginChanged )
 
+
     def set_control(self):
-        super.set_control()
+        super().set_control()
         self.m_slider_margin.SetValue(self.margin)
         self.m_textCtrl_margin.SetValue(str(self.margin))
 
@@ -110,7 +133,7 @@ class MerchantParameterSettingDialog(AnimalParameterSettingDialog):
         self.margin = self.m_slider_margin.GetValue()
         self.set_control()
 
-    def onMarginTextFocus(self, event):
+    def onMarginText(self, event):
         value = int(self.m_textCtrl_margin.GetValue())
         if value > 100:
             value = 100

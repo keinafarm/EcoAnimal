@@ -540,16 +540,23 @@ class AnimalView(BaseicAnimalBook):
         obj.purchase_amount = self.model.purchase_amount
 
     def parameter_setting(self):
+        dialog = self.make_dialog()
+        self.show_dialog(dialog)
+
+    def make_dialog(self):
         dialog = AnimalParameterSettingDialog(self, self.load_property, "{0}のパラメータを設定".format(self.model.name))
+        return dialog
+
+    def show_dialog(self, dialog):
+        dialog.set_control()
         result = dialog.ShowModal()
         if result != wx.ID_OK:
             return
         self.set_parameter(dialog)
 
-
 ############################################################
 #
-#   一括設定ダイアログのユーザーインタフェース
+#   設定ダイアログのユーザーインタフェース
 #
 ############################################################
 class AnimalParameterSettingDialog(DialogParameterSetting):
@@ -560,13 +567,12 @@ class AnimalParameterSettingDialog(DialogParameterSetting):
         :param initializer: 初期値設定関数
         """
         super().__init__(parent)
-        self.m_staticText_tips = tips
+        self.m_staticText_tips.SetLabel(tips)
         self.initial_right = None
         self.create_value = None
         self.consumption = None
         self.purchase_amount = None
         initializer(self)
-        self.set_control()
 
     def set_control(self):
         self.m_slider_create_value.SetValue(self.create_value)
