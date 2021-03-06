@@ -157,6 +157,9 @@ class AnimalModel:
         価値と権利の遷移をグラフで表示する
         :return:
         """
+        if len(self.history) <= 0:
+            print("graph:データがない")
+            return
         self.history.plot()
         plt.title("{0}".format(self.name))
         plt.show()
