@@ -56,11 +56,7 @@ class ParameterSetting(DialogParameterSetting):
         """
         super().__init__(parent)
         self.m_staticText_tips.SetLabel(tips)
-        self.initial_right = None
-        self.create_value = None
-        self.consumption = None
-        self.purchase_amount = None
-        initializer(self)
+        self.initializer = initializer
 
         self.setting_property_list = []
         self.parameters = 0
@@ -72,6 +68,8 @@ class ParameterSetting(DialogParameterSetting):
     def append(self, setting_property):
         self.parameters += 1
         row_pos = self.parameters + 1  # レイアウト上の行番号
+
+        setattr(self, setting_property.method, None)        # このオブジェクトにメソッドを追加する
 
         self.m_staticText91 = wx.StaticText(self, wx.ID_ANY, setting_property.label, wx.DefaultPosition, wx.DefaultSize,
                                             0)
@@ -120,6 +118,8 @@ class ParameterSetting(DialogParameterSetting):
         ダイアログを確定する
         :return:
         """
+        self.initializer(self)      # 初期値をセットする
+
         self.button_cancel = wx.Button(self, wx.ID_CANCEL, _(u"Cancel"), wx.DefaultPosition, wx.DefaultSize, 0)
         self.m_gbSizer.Add(self.button_cancel, wx.GBPosition(10, 0), wx.GBSpan(1, 1), wx.ALL, 5)
 

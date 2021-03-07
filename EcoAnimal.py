@@ -9,8 +9,7 @@
 #
 
 import wx
-from Animal import AnimalModel, AnimalView
-# from Merchant import MerchantData, MerchantModel, MerchantView, MerchantParameterSettingDialog
+from Merchant import MerchantData, MerchantModel, MerchantView
 from Market import Market
 from SimpleBookSample import MainFrame
 from Histogram import Histogram
@@ -26,15 +25,13 @@ class EcoAnimal:
             アプリのメインクラス
             全アニマルのデータをPandasのDataFrameで管理している
         """
-        DataBase.create(DataBase)
-        #        DataBase.create(MerchantData)
+        DataBase.create(MerchantData)
         DataBase.obj().initialize(ANIMALS)
         self._animal_list = []
         for i in range(ANIMALS):
             # 初期値
             animal_name = "Animal{0}".format(i + 1)  # アニマル名の初期値
-            #            animal = MerchantModel(i, animal_name)  # アニマルを生成
-            animal = AnimalModel(i, animal_name)  # アニマルを生成
+            animal = MerchantModel(i, animal_name)  # アニマルを生成
             self._animal_list.append(animal)
 
         self.view = EcoAnimalView(None, self)  # viewを作成
@@ -111,7 +108,7 @@ class EcoAnimalView(MainFrame):
 
         self.animal_list = []
         for i in range(ANIMALS):
-            animal = AnimalView(self.m_scrolledWindow, self.model.animal_list[i], wx.ID_ANY, wx.DefaultPosition,
+            animal = MerchantView(self.m_scrolledWindow, self.model.animal_list[i], wx.ID_ANY, wx.DefaultPosition,
                                 wx.DefaultSize, 0)
             self.bSizer_animal_list.Add(animal, 1, wx.EXPAND | wx.ALL, 5)
             self.animal_list.append(animal)  # アニマルのViewを作って登録
@@ -321,10 +318,7 @@ class EcoAnimalView(MainFrame):
         :param event:
         :return:
         """
-        #        dialog = MerchantParameterSettingDialog(self, DataBase.obj().load_property, "全アニマルのパラメータを設定します")
-        dialog = ParameterSetting(self, DataBase.obj().load_property, "全アニマルのパラメータを設定します")
-        dialog.initialize_complete()
-        dialog.set_control()
+        dialog = self.animal_list[0].make_dialog_for_all(self)
         result = dialog.ShowModal()
         if result != wx.ID_OK:
             return

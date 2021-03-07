@@ -1,5 +1,5 @@
 import wx
-from SimpleBookSample import BaseicAnimalBook, DialogParameterSetting
+from SimpleBookSample import BaseicAnimalBook
 import random
 import pandas as pd
 import matplotlib.pyplot as plt
