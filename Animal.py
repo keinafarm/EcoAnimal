@@ -4,7 +4,7 @@ import random
 import pandas as pd
 import matplotlib.pyplot as plt
 from DataBase import DataBase
-
+from ParameterSetting import ParameterSetting
 
 # https://qiita.com/ysdyt/items/9ccca82fc5b504e7913a
 # https://aiacademy.jp/media/?p=152
@@ -547,7 +547,8 @@ class AnimalView(BaseicAnimalBook):
         self.show_dialog(dialog)
 
     def make_dialog(self):
-        dialog = AnimalParameterSettingDialog(self, self.load_property, "{0}のパラメータを設定".format(self.model.name))
+        dialog = ParameterSetting(self, self.load_property, "{0}のパラメータを設定".format(self.model.name))
+        dialog.initialize_complete()
         return dialog
 
     def show_dialog(self, dialog):
@@ -557,104 +558,4 @@ class AnimalView(BaseicAnimalBook):
             return
         self.set_parameter(dialog)
 
-############################################################
-#
-#   設定ダイアログのユーザーインタフェース
-#
-############################################################
-class AnimalParameterSettingDialog(DialogParameterSetting):
-    def __init__(self, parent, initializer, tips):
-        """
-        一括設定ダイアログ初期化
-        :param parent: 親window
-        :param initializer: 初期値設定関数
-        """
-        super().__init__(parent)
-        self.m_staticText_tips.SetLabel(tips)
-        self.initial_right = None
-        self.create_value = None
-        self.consumption = None
-        self.purchase_amount = None
-        initializer(self)
 
-    def set_control(self):
-        self.m_slider_create_value.SetValue(self.create_value)
-        self.m_slider_initial_right.SetValue(self.initial_right)
-        self.m_slider_purchase_amount.SetValue(self.purchase_amount)
-        self.m_slider_consumption.SetValue(self.consumption)
-
-        self.m_textCtrl_create_value.SetValue(str(self.create_value))
-        self.m_textCtrl_initial_right.SetValue(str(self.initial_right))
-        self.m_textCtrl_purchase_amount.SetValue(str(self.purchase_amount))
-        self.m_textCtrl_consumption.SetValue(str(self.consumption))
-
-    def onValueChanged(self, event):
-        self.create_value = self.m_slider_create_value.GetValue()
-        self.set_control()
-
-    def onRightChanged(self, event):
-        self.initial_right = self.m_slider_initial_right.GetValue()
-        self.set_control()
-
-    def onPurchaseAmountChanged(self, event):
-        self.purchase_amount = self.m_slider_purchase_amount.GetValue()
-        self.set_control()
-
-    def onConsumptionChanged(self, event):
-        self.consumption = self.m_slider_consumption.GetValue()
-        self.set_control()
-
-    def onValueText(self, event):
-        value = int(self.m_textCtrl_create_value.GetValue())
-        if value > 100:
-            value = 100
-        elif value < 0:
-            value = 0
-        self.create_value = value
-        self.set_control()
-
-    def onValueTextFocus(self, event):
-        self.onValueText(event)
-        event.Skip()  # これ入れないと、二回目にカーソルが入れられない
-
-    def onRightText(self, event):
-        value = int(self.m_textCtrl_initial_right.GetValue())
-        if value > 100:
-            value = 100
-        elif value < 0:
-            value = 0
-
-        self.initial_right = value
-        self.set_control()
-
-    def onRightTextFocus(self, event):
-        self.onRightText(event)
-        event.Skip()  # これ入れないと、二回目にカーソルが入れられない
-
-    def onPurchaseAmountText(self, event):
-        value = int(self.m_textCtrl_purchase_amount.GetValue())
-        if value > 100:
-            value = 100
-        elif value < 0:
-            value = 0
-
-        self.purchase_amount = value
-        self.set_control()
-
-    def onPurchaseAmountTextFocus(self, event):
-        self.onPurchaseAmountText(event)
-        event.Skip()  # これ入れないと、二回目にカーソルが入れられない
-
-    def onConsumptionText(self, event):
-        value = int(self.m_textCtrl_consumption.GetValue())
-        if value > 100:
-            value = 100
-        elif value < 0:
-            value = 0
-
-        self.consumption = value
-        self.set_control()
-
-    def onConsumptionTextFocus(self, event):
-        self.onConsumptionText(event)
-        event.Skip()  # これ入れないと、二回目にカーソルが入れられない
